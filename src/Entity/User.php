@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Auteur::class)]
     private Collection $supprimeAuteurs;
 
+    #[ORM\Column(length: 255)]
+    private ?string $temoin = null;
+
     public function __construct()
     {
         $this->armoires = new ArrayCollection();
@@ -297,6 +300,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $supprimeAuteur->setSupprimePar(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTemoin(): ?string
+    {
+        return $this->temoin;
+    }
+
+    public function setTemoin(string $temoin): self
+    {
+        $this->temoin = $temoin;
 
         return $this;
     }
