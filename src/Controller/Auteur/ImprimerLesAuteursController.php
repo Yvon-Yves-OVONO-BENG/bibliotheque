@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Armoire;
+namespace App\Controller\Auteur;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,12 +14,12 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-class ImprimerLesArmoiresController extends AbstractController
+class ImprimerLesAuteursController extends AbstractController
 {
-    #[Route('/imprimer-les-armoires', name: 'imprimer_les_armoires')]
-    public function imprimerLesArmoires(): Response
+    #[Route('/imprimer-les-auteurs', name: 'imprimer_les_auteurs')]
+    public function imprimerLesAuteurs(): Response
     {
-        return $this->render('armoires/index.html.twig', [
+        return $this->render('auteurs/index.html.twig', [
             
         ]);
     }

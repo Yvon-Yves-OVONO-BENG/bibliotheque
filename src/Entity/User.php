@@ -46,9 +46,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Armoire::class)]
     private Collection $armoires;
 
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Auteur::class)]
+    private Collection $enregistreAuteurs;
+
+    #[ORM\OneToMany(mappedBy: 'modifiePar', targetEntity: Auteur::class)]
+    private Collection $modifieAuteurs;
+
+    #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Auteur::class)]
+    private Collection $supprimeAuteurs;
+
     public function __construct()
     {
         $this->armoires = new ArrayCollection();
+        $this->enregistreAuteurs = new ArrayCollection();
+        $this->modifieAuteurs = new ArrayCollection();
+        $this->supprimeAuteurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +205,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($armoire->getEnregistrePar() === $this) {
                 $armoire->setEnregistrePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Auteur>
+     */
+    public function getEnregistreAuteurs(): Collection
+    {
+        return $this->enregistreAuteurs;
+    }
+
+    public function addEnregistreAuteur(Auteur $enregistreAuteur): self
+    {
+        if (!$this->enregistreAuteurs->contains($enregistreAuteur)) {
+            $this->enregistreAuteurs->add($enregistreAuteur);
+            $enregistreAuteur->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnregistreAuteur(Auteur $enregistreAuteur): self
+    {
+        if ($this->enregistreAuteurs->removeElement($enregistreAuteur)) {
+            // set the owning side to null (unless already changed)
+            if ($enregistreAuteur->getEnregistrePar() === $this) {
+                $enregistreAuteur->setEnregistrePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Auteur>
+     */
+    public function getModifieAuteurs(): Collection
+    {
+        return $this->modifieAuteurs;
+    }
+
+    public function addModifieAuteur(Auteur $modifieAuteur): self
+    {
+        if (!$this->modifieAuteurs->contains($modifieAuteur)) {
+            $this->modifieAuteurs->add($modifieAuteur);
+            $modifieAuteur->setModifiePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModifieAuteur(Auteur $modifieAuteur): self
+    {
+        if ($this->modifieAuteurs->removeElement($modifieAuteur)) {
+            // set the owning side to null (unless already changed)
+            if ($modifieAuteur->getModifiePar() === $this) {
+                $modifieAuteur->setModifiePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Auteur>
+     */
+    public function getSupprimeAuteurs(): Collection
+    {
+        return $this->supprimeAuteurs;
+    }
+
+    public function addSupprimeAuteur(Auteur $supprimeAuteur): self
+    {
+        if (!$this->supprimeAuteurs->contains($supprimeAuteur)) {
+            $this->supprimeAuteurs->add($supprimeAuteur);
+            $supprimeAuteur->setSupprimePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupprimeAuteur(Auteur $supprimeAuteur): self
+    {
+        if ($this->supprimeAuteurs->removeElement($supprimeAuteur)) {
+            // set the owning side to null (unless already changed)
+            if ($supprimeAuteur->getSupprimePar() === $this) {
+                $supprimeAuteur->setSupprimePar(null);
             }
         }
 

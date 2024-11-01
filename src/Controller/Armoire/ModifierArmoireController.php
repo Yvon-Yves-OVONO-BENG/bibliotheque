@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
@@ -22,7 +24,8 @@ class ModifierArmoireController extends AbstractController
     public function __construct(
         protected StrService $strService,
         protected EntityManagerInterface $em,
-        protected ArmoireRepository $armoireRepository
+        protected ArmoireRepository $armoireRepository,
+        protected CsrfTokenManagerInterface $csrfTokenManager,
     ){}
 
     #[Route('/modifier-armoire/{slug}', name: 'modifier_armoire')]
@@ -45,25 +48,48 @@ class ModifierArmoireController extends AbstractController
 
         $form->handleRequest($request);
 
+        # je crée mon CSRF pour sécuriser mes formulaires
+        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireAuteur')->getValue();
+
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            $armoire->setArmoire($this->strService->strToUpper($armoire->getArmoire()))
-            ->setSupprime(0)
-            ->setModifiePar($this->getUser())
-            ->setModifieLeAt(new DateTime('now'))
-            ;
+            $csrfTokenFormulaire = $request->request->get('csrfToken');
 
-            $this->em->persist($armoire);
-            $this->em->flush(); 
+            if ($this->csrfTokenManager->isTokenValid(
+                new CsrfToken('envoieFormulaireArmoire', $csrfTokenFormulaire))) 
+            {
+                $armoire->setArmoire($this->strService->strToUpper($armoire->getArmoire()))
+                ->setSupprime(0)
+                ->setModifiePar($this->getUser())
+                ->setModifieLeAt(new DateTime('now'))
+                ;
 
-            $this->addFlash('info', 'Armoire modifiée avec succès !');
-            
-            #j'affecte 1 à ma variable pour afficher le message
-            $mySession->set('miseAjour', 1);
+                $this->em->persist($armoire);
+                $this->em->flush(); 
 
-            return $this->redirectToRoute('liste_armoire', [
-                'm' => 1,
-            ]);
+                $this->addFlash('info', 'Armoire modifiée avec succès !');
+                
+                #j'affecte 1 à ma variable pour afficher le message
+                $mySession->set('miseAjour', 1);
+
+                return $this->redirectToRoute('liste_armoire', [
+                    'm' => 1,
+                ]);
+            }
+            else 
+            {
+                /**
+                 * @var User
+                 */
+                $user = $this->getUser();
+                $user->setBloque(1);
+
+                $this->em->persist($user);
+                $this->em->flush();
+
+                return $this->redirectToRoute('accueil', ['b' => 1 ]);
+
+            }
             
         }
 
@@ -74,6 +100,7 @@ class ModifierArmoireController extends AbstractController
             'slug' => $slug,
             'armoire' => $armoire,
             'armoires' => $armoires,
+            'csrfToken' => $csrfToken,
             'ajoutArmoireForm' => $form->createView(),
         ]);
     }

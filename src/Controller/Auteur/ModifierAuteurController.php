@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Controller\Armoire;
+namespace App\Controller\Auteur;
 
-use App\Entity\Armoire;
-use App\Form\AjoutArmoireType;
-use App\Repository\ArmoireRepository;
-use App\Repository\UserRepository;
-use App\Services\StrService;
 use DateTime;
+use App\Services\StrService;
+use App\Form\AjoutAuteurType;
+use App\Repository\AuteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -21,18 +19,17 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-class AjoutArmoireController extends AbstractController
+class ModifierAuteurController extends AbstractController
 {
     public function __construct(
         protected StrService $strService,
         protected EntityManagerInterface $em,
-        protected UserRepository $userRepository,
-        protected ArmoireRepository $armoireRepository,
+        protected AuteurRepository $auteurRepository,
         protected CsrfTokenManagerInterface $csrfTokenManager,
     ){}
 
-    #[Route('/ajout-armoire', name: 'ajout_armoire')]
-    public function ajoutArmoire(Request $request): Response
+    #[Route('/modifier-auteur/{slug}', name: 'modifier_auteur')]
+    public function modifierAuteur(Request $request, string $slug): Response
     {
         $mySession = $request->getSession();
         
@@ -44,44 +41,41 @@ class AjoutArmoireController extends AbstractController
         $mySession->set('ajout',null);
         $mySession->set('suppression', null);
         $mySession->set('miseAjour', null);
-        
-        $slug = "";
 
-        $armoire = new Armoire;       
+        $auteur = $this->auteurRepository->findOneBySlug(['slug' => $slug]);       
         
-        $form = $this->createForm(AjoutArmoireType::class, $armoire);
+        $form = $this->createForm(AjoutAuteurType::class, $auteur);
 
         $form->handleRequest($request);
 
         # je crée mon CSRF pour sécuriser mes formulaires
-        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireArmoire')->getValue();
+        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireAuteur')->getValue();
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
             $csrfTokenFormulaire = $request->request->get('csrfToken');
 
             if ($this->csrfTokenManager->isTokenValid(
-                new CsrfToken('envoieFormulaireArmoire', $csrfTokenFormulaire))) 
+                new CsrfToken('envoieFormulaireAuteur', $csrfTokenFormulaire))) 
             {
-                $armoire->setArmoire($this->strService->strToUpper($armoire->getArmoire()))
-                ->setSlug(uniqid('', true))
+                $auteur->setNom($this->strService->strToUpper($auteur->getNom()))
                 ->setSupprime(0)
-                ->setEnregistrePar($this->getUser())
-                ->setEnregistreLeAt(new DateTime('now'))
+                ->setModifiePar($this->getUser())
+                ->setModifieLeAt(new DateTime('now'))
                 ;
 
-                $this->em->persist($armoire);
+                $this->em->persist($auteur);
                 $this->em->flush(); 
 
-                $this->addFlash('info', 'Armoire ajoutée avec succès !');
+                $this->addFlash('info', 'Auteur modifiée avec succès !');
                 
                 #j'affecte 1 à ma variable pour afficher le message
-                $mySession->set('ajout', 1);
+                $mySession->set('miseAjour', 1);
 
-                $armoire = new Armoire();
-                $form = $this->createForm(AjoutArmoireType::class, $armoire);
-
-            } 
+                return $this->redirectToRoute('liste_auteur', [
+                    'm' => 1,
+                ]);
+            }
             else 
             {
                 /**
@@ -99,14 +93,15 @@ class AjoutArmoireController extends AbstractController
             
         }
 
-        #je récupère toutes mes armoires non supprimées
-        $armoires = $this->armoireRepository->findBy(['supprime' => 0]);
+        #je récupère toutes mes auteurs non supprimées
+        $auteurs = $this->auteurRepository->findBy(['supprime' => 0]);
 
-        return $this->render('armoire/ajoutArmoire.html.twig', [
+        return $this->render('auteur/ajoutAuteur.html.twig', [
             'slug' => $slug,
+            'auteur' => $auteur,
+            'auteurs' => $auteurs,
             'csrfToken' => $csrfToken,
-            'armoires' => $armoires,
-            'ajoutArmoireForm' => $form->createView(),
+            'ajoutAuteurForm' => $form->createView(),
         ]);
     }
 }
