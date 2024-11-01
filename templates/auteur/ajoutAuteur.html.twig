@@ -95,6 +95,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        {{ form_label(ajoutAuteurForm.typeAuteur)}}
+                                        {{ form_widget(ajoutAuteurForm.typeAuteur, {'attr': {'class': 'form-control select2-show-search form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir la nationalite !{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         {{ form_label(ajoutAuteurForm.biographie)}}
                                         {{ form_widget(ajoutAuteurForm.biographie, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
                                         <div class="invalid-feedback">
@@ -103,6 +112,12 @@
                                     </div>
                                 </div>
                                 <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                
+                                
+                            </div>
+                            <div class="row mb-5">
+                                <div class="col-md-4">
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label style="color: #fff;">.</label>
@@ -118,7 +133,7 @@
                                             {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                 </div>
                             </div>
 

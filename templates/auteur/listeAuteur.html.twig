@@ -95,7 +95,7 @@
                                                 {% for auteur in auteurs %}
                                                     <tr>
                                                         <td><span class="badge bg-primary">{{ i }}</span></td>
-                                                        <td>{{ auteur.nom }}</td>
+                                                        <td>{{ auteur.nom }} <br><span class="badge bg-primary">{{ auteur.typeAuteur ? auteur.typeAuteur.typeAuteur: "" }}</span></td>
                                                         <td>{{ auteur.dateNaissanceAt|date('d-M-Y') }}</td>
                                                         <td>
                                                             {% if auteur.sexe.sexe == "M" %}

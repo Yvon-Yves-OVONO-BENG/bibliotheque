@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Liste auteur{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Profil de {% endtrans %} {{ auteur.nom }}{% endblock %}
 {% block stylesheets %}
 	<style>
 		th,
@@ -26,23 +26,17 @@
         <!--Page header-->
 						<div class="page-header">
 							<div class="page-leftheader">
-								<h4 class="page-title mb-0 text-primary">Profile 1</h4>
+								<h4 class="page-title mb-0 text-primary"><i class="fa fa-user me-2"></i>{% trans %}Profil de{% endtrans %} {{ auteur.nom }}</h4>
 							</div>
 							<div class="page-rightheader">
 								<div class="btn-list">
-									<button class="btn btn-outline-primary"><i class="fe fe-download me-2"></i>
-										Import</button>
-									<a href="javascript:void(0);"  class="btn btn-primary btn-pill" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="fa fa-calendar me-2 fs-14"></i> Search By Date</a>
-									<div class="dropdown-menu border-0">
-											<a class="dropdown-item" href="javascript:void(0);">Today</a>
-											<a class="dropdown-item" href="javascript:void(0);">Yesterday</a>
-											<a class="dropdown-item active" href="javascript:void(0);">Last 7 days</a>
-											<a class="dropdown-item" href="javascript:void(0);">Last 30 days</a>
-											<a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-											<a class="dropdown-item" href="javascript:void(0);">Last 6 months</a>
-											<a class="dropdown-item" href="javascript:void(0);">Last year</a>
-									</div>
+									<a href="{{ path ('ajout_auteur') }}" class="btn btn-outline-primary"><i class="fe fe-user-plus me-2"></i>
+										{% trans %}Ajouter un auteur{% endtrans %}
+                                    </a>
+									<a href="{{ path ('liste_auteur') }}"  class="btn btn-outline-primary btn-pill" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-users me-2 fs-14"></i>{% trans %}Liste des auteurs{% endtrans %}
+                                    </a>
+									
 								</div>
 							</div>
 						</div>
@@ -55,33 +49,11 @@
 									<div class="widget-user-image mx-auto mt-5"><img alt="User Avatar" class="rounded-circle" src="../../assets/images/users/2.jpg"></div>
 									<div class="card-body text-center">
 										<div class="pro-user">
-											<h4 class="pro-user-username mb-1 font-weight-bold">Patrenna</h4>
-											<h6 class="pro-user-desc text-muted">UI UX Designer</h6>
-											<div class="wideget-user-rating">
-												<a href="javascript:void(0);"><i class="fa fa-star text-warning"></i></a>
-												<a href="javascript:void(0);"><i class="fa fa-star text-warning"></i></a>
-												<a href="javascript:void(0);"><i class="fa fa-star text-warning"></i></a>
-												<a href="javascript:void(0);"><i class="fa fa-star text-warning"></i></a>
-												<a href="javascript:void(0);"><i class="fa fa-star-o text-warning me-1"></i></a> <span>5 (3876 Reviews)</span>
-											</div>
-											<a href="javascript:void(0);" class="btn btn-success mt-3"><i class="fa fa-rss me-2"></i>Edit Profile</a>
-											<a href="javascript:void(0);" class="btn btn-primary mt-3"><i class="fa fa-pencil me-2"></i> Follow</a>
-										</div>
-									</div>
-									<div class="card-footer p-0">
-										<div class="row">
-											<div class="col-sm-6 border-end text-center">
-												<div class="description-block p-4">
-													<h5 class="description-header mb-1 font-weight-bold  number-font">689k</h5>
-													<span class="text-muted">Followers</span>
-												</div>
-											</div>
-											<div class="col-sm-6">
-												<div class="description-block text-center p-4">
-													<h5 class="description-header mb-1 font-weight-bold number-font">3,765</h5>
-													<span class="text-muted">Following</span>
-												</div>
-											</div>
+											<h4 class="pro-user-username mb-1 font-weight-bold">{{ auteur.nom }}</h4>
+											<h6 class="pro-user-desc text-muted">{{ auteur.typeAuteur.typeAuteur }}</h6>
+											
+											<a href="javascript:void(0);" class="btn btn-success mt-3"><i class="fa fa-print me-2"></i>{% trans %}Imprimer{% endtrans %}</a>
+											<a href="{{ path ('modifier_auteur', {'slug': auteur.slug}) }}" class="btn btn-primary mt-3"><i class="fa fa-pencil me-2"></i>{% trans %}Modifier{% endtrans %}</a>
 										</div>
 									</div>
 								</div>

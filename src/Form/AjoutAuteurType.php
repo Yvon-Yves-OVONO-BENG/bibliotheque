@@ -5,8 +5,10 @@ namespace App\Form;
 use App\Entity\Auteur;
 use App\Entity\Nationalite;
 use App\Entity\Sexe;
+use App\Entity\TypeAuteur;
 use App\Repository\NationaliteRepository;
 use App\Repository\SexeRepository;
+use App\Repository\TypeAuteurRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -66,6 +68,20 @@ class AjoutAuteurType extends AbstractType
                 'query_builder' => function(SexeRepository $sexeRepository){
                     
                     return $sexeRepository->createQueryBuilder('s')->orderBy('s.sexe');
+                    
+                },
+            ])
+            ->add('typeAuteur', EntityType::class, [
+                'class' => TypeAuteur::class,
+                'choice_label' => 'typeAuteur',
+                'required' => true,
+                'placeholder' => '- - -',
+                'attr' => [
+                    'class' => 'form-control select2-show-search',
+                ],
+                'query_builder' => function(TypeAuteurRepository $typeAuteurRepository){
+                    
+                    return $typeAuteurRepository->createQueryBuilder('t')->orderBy('t.typeAuteur');
                     
                 },
             ])

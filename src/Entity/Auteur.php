@@ -58,6 +58,9 @@ class Auteur
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $supprimeLeAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'auteurs')]
+    private ?TypeAuteur $typeAuteur = null;
+
     public function __construct()
     {
         $this->livres = new ArrayCollection();
@@ -250,6 +253,18 @@ class Auteur
     public function setSupprimeLeAt(?\DateTimeInterface $supprimeLeAt): self
     {
         $this->supprimeLeAt = $supprimeLeAt;
+
+        return $this;
+    }
+
+    public function getTypeAuteur(): ?TypeAuteur
+    {
+        return $this->typeAuteur;
+    }
+
+    public function setTypeAuteur(?TypeAuteur $typeAuteur): self
+    {
+        $this->typeAuteur = $typeAuteur;
 
         return $this;
     }
