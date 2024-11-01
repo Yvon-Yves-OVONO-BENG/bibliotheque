@@ -43,6 +43,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Armoire::class)]
+    private Collection $armoires;
+
+    public function __construct()
+    {
+        $this->armoires = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -160,4 +168,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Armoire>
+     */
+    public function getArmoires(): Collection
+    {
+        return $this->armoires;
+    }
+
+    public function addArmoire(Armoire $armoire): self
+    {
+        if (!$this->armoires->contains($armoire)) {
+            $this->armoires->add($armoire);
+            $armoire->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArmoire(Armoire $armoire): self
+    {
+        if ($this->armoires->removeElement($armoire)) {
+            // set the owning side to null (unless already changed)
+            if ($armoire->getEnregistrePar() === $this) {
+                $armoire->setEnregistrePar(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

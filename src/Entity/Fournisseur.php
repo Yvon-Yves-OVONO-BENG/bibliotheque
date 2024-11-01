@@ -27,7 +27,7 @@ class Fournisseur
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'fournisseur', targetEntity: Livre::class)]
+    #[ORM\OneToMany(mappedBy: 'Fournisseur', targetEntity: Livre::class)]
     private Collection $livres;
 
     public function __construct()

@@ -15,53 +15,71 @@
 		</title>
 
 		<!--Favicon -->
-		<link rel="icon" href="{{ asset('assets/images/brand/favicon.ico')}}" type="image/x-icon"/>
+		<link rel="icon" href="{{ asset ('assets/images/brand/favicon.ico')}}" type="image/x-icon"/>
 
 		<!--Bootstrap css -->
-		<link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+		<link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
 		<!-- INTERNAL File Uploads css -->
-		<link href="{{ asset('assets/plugins/fancyuploder/fancy_fileupload.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/fancyuploder/fancy_fileupload.css')}}" rel="stylesheet" />
 		<!-- INTERNAL File Uploads css-->
-        <link href="{{ asset('assets/plugins/fileupload/css/fileupload.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset ('assets/plugins/fileupload/css/fileupload.css')}}" rel="stylesheet" type="text/css" />
 		<!-- Style css -->
-		<link href="{{ asset('assets/css/style.css')}}" rel="stylesheet" />
-		<link href="{{ asset('assets/css/dark.css')}}" rel="stylesheet" />
-		<link href="{{ asset('assets/css/skin-modes.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/style.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/dark.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/skin-modes.css')}}" rel="stylesheet" />
 
-		<link href="{{ asset('assets/plugins/datatables/DataTables/css/dataTables.bootstrap5.css')}}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/datatables/Buttons/css/buttons.bootstrap5.min.css')}}"  rel="stylesheet">
-		<link href="{{ asset('assets/plugins/datatables/Responsive/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/datatables/DataTables/css/dataTables.bootstrap5.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/datatables/Buttons/css/buttons.bootstrap5.min.css')}}"  rel="stylesheet">
+		<link href="{{ asset ('assets/plugins/datatables/Responsive/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" />
 				
 
 		<!-- Animate css -->
-		<link href="{{ asset('assets/css/animated.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/animated.css')}}" rel="stylesheet" />
 
 		<!-- P-scroll bar css-->
-		<link href="{{ asset('assets/plugins/p-scrollbar/p-scrollbar.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/p-scrollbar/p-scrollbar.css')}}" rel="stylesheet" />
 
 		<!---Icons css-->
-		<link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/icons.css')}}" rel="stylesheet" />
 
 		<!-- Simplebar css -->
-		<link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/css/simplebar.css')}}">
+		<link rel="stylesheet" href="{{ asset ('assets/plugins/simplebar/css/simplebar.css')}}">
 
 		<!-- INTERNAL Morris Charts css -->
-		<link href="{{ asset('assets/plugins/morris/morris.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/morris/morris.css')}}" rel="stylesheet" />
 
 		<!-- INTERNAL Select2 css -->
-		<link href="{{ asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
 
 		<!-- Data table css -->
-		<link href="{{ asset('assets/plugins/datatables/DataTables/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
-		<link href="{{ asset('assets/plugins/datatables/Responsive/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/datatables/DataTables/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/datatables/Responsive/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
 
 	    <!-- Color Skin css -->
-		<link id="theme" href="{{ asset('assets/colors/color1.css')}}" rel="stylesheet" type="text/css"/>
+		<link id="theme" href="{{ asset ('assets/colors/color1.css')}}" rel="stylesheet" type="text/css"/>
 
 		<!-- INTERNAL Switcher css -->
-		<link href="{{ asset('assets/switcher/css/switcher.css')}}" rel="stylesheet"/>
-		<link href="{{ asset('assets/switcher/demo.css')}}" rel="stylesheet"/>
+		<link href="{{ asset ('assets/switcher/css/switcher.css')}}" rel="stylesheet"/>
+		<link href="{{ asset ('assets/switcher/demo.css')}}" rel="stylesheet"/>
+		<!--- INTERNAL Sweetalert css-->
+		<link href="{{ asset ('assets/plugins/sweet-alert/jquery.sweet-modal.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/sweet-alert/sweetalert.css')}}" rel="stylesheet" />
+
+		<!-- INTERNAL Prism Css -->
+		<link href="{{ asset ('assets/plugins/prism/prism.css')}}" rel="stylesheet">
+
+		<script src="{{ asset ('js/swal.js') }}"></script>
+
+		{% set mySession = app.session %}
+		
+		{% if mySession.get('ajout') is defined 
+			or mySession.get('miseAjour') is defined 
+			or mySession.get('suppression') is defined  
+			or mySession.get('resetPwd') is defined   
+			%}
+			<link href="{{ asset ('assets/plugins/notify/css/notifIt.css')}}" rel="stylesheet"/> 
+		{% endif %}
 
         
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -74,10 +92,58 @@
         {% endblock %}
     </head>
     <body class="app">
+		
+			{% if app.user and app.user.bloque == 1 and b == 0 %}
+				
+				<script>
+					// Exemple d'utilisation de SweetAlert2
+					Swal.fire({
+						title: 'Votre compte est bloqué !',
+						text: "Veuillez consulter un administrateur !",
+						icon: 'error',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+						allowEnterKey: false,
+						showConfirmButton: true,
+						confirmButtonText: "D'accord",
+					}).then((result) => {
+						if (result.isConfirmed) {
+							// Redirection vers une autre page ou rafraîchissement de la page actuelle
+							window.location.href = "{{ path ('app_logout') }}"; // Exemple de redirection
+						}
+					});
+					// Empêcher toute interaction utilisateur
+					
+				</script>
+				{% else %}
+					{% if app.user and app.user.bloque == 1 and b == 1 %}
+						<script>
+							// Exemple d'utilisation de SweetAlert2
+							Swal.fire({
+								title: 'Sécurité menaceé',
+								text: "Tentative de soumission non sécurisée détectée !",
+								icon: 'error',
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								allowEnterKey: false,
+								showConfirmButton: true,
+								confirmButtonText: "D'accord",
+							}).then((result) => {
+								if (result.isConfirmed) {
+									// Redirection vers une autre page ou rafraîchissement de la page actuelle
+									window.location.href = "{{ path ('app_logout') }}"; // Exemple de redirection
+								}
+							});
+							// Empêcher toute interaction utilisateur
+							
+						</script>
+					{% endif %}
+															
+			{% endif %}
 
 		<!---Global-loader-->
 		<div id="global-loader" >
-			<img src="{{ asset('assets/images/svgs/loader.svg')}}" alt="loader">
+			<img src="{{ asset ('assets/images/svgs/loader.svg')}}" alt="loader">
 		</div>
 		<!--- End Global-loader-->
 
@@ -91,10 +157,10 @@
 						<div class="d-flex">
 							<a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
 							<a class="header-brand" href="{{ path ('accueil') }}">
-								<img src="{{ asset('assets/images/brand/logo.png')}}" class="header-brand-img desktop-lgo" alt="Azea logo">
-								<img src="{{ asset('assets/images/brand/logo.png')}}" class="header-brand-img dark-logo" alt="Azea logo">
-								<img src="{{ asset('assets/images/brand/favicon.png')}}" class="header-brand-img mobile-logo" alt="Azea logo">
-								<img src="{{ asset('assets/images/brand/favicon1.png')}}" class="header-brand-img darkmobile-logo" alt="Azea logo">
+								<img src="{{ asset ('assets/images/brand/logo.png')}}" class="header-brand-img desktop-lgo" alt="Azea logo">
+								<img src="{{ asset ('assets/images/brand/logo.png')}}" class="header-brand-img dark-logo" alt="Azea logo">
+								<img src="{{ asset ('assets/images/brand/favicon.png')}}" class="header-brand-img mobile-logo" alt="Azea logo">
+								<img src="{{ asset ('assets/images/brand/favicon1.png')}}" class="header-brand-img darkmobile-logo" alt="Azea logo">
 							</a>
 							<div class="mt-1 d-md-block d-none">
 								<form class="form-inline">
@@ -140,25 +206,25 @@
 											<div class="dropdown country-selector d-flex">
 												<a href="javascript:void(0);" class="nav-link leading-none" data-bs-toggle="dropdown">
 													<span class="header-avatar1">
-														<img src="{{ asset('assets/images/us_flag.jpg')}}" alt="img" class="me-2 country">
+														<img src="{{ asset ('assets/images/us_flag.jpg')}}" alt="img" class="me-2 country">
 														<span class="fs-14 font-weight-semibold"> English</span>
 													</span>
 												</a>
 												<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow animated">
 													<a class="dropdown-item d-flex" href="javascript:void(0);">
-														<img src="{{ asset('assets/images/germany_flag.jpg')}}" alt="img" class="me-2 country mt-1">
+														<img src="{{ asset ('assets/images/germany_flag.jpg')}}" alt="img" class="me-2 country mt-1">
 														<span class="fs-13"> Germany</span>
 													</a>
 													<a class="dropdown-item d-flex" href="javascript:void(0);">
-														<img src="{{ asset('assets/images/italy_flag.jpg')}}" alt="img" class="me-2 country mt-1">
+														<img src="{{ asset ('assets/images/italy_flag.jpg')}}" alt="img" class="me-2 country mt-1">
 														<span class="fs-13"> Italy</span>
 													</a>
 													<a class="dropdown-item d-flex" href="javascript:void(0);">
-														<img src="{{ asset('assets/images/russia_flag.jpg')}}" alt="img" class="me-2 country mt-1">
+														<img src="{{ asset ('assets/images/russia_flag.jpg')}}" alt="img" class="me-2 country mt-1">
 														<span class="fs-13"> Russia</span>
 													</a>
 													<a class="dropdown-item d-flex" href="javascript:void(0);">
-														<img src="{{ asset('assets/images/spain_flag.jpg')}}" alt="img" class=" me-2 country mt-1">
+														<img src="{{ asset ('assets/images/spain_flag.jpg')}}" alt="img" class=" me-2 country mt-1">
 														<span class="fs-13"> Spain</span>
 													</a>
 												</div>
@@ -177,7 +243,7 @@
 														<a class="dropdown-item border-bottom" href="#">
 															<div class="d-flex align-items-center">
 																<div class="">
-																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/1.jpg')}}"></span>
+																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset ('assets/images/users/1.jpg')}}"></span>
 																</div>
 																<div class="d-flex mt-1 mb-1">
 																	<div class="ps-3">
@@ -193,7 +259,7 @@
 														<a class="dropdown-item border-bottom" href="javascript:void(0);">
 															<div class="d-flex align-items-center">
 																<div class="">
-																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/2.jpg')}}"></span>
+																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset ('assets/images/users/2.jpg')}}"></span>
 																</div>
 																<div class="d-flex mt-1 mb-1">
 																	<div class="ps-3">
@@ -209,7 +275,7 @@
 														<a class="dropdown-item border-bottom" href="javascript:void(0);">
 															<div class="d-flex align-items-center">
 																<div class="">
-																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/3.jpg')}}"></span>
+																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset ('assets/images/users/3.jpg')}}"></span>
 																</div>
 																<div class="d-flex mt-1 mb-1">
 																	<div class="ps-3">
@@ -225,7 +291,7 @@
 														<a class="dropdown-item border-bottom" href="javascript:void(0);">
 															<div class="d-flex align-items-center">
 																<div class="">
-																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/4.jpg')}}"></span>
+																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset ('assets/images/users/4.jpg')}}"></span>
 																</div>
 																<div class="d-flex mt-1 mb-1">
 																	<div class="ps-3">
@@ -241,7 +307,7 @@
 														<a class="dropdown-item border-bottom"  href="javascript:void(0);">
 															<div class="d-flex align-items-center">
 																<div class="">
-																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/6.jpg')}}"></span>
+																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset ('assets/images/users/6.jpg')}}"></span>
 																</div>
 																<div class="d-flex mt-1 mb-1">
 																	<div class="ps-3">
@@ -257,7 +323,7 @@
 														<a class="dropdown-item" href="javascript:void(0);">
 															<div class="d-flex align-items-center">
 																<div class="">
-																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/7.jpg')}}"></span>
+																	<span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset ('assets/images/users/7.jpg')}}"></span>
 																</div>
 																<div class="d-flex mt-1 mb-1">
 																	<div class="ps-3">
@@ -324,7 +390,7 @@
 											<div class="dropdown profile-dropdown d-flex">
 												<a href="" class="nav-link pe-0 leading-none" data-bs-toggle="dropdown">
 													<span class="header-avatar1">
-														<img src="{{ asset('assets/images/users/2.jpg')}}" alt="img" class="avatar avatar-md brround">
+														<img src="{{ asset ('assets/images/users/2.jpg')}}" alt="img" class="avatar avatar-md brround">
 													</span>
 												</a>
 												<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow animated">
@@ -383,192 +449,195 @@
 					</div>
 				</div>
 				<!--/app header-->
-    {% if app.user %}
-				<!--/Horizontal-main -->
-				<div class="sticky">
-					<div class="horizontal-main hor-menu clearfix">
-						<div class="horizontal-mainwrapper container clearfix">
-							<nav class="horizontalMenu clearfix">
-								<ul class="horizontalMenu-list">
-									<li aria-haspopup="true">
-										<a href="{{path('accueil')}}" class="sub-icon">
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm7 7v-5h4v5h-4zm2-15.586 6 6V15l.001 5H16v-5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v5H6v-9.586l6-6z"/></svg>
-											
-										</a>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
+    			{% if app.user %}
+					<!--/Horizontal-main -->
+					<div class="sticky">
+						<div class="horizontal-main hor-menu clearfix">
+							<div class="horizontal-mainwrapper container clearfix">
+								<nav class="horizontalMenu clearfix">
+									<ul class="horizontalMenu-list">
+										<li aria-haspopup="true">
+											<a href="{{path('accueil')}}" class="sub-icon">
+												<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm7 7v-5h4v5h-4zm2-15.586 6 6V15l.001 5H16v-5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v5H6v-9.586l6-6z"/></svg>
+												
+											</a>
+										</li>
+										{% if is_granted('ROLE_ADMIN') %}
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
 
+													
+												<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><g><circle cx="10" cy="8" r="4"/><path d="M10.67,13.02C10.45,13.01,10.23,13,10,13c-2.42,0-4.68,0.67-6.61,1.82C2.51,15.34,2,16.32,2,17.35V20h9.26 C10.47,18.87,10,17.49,10,16C10,14.93,10.25,13.93,10.67,13.02z"/><path d="M20.75,16c0-0.22-0.03-0.42-0.06-0.63l1.14-1.01l-1-1.73l-1.45,0.49c-0.32-0.27-0.68-0.48-1.08-0.63L18,11h-2l-0.3,1.49 c-0.4,0.15-0.76,0.36-1.08,0.63l-1.45-0.49l-1,1.73l1.14,1.01c-0.03,0.21-0.06,0.41-0.06,0.63s0.03,0.42,0.06,0.63l-1.14,1.01 l1,1.73l1.45-0.49c0.32,0.27,0.68,0.48,1.08,0.63L16,21h2l0.3-1.49c0.4-0.15,0.76-0.36,1.08-0.63l1.45,0.49l1-1.73l-1.14-1.01 C20.72,16.42,20.75,16.22,20.75,16z M17,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,18,17,18z"/></g></g></svg>
+												{% trans %}Configuration{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<div class="horizontal-megamenu clearfix">
+													<div class="container">
+														<div class="mega-menubg border-primary">
+															<div class="row">
+																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
+																	<ul>
+																		<li><h3 class="fs-14 font-weight-bold"><i class="fa fa-navicon me-2"></i>{% trans %}Armoires{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_armoire') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter une armoire{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_armoire') }}"><i class="fa fa-list me-2"></i>{% trans %}Afficher les des armoires{% endtrans %}</a></li>
 											
-										<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><g><circle cx="10" cy="8" r="4"/><path d="M10.67,13.02C10.45,13.01,10.23,13,10,13c-2.42,0-4.68,0.67-6.61,1.82C2.51,15.34,2,16.32,2,17.35V20h9.26 C10.47,18.87,10,17.49,10,16C10,14.93,10.25,13.93,10.67,13.02z"/><path d="M20.75,16c0-0.22-0.03-0.42-0.06-0.63l1.14-1.01l-1-1.73l-1.45,0.49c-0.32-0.27-0.68-0.48-1.08-0.63L18,11h-2l-0.3,1.49 c-0.4,0.15-0.76,0.36-1.08,0.63l-1.45-0.49l-1,1.73l1.14,1.01c-0.03,0.21-0.06,0.41-0.06,0.63s0.03,0.42,0.06,0.63l-1.14,1.01 l1,1.73l1.45-0.49c0.32,0.27,0.68,0.48,1.08,0.63L16,21h2l0.3-1.49c0.4-0.15,0.76-0.36,1.08-0.63l1.45,0.49l1-1.73l-1.14-1.01 C20.72,16.42,20.75,16.22,20.75,16z M17,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,18,17,18z"/></g></g></svg>
-										{% trans %}Configuration{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<div class="horizontal-megamenu clearfix">
-											<div class="container">
-												<div class="mega-menubg border-primary">
-													<div class="row">
-														<div class="col-lg-3 col-md-12 col-xs-12 link-list">
-															<ul>
-																<li><h3 class="fs-14 font-weight-bold"><i class="fa fa-navicon me-2"></i>{% trans %}Armoires{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter une armoire{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Afficher les des armoires{% endtrans %}</a></li>
-									
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-users me-2"></i>{% trans %}Auteurs{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un auteur{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des auteurs{% endtrans %}</a></li>
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-users me-2"></i>{% trans %}Auteurs{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un auteur{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des auteurs{% endtrans %}</a></li>
 
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fe fe-book me-2"></i>{% trans %}Editeurs{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un éditeur{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des editeurs{% endtrans %}</a></li>
-											
-															</ul>
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fe fe-book me-2"></i>{% trans %}Editeurs{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un éditeur{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des editeurs{% endtrans %}</a></li>
+													
+																	</ul>
+																</div>
+																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
+																	<ul>
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-money me-2"></i>{% trans %}Mode de paiement{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un mode de paiement{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des modes de paiement{% endtrans %}</a></li>
+													
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-truck me-2"></i>{% trans %}Fournissuers{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un fournissuer{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des fournissuers{% endtrans %}</a></li>
+
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-leanpub me-2"></i>{% trans %}Genre littéraire{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un genre littéraire{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des genres littéraires{% endtrans %}</a></li>
+													
+																	</ul>
+																</div>
+
+																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
+																	<ul>
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-book me-2"></i>{% trans %}Livres{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un livre{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des livres{% endtrans %}</a></li>
+
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check me-2"></i>{% trans %}Statut emprunt{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut emprunt{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts emprunt{% endtrans %}</a></li>
+																		
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle me-2"></i>{% trans %}Etat exemplaire{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état exemplaire{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états exemplaire{% endtrans %}</a></li>
+													
+																	</ul>
+																</div>
+
+																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
+																	<ul>
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle-o me-2"></i>{% trans %}Statut livre{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut livre{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts livres{% endtrans %}</a></li>
+
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-square me-2"></i>{% trans %}Etat paiement{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état paiement{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états paiements{% endtrans %}</a></li>
+																		
+																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-square-o me-2"></i>{% trans %}Etat réservation{% endtrans %}</h3></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état réservation{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états réservation{% endtrans %}</a></li>
+													
+																	</ul>
+																</div>
+
+															</div>
 														</div>
-														<div class="col-lg-3 col-md-12 col-xs-12 link-list">
-															<ul>
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-money me-2"></i>{% trans %}Mode de paiement{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un mode de paiement{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des modes de paiement{% endtrans %}</a></li>
-											
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-truck me-2"></i>{% trans %}Fournissuers{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un fournissuer{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des fournissuers{% endtrans %}</a></li>
-
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-leanpub me-2"></i>{% trans %}Genre littéraire{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un genre littéraire{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des genres littéraires{% endtrans %}</a></li>
-											
-															</ul>
-														</div>
-
-														<div class="col-lg-3 col-md-12 col-xs-12 link-list">
-															<ul>
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-book me-2"></i>{% trans %}Livres{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un livre{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des livres{% endtrans %}</a></li>
-
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check me-2"></i>{% trans %}Statut emprunt{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut emprunt{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts emprunt{% endtrans %}</a></li>
-																
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle me-2"></i>{% trans %}Etat exemplaire{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état exemplaire{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états exemplaire{% endtrans %}</a></li>
-											
-															</ul>
-														</div>
-
-														<div class="col-lg-3 col-md-12 col-xs-12 link-list">
-															<ul>
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle-o me-2"></i>{% trans %}Statut livre{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut livre{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts livres{% endtrans %}</a></li>
-
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-square me-2"></i>{% trans %}Etat paiement{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état paiement{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états paiements{% endtrans %}</a></li>
-																
-																<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-square-o me-2"></i>{% trans %}Etat réservation{% endtrans %}</h3></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état réservation{% endtrans %}</a></li>
-																<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états réservation{% endtrans %}</a></li>
-											
-															</ul>
-														</div>
-
 													</div>
 												</div>
-											</div>
-										</div>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
-											
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1zm0-14v4h2V5.08c3.39.49 6 3.39 6 6.92 0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.68.59-3.22 1.58-4.42L12 13l1.41-1.41-6.8-6.8v.02C4.42 6.45 3 9.05 3 12c0 4.97 4.02 9 9 9 4.97 0 9-4.03 9-9s-4.03-9-9-9h-1zm7 9c0-.55-.45-1-1-1s-1 .45-1 1 .45 1 1 1 1-.45 1-1zM6 12c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1z"/></svg>
-
-											{% trans %}Emprunt{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<ul class="sub-menu">
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un Emprunt{% endtrans %}</a></li>
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des Emprunts{% endtrans %}</a></li>
-											
-										</ul>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
-											
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1zm0-14v4h2V5.08c3.39.49 6 3.39 6 6.92 0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.68.59-3.22 1.58-4.42L12 13l1.41-1.41-6.8-6.8v.02C4.42 6.45 3 9.05 3 12c0 4.97 4.02 9 9 9 4.97 0 9-4.03 9-9s-4.03-9-9-9h-1zm7 9c0-.55-.45-1-1-1s-1 .45-1 1 .45 1 1 1 1-.45 1-1zM6 12c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1z"/></svg>
-
-											{% trans %}Réservations{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<ul class="sub-menu">
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter une réservation{% endtrans %}</a></li>
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des réservation{% endtrans %}</a></li>
-											
-										</ul>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 11h8V3H3zm2-6h4v4H5zM3 21h8v-8H3zm2-6h4v4H5zm8-12v8h8V3zm6 6h-4V5h4zm-5.99 4h2v2h-2zm2 2h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm2 2h2v2h-2zm-4 0h2v2h-2zm2-6h2v2h-2zm2 2h2v2h-2z"/></svg>
-											{% trans %}Exemplaire{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<ul class="sub-menu">
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un exemplaire{% endtrans %}</a>
-												
 											</li>
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des exemplaires{% endtrans %}</a>
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
+													
+													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1zm0-14v4h2V5.08c3.39.49 6 3.39 6 6.92 0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.68.59-3.22 1.58-4.42L12 13l1.41-1.41-6.8-6.8v.02C4.42 6.45 3 9.05 3 12c0 4.97 4.02 9 9 9 4.97 0 9-4.03 9-9s-4.03-9-9-9h-1zm7 9c0-.55-.45-1-1-1s-1 .45-1 1 .45 1 1 1 1-.45 1-1zM6 12c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1z"/></svg>
+
+													{% trans %}Emprunt{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<ul class="sub-menu">
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un Emprunt{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des Emprunts{% endtrans %}</a></li>
+													
+												</ul>
+											</li>
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
+													
+													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1zm0-14v4h2V5.08c3.39.49 6 3.39 6 6.92 0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.68.59-3.22 1.58-4.42L12 13l1.41-1.41-6.8-6.8v.02C4.42 6.45 3 9.05 3 12c0 4.97 4.02 9 9 9 4.97 0 9-4.03 9-9s-4.03-9-9-9h-1zm7 9c0-.55-.45-1-1-1s-1 .45-1 1 .45 1 1 1 1-.45 1-1zM6 12c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1z"/></svg>
+
+													{% trans %}Réservations{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<ul class="sub-menu">
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter une réservation{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des réservation{% endtrans %}</a></li>
+													
+												</ul>
+											</li>
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
+													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 11h8V3H3zm2-6h4v4H5zM3 21h8v-8H3zm2-6h4v4H5zm8-12v8h8V3zm6 6h-4V5h4zm-5.99 4h2v2h-2zm2 2h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm2 2h2v2h-2zm-4 0h2v2h-2zm2-6h2v2h-2zm2 2h2v2h-2z"/></svg>
+													{% trans %}Exemplaire{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<ul class="sub-menu">
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un exemplaire{% endtrans %}</a>
+														
+													</li>
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des exemplaires{% endtrans %}</a>
+														
+												</ul>
+											</li>
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
+													
+													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/><path d="M17,2H7C5.9,2,5,2.9,5,4v2c0,1.1,0.9,2,2,2h10c1.1,0,2-0.9,2-2V4C19,2.9,18.1,2,17,2z M17,6H7V4h10V6z M20,22H4 c-1.1,0-2-0.9-2-2v-1h20v1C22,21.1,21.1,22,20,22z M18.53,10.19C18.21,9.47,17.49,9,16.7,9H7.3c-0.79,0-1.51,0.47-1.83,1.19L2,18 h20L18.53,10.19z M9.5,16h-1C8.22,16,8,15.78,8,15.5C8,15.22,8.22,15,8.5,15h1c0.28,0,0.5,0.22,0.5,0.5C10,15.78,9.78,16,9.5,16z M9.5,14h-1C8.22,14,8,13.78,8,13.5C8,13.22,8.22,13,8.5,13h1c0.28,0,0.5,0.22,0.5,0.5C10,13.78,9.78,14,9.5,14z M9.5,12h-1 C8.22,12,8,11.78,8,11.5C8,11.22,8.22,11,8.5,11h1c0.28,0,0.5,0.22,0.5,0.5C10,11.78,9.78,12,9.5,12z M12.5,16h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C13,15.78,12.78,16,12.5,16z M12.5,14h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C13,13.78,12.78,14,12.5,14z M12.5,12h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C13,11.78,12.78,12,12.5,12z M15.5,16h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C16,15.78,15.78,16,15.5,16z M15.5,14h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C16,13.78,15.78,14,15.5,14z M15.5,12h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C16,11.78,15.78,12,15.5,12z"/></g></svg> 	
+													{% trans %}Pénalités{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<ul class="sub-menu">
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter une pénalité{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des Pénalités{% endtrans %}</a></li>
+													
+												</ul>
+											</li>
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
 												
-										</ul>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
-											
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/><path d="M17,2H7C5.9,2,5,2.9,5,4v2c0,1.1,0.9,2,2,2h10c1.1,0,2-0.9,2-2V4C19,2.9,18.1,2,17,2z M17,6H7V4h10V6z M20,22H4 c-1.1,0-2-0.9-2-2v-1h20v1C22,21.1,21.1,22,20,22z M18.53,10.19C18.21,9.47,17.49,9,16.7,9H7.3c-0.79,0-1.51,0.47-1.83,1.19L2,18 h20L18.53,10.19z M9.5,16h-1C8.22,16,8,15.78,8,15.5C8,15.22,8.22,15,8.5,15h1c0.28,0,0.5,0.22,0.5,0.5C10,15.78,9.78,16,9.5,16z M9.5,14h-1C8.22,14,8,13.78,8,13.5C8,13.22,8.22,13,8.5,13h1c0.28,0,0.5,0.22,0.5,0.5C10,13.78,9.78,14,9.5,14z M9.5,12h-1 C8.22,12,8,11.78,8,11.5C8,11.22,8.22,11,8.5,11h1c0.28,0,0.5,0.22,0.5,0.5C10,11.78,9.78,12,9.5,12z M12.5,16h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C13,15.78,12.78,16,12.5,16z M12.5,14h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C13,13.78,12.78,14,12.5,14z M12.5,12h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C13,11.78,12.78,12,12.5,12z M15.5,16h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C16,15.78,15.78,16,15.5,16z M15.5,14h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C16,13.78,15.78,14,15.5,14z M15.5,12h-1 c-0.28,0-0.5-0.22-0.5-0.5c0-0.28,0.22-0.5,0.5-0.5h1c0.28,0,0.5,0.22,0.5,0.5C16,11.78,15.78,12,15.5,12z"/></g></svg> 	
-											{% trans %}Pénalités{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<ul class="sub-menu">
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter une pénalité{% endtrans %}</a></li>
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des Pénalités{% endtrans %}</a></li>
-											
-										</ul>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
+													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+													{% trans %}Personnel{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<ul class="sub-menu">
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un personnel{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste du personnel{% endtrans %}</a></li>
+													
+												</ul>
+											</li>
+											<li aria-haspopup="true">
+												<a href="javascript:void(0);" class="sub-icon">
+												
+													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+													{% trans %}Membres{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+												</a>
+												<ul class="sub-menu">
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un membre{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des membres{% endtrans %}</a></li>
+													
+												</ul>
+											</li>
+										{% endif %}
 										
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-											{% trans %}Personnel{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<ul class="sub-menu">
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un personnel{% endtrans %}</a></li>
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste du personnel{% endtrans %}</a></li>
-											
-										</ul>
-									</li>
-									<li aria-haspopup="true">
-										<a href="javascript:void(0);" class="sub-icon">
-										
-											<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-											{% trans %}Membres{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
-										</a>
-										<ul class="sub-menu">
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un membre{% endtrans %}</a></li>
-											<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des membres{% endtrans %}</a></li>
-											
-										</ul>
-									</li>
-									
-									
-									
-								</ul>
-							</nav>
-							<!--Nav-->
+									</ul>
+								</nav>
+								<!--Nav-->
+							</div>
 						</div>
 					</div>
-				</div>
-				<!--/Horizontal-main -->
-     {% endif %}
+					<!--/Horizontal-main -->
+     			{% endif %}
 				<!-- App-Content -->
 				<div class="hor-content main-content">
 					<div class="container">
-        {% block body %}{% endblock %}
+        			{% block body %}{% endblock %}
+
+					
+						
         		<!--Footer-->
 				<div class="footer br-bl-7 br-br-7 border-top-0 p-0" style="background-image: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 51%, rgba(0,212,255,1) 80%);">
 					<div class="container">
@@ -607,104 +676,252 @@
 		<a href="#top" id="back-to-top"><i class="fe fe-chevron-up"></i></a>
 
 		<!-- Jquery js-->
-		<script src="{{ asset('assets/js/jquery.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/jquery.min.js')}}"></script>
 
 		<!-- Bootstrap5 js-->
-		<script src="{{ asset('assets/plugins/bootstrap/popper.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/bootstrap/popper.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 
 		<!--Othercharts js-->
-		<script src="{{ asset('assets/plugins/othercharts/jquery.sparkline.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/othercharts/jquery.sparkline.min.js')}}"></script>
 
 		<!-- Circle-progress js-->
-		<script src="{{ asset('assets/js/circle-progress.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/circle-progress.min.js')}}"></script>
 
 		<!-- Jquery-rating js-->
-		<script src="{{ asset('assets/plugins/rating/jquery.rating-stars.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/rating/jquery.rating-stars.js')}}"></script>
 
 		<!--Horizontal-menu js-->
-		<script src="{{ asset('assets/plugins/horizontal-menu/horizontal-menu.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/horizontal-menu/horizontal-menu.js')}}"></script>
 
 		<!-- Sticky js-->
-		<script src="{{ asset('assets/js/stiky.js')}}"></script>
+		<script src="{{ asset ('assets/js/stiky.js')}}"></script>
 
 		<!-- P-scroll js-->
-		<script src="{{ asset('assets/plugins/p-scrollbar/p-scrollbar.js')}}"></script>
-		<script src="{{ asset('assets/plugins/p-scrollbar/p-scroll.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/p-scrollbar/p-scrollbar.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/p-scrollbar/p-scroll.js')}}"></script>
 
 		<!--INTERNAL Flot Charts js-->
-		<script src="{{ asset('assets/plugins/flot/jquery.flot.js')}}"></script>
-		<script src="{{ asset('assets/plugins/flot/jquery.flot.fillbetween.js')}}"></script>
-		<script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js')}}"></script>
-		<script src="{{ asset('assets/js/dashboard.sampledata.js')}}"></script>
-		<script src="{{ asset('assets/js/chart.flot.sampledata.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/flot/jquery.flot.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/flot/jquery.flot.fillbetween.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/flot/jquery.flot.pie.js')}}"></script>
+		<script src="{{ asset ('assets/js/dashboard.sampledata.js')}}"></script>
+		<script src="{{ asset ('assets/js/chart.flot.sampledata.js')}}"></script>
 
 		<!-- INTERNAL Chart js -->
-		<script src="{{ asset('assets/plugins/chart/chart.bundle.js')}}"></script>
-		<script src="{{ asset('assets/plugins/chart/utils.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/chart/chart.bundle.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/chart/utils.js')}}"></script>
 
 		<!-- INTERNAL Apexchart js -->
-		<script src="{{ asset('assets/js/apexcharts.js')}}"></script>
+		<script src="{{ asset ('assets/js/apexcharts.js')}}"></script>
 
 		<!--INTERNAL Moment js-->
-		<script src="{{ asset('assets/plugins/moment/moment.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/moment/moment.js')}}"></script>
 
 		<!--INTERNAL Index js-->
-		<script src="{{ asset('assets/js/index1.js')}}"></script>
+		<script src="{{ asset ('assets/js/index1.js')}}"></script>
 
 		<!-- INTERNAL Data tables -->
-		<script src="{{ asset('assets/plugins/datatables/DataTables/js/jquery.dataTables.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/DataTables/js/dataTables.bootstrap5.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Responsive/js/responsive.bootstrap5.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/DataTables/js/jquery.dataTables.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/DataTables/js/dataTables.bootstrap5.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/responsive.bootstrap5.min.js')}}"></script>
 
 		<!-- INTERNAL Select2 js -->
-		<script src="{{ asset('assets/plugins/select2/select2.full.min.js')}}"></script>
-		<script src="{{ asset('assets/js/select2.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/select2/select2.full.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/select2.js')}}"></script>
 
 		<!-- Simplebar JS -->
-		<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/simplebar/js/simplebar.min.js')}}"></script>
 
 		<!-- Rounded bar chart js-->
-		<script src="{{ asset('assets/js/rounded-barchart.js')}}"></script>
+		<script src="{{ asset ('assets/js/rounded-barchart.js')}}"></script>
 
 		<!-- Custom js-->
-		<script src="{{ asset('assets/js/custom.js')}}"></script>
+		<script src="{{ asset ('assets/js/custom.js')}}"></script>
 
 		<!-- Switcher js -->
-		<script src="{{ asset('assets/switcher/js/switcher.js')}}"></script>
+		<script src="{{ asset ('assets/switcher/js/switcher.js')}}"></script>
 
 		<!--Form Validations js-->
-		<script src="{{ asset('assets/js/form-vallidations.js')}}"></script>
+		<script src="{{ asset ('assets/js/form-vallidations.js')}}"></script>
 		<!-- INTERNAL Data tables -->
-		<script src="{{ asset('build./assets/plugins/datatables/DataTables/js/jquery.dataTables.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/DataTables/js/dataTables.bootstrap5.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Buttons/js/dataTables.buttons.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Buttons/js/buttons.bootstrap4.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/JSZip/jszip.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/pdfmake/pdfmake.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/pdfmake/vfs_fonts.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Buttons/js/buttons.html5.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Buttons/js/buttons.print.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Buttons/js/buttons.colVis.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
-		<script src="{{ asset('assets/plugins/datatables/Responsive/js/responsive.bootstrap5.min.js')}}"></script>
-		<script src="{{ asset('assets/js/datatables.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/DataTables/js/jquery.dataTables.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/DataTables/js/dataTables.bootstrap5.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/dataTables.buttons.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.bootstrap4.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/JSZip/jszip.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/pdfmake/pdfmake.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/pdfmake/vfs_fonts.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.html5.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.print.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.colVis.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/responsive.bootstrap5.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/datatables.js')}}"></script>
 
 
 		<!--INTERNAL Form Advanced Element -->
-		<script src="{{ asset('assets/js/formelementadvnced.js')}}"></script>
-		<script src="{{ asset('assets/js/form-elements.js')}}"></script>
-		<script src="{{ asset('assets/js/file-upload.js')}}"></script>
+		<script src="{{ asset ('assets/js/formelementadvnced.js')}}"></script>
+		<script src="{{ asset ('assets/js/form-elements.js')}}"></script>
+		<script src="{{ asset ('assets/js/file-upload.js')}}"></script>
 		<!-- INTERNAL File-Uploads Js-->
-		<script src="{{ asset('assets/plugins/fancyuploder/jquery.ui.widget.js')}}"></script>
-        <script src="{{ asset('assets/plugins/fancyuploder/jquery.fileupload.js')}}"></script>
-        <script src="{{ asset('assets/plugins/fancyuploder/jquery.iframe-transport.js')}}"></script>
-        <script src="{{ asset('assets/plugins/fancyuploder/jquery.fancy-fileupload.js')}}"></script>
-        <script src="{{ asset('assets/plugins/fancyuploder/fancy-uploader.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/fancyuploder/jquery.ui.widget.js')}}"></script>
+        <script src="{{ asset ('assets/plugins/fancyuploder/jquery.fileupload.js')}}"></script>
+        <script src="{{ asset ('assets/plugins/fancyuploder/jquery.iframe-transport.js')}}"></script>
+        <script src="{{ asset ('assets/plugins/fancyuploder/jquery.fancy-fileupload.js')}}"></script>
+        <script src="{{ asset ('assets/plugins/fancyuploder/fancy-uploader.js')}}"></script>
 
 		<!-- INTERNAL File uploads js -->
-        <script src="{{ asset('assets/plugins/fileupload/js/dropify.js')}}"></script>
-		<script src="{{ asset('assets/js/filupload.js')}}"></script>
+        <script src="{{ asset ('assets/plugins/fileupload/js/dropify.js')}}"></script>
+		<script src="{{ asset ('assets/js/filupload.js')}}"></script>
+
+		<!-- Jquery-steps js -->
+		<script src="{{ asset ('assets/plugins/jquery-steps/jquery.steps.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/checkout-jquery-steps.js')}}"></script>
+
+		<!-- INTERNAL popover js -->
+        <script src="{{ asset ('assets/js/popover.js')}}"></script>
+
+		<!-- INTERNAL Sweet alert js -->
+		<script src="{{ asset ('assets/plugins/sweet-alert/jquery.sweet-modal.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/sweet-alert.js')}}"></script>
+
+		{% set mySession = app.session %}
+
+		{% if mySession.get('ajout') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset ('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			
+			{% if mySession.get('ajout') == 1 %}
+				{% set notificationSuccess = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationSuccess = message %}
+				{% endfor %}
+
+				<script>
+
+					{# swal('Success !', '{{ notificationSuccess }}', 'success'); #}
+					window.onload = () => {
+						notif({
+						msg: "<b>   {{ notificationSuccess }}</b>",
+						type: "success",
+						position: "right",
+						width: 500,
+						height: 60,
+						autohide: true
+						});
+						}
+				</script>
+			{% endif %}
+		{% endif %}
+
+		{% if mySession.get('miseAjour') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset ('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			
+			{% if mySession.get('miseAjour') == 1 %}
+				{% set notificationSuccess = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationSuccess = message %}
+				{% endfor %}
+
+				<script>
+
+					{# swal('Success !', '{{ notificationSuccess }}', 'success'); #}
+					window.onload = () => {
+						notif({
+						msg: "<b>   {{ notificationSuccess }}</b>",
+						type: "info",
+						position: "left",
+						width: 500,
+						height: 60,
+						autohide: true
+						});
+						}
+				</script>
+			{% endif %}
+		{% endif %}
+
+		{% if mySession.get('suppression') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset ('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			{% if mySession.get('suppression') == 1 %}
+				{% set notificationSuppression = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationSuppression = message %}
+				{% endfor %}
+
+				<script>
+					{# swal({
+						title: "{% trans %}Suppression{% endtrans %}",
+						text: "{{ notificationSuccess }}",
+						type: "error",
+						showCancelButton: false,
+						confirmButtonText: 'OK',
+						cancelButtonText: 'Stay on the page'
+					}); #}
+
+					notif({
+						msg: "<b>{{ notificationSuppression }}</b>",
+						type: "error",
+						position: "center"
+					});
+				</script>
+			{% endif %}
+		{% endif %}
+		
+		{% if mySession.get('resetPwd') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset ('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			{% if mySession.get('resetPwd') == 1 %}
+				{% set notificationResetPwd = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationResetPwd = message %}
+				{% endfor %}
+
+				<script>
+					window.onload = () => {
+						notif({
+							type: "success",
+							msg: "<b>{{ notificationResetPwd }}</b> Click on me !",
+							position: "center",
+							width: 500,
+							height: 60,
+							autohide: false
+						});
+					}
+				</script>
+			{% endif %}
+		{% endif %}
     </body>
 </html>

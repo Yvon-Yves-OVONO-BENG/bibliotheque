@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ArmoireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArmoireRepository::class)]
@@ -23,6 +24,30 @@ class Armoire
 
     #[ORM\OneToMany(mappedBy: 'armoire', targetEntity: Livre::class)]
     private Collection $livres;
+
+    #[ORM\Column]
+    private ?bool $supprime = null;
+
+    #[ORM\ManyToOne(inversedBy: 'armoires')]
+    private ?User $enregistrePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $enregistreLeAt = null;
+
+    #[ORM\ManyToOne]
+    private ?User $modifiePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $modifieLeAt = null;
+
+    #[ORM\ManyToOne]
+    private ?user $supprimePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $supprimeLeAt = null;
+
+    #[ORM\Column]
+    private ?int $nombreEtagere = null;
 
     public function __construct()
     {
@@ -84,6 +109,102 @@ class Armoire
                 $livre->setArmoire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isSupprime(): ?bool
+    {
+        return $this->supprime;
+    }
+
+    public function setSupprime(bool $supprime): self
+    {
+        $this->supprime = $supprime;
+
+        return $this;
+    }
+
+    public function getEnregistrePar(): ?User
+    {
+        return $this->enregistrePar;
+    }
+
+    public function setEnregistrePar(?User $enregistrePar): self
+    {
+        $this->enregistrePar = $enregistrePar;
+
+        return $this;
+    }
+
+    public function getEnregistreLeAt(): ?\DateTimeInterface
+    {
+        return $this->enregistreLeAt;
+    }
+
+    public function setEnregistreLeAt(\DateTimeInterface $enregistreLeAt): self
+    {
+        $this->enregistreLeAt = $enregistreLeAt;
+
+        return $this;
+    }
+
+    public function getModifiePar(): ?User
+    {
+        return $this->modifiePar;
+    }
+
+    public function setModifiePar(?User $modifiePar): self
+    {
+        $this->modifiePar = $modifiePar;
+
+        return $this;
+    }
+
+    public function getModifieLeAt(): ?\DateTimeInterface
+    {
+        return $this->modifieLeAt;
+    }
+
+    public function setModifieLeAt(?\DateTimeInterface $modifieLeAt): self
+    {
+        $this->modifieLeAt = $modifieLeAt;
+
+        return $this;
+    }
+
+    public function getSupprimePar(): ?user
+    {
+        return $this->supprimePar;
+    }
+
+    public function setSupprimePar(?user $supprimePar): self
+    {
+        $this->supprimePar = $supprimePar;
+
+        return $this;
+    }
+
+    public function getSupprimeLeAt(): ?\DateTimeInterface
+    {
+        return $this->supprimeLeAt;
+    }
+
+    public function setSupprimeLeAt(?\DateTimeInterface $supprimeLeAt): self
+    {
+        $this->supprimeLeAt = $supprimeLeAt;
+
+        return $this;
+    }
+
+    public function getNombreEtagere(): ?int
+    {
+        return $this->nombreEtagere;
+    }
+
+    public function setNombreEtagere(int $nombreEtagere): self
+    {
+        $this->nombreEtagere = $nombreEtagere;
 
         return $this;
     }

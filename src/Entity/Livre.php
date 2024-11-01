@@ -65,7 +65,7 @@ class Livre
     private Collection $reservations;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    private ?fournisseur $fournisseur = null;
+    private ?Fournisseur $fournisseur = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
     private ?Armoire $armoire = null;
@@ -229,27 +229,7 @@ class Livre
         return $this->etatExemplaires;
     }
 
-    public function addEtatExemplaire(EtatExemplaire $etatExemplaire): self
-    {
-        if (!$this->etatExemplaires->contains($etatExemplaire)) {
-            $this->etatExemplaires->add($etatExemplaire);
-            $etatExemplaire->setLivre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtatExemplaire(EtatExemplaire $etatExemplaire): self
-    {
-        if ($this->etatExemplaires->removeElement($etatExemplaire)) {
-            // set the owning side to null (unless already changed)
-            if ($etatExemplaire->getLivre() === $this) {
-                $etatExemplaire->setLivre(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, Exemplaire>
@@ -353,12 +333,12 @@ class Livre
         return $this;
     }
 
-    public function getFournisseur(): ?fournisseur
+    public function getFournisseur(): ?Fournisseur
     {
         return $this->fournisseur;
     }
 
-    public function setFournisseur(?fournisseur $fournisseur): self
+    public function setFournisseur(?Fournisseur $fournisseur): self
     {
         $this->fournisseur = $fournisseur;
 

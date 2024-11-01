@@ -31,7 +31,8 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setSlug(uniqid('', true))
-            ->setBloque(0);
+            ->setBloque(0)
+            ->setTemoin(0);
 
             $entityManager->persist($user);
             $entityManager->flush();
