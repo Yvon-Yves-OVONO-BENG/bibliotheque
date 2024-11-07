@@ -28,26 +28,26 @@ class Armoire
     #[ORM\Column]
     private ?bool $supprime = null;
 
-    #[ORM\ManyToOne(inversedBy: 'armoires')]
-    private ?User $enregistrePar = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $enregistreLeAt = null;
 
-    #[ORM\ManyToOne]
-    private ?User $modifiePar = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modifieLeAt = null;
-
-    #[ORM\ManyToOne]
-    private ?user $supprimePar = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $supprimeLeAt = null;
 
     #[ORM\Column]
     private ?int $nombreEtagere = null;
+
+    #[ORM\ManyToOne(inversedBy: 'enregistreArmoires')]
+    private ?User $enregistrePar = null;
+
+    #[ORM\ManyToOne(inversedBy: 'modifieArmoires')]
+    private ?User $modifiePar = null;
+
+    #[ORM\ManyToOne(inversedBy: 'supprimeArmoires')]
+    private ?User $supprimePar = null;
 
     public function __construct()
     {
@@ -125,18 +125,6 @@ class Armoire
         return $this;
     }
 
-    public function getEnregistrePar(): ?User
-    {
-        return $this->enregistrePar;
-    }
-
-    public function setEnregistrePar(?User $enregistrePar): self
-    {
-        $this->enregistrePar = $enregistrePar;
-
-        return $this;
-    }
-
     public function getEnregistreLeAt(): ?\DateTimeInterface
     {
         return $this->enregistreLeAt;
@@ -149,18 +137,6 @@ class Armoire
         return $this;
     }
 
-    public function getModifiePar(): ?User
-    {
-        return $this->modifiePar;
-    }
-
-    public function setModifiePar(?User $modifiePar): self
-    {
-        $this->modifiePar = $modifiePar;
-
-        return $this;
-    }
-
     public function getModifieLeAt(): ?\DateTimeInterface
     {
         return $this->modifieLeAt;
@@ -169,18 +145,6 @@ class Armoire
     public function setModifieLeAt(?\DateTimeInterface $modifieLeAt): self
     {
         $this->modifieLeAt = $modifieLeAt;
-
-        return $this;
-    }
-
-    public function getSupprimePar(): ?user
-    {
-        return $this->supprimePar;
-    }
-
-    public function setSupprimePar(?user $supprimePar): self
-    {
-        $this->supprimePar = $supprimePar;
 
         return $this;
     }
@@ -205,6 +169,42 @@ class Armoire
     public function setNombreEtagere(int $nombreEtagere): self
     {
         $this->nombreEtagere = $nombreEtagere;
+
+        return $this;
+    }
+
+    public function getEnregistrePar(): ?User
+    {
+        return $this->enregistrePar;
+    }
+
+    public function setEnregistrePar(?User $enregistrePar): self
+    {
+        $this->enregistrePar = $enregistrePar;
+
+        return $this;
+    }
+
+    public function getModifiePar(): ?User
+    {
+        return $this->modifiePar;
+    }
+
+    public function setModifiePar(?User $modifiePar): self
+    {
+        $this->modifiePar = $modifiePar;
+
+        return $this;
+    }
+
+    public function getSupprimePar(): ?User
+    {
+        return $this->supprimePar;
+    }
+
+    public function setSupprimePar(?User $supprimePar): self
+    {
+        $this->supprimePar = $supprimePar;
 
         return $this;
     }

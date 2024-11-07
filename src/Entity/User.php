@@ -43,9 +43,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Armoire::class)]
-    private Collection $armoires;
-
     #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Auteur::class)]
     private Collection $enregistreAuteurs;
 
@@ -67,15 +64,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Editeur::class)]
     private Collection $supprimeEditeurs;
 
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: ModePaiement::class)]
+    private Collection $enregistreModePaiements;
+
+    #[ORM\OneToMany(mappedBy: 'modifiePar', targetEntity: ModePaiement::class)]
+    private Collection $modifieModePaiements;
+
+    #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: ModePaiement::class)]
+    private Collection $supprimeModePaiements;
+
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Armoire::class)]
+    private Collection $enregistreArmoires;
+
+    #[ORM\OneToMany(mappedBy: 'modifiePar', targetEntity: Armoire::class)]
+    private Collection $modifieArmoires;
+
+    #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Armoire::class)]
+    private Collection $supprimeArmoires;
+
     public function __construct()
     {
-        $this->armoires = new ArrayCollection();
         $this->enregistreAuteurs = new ArrayCollection();
         $this->modifieAuteurs = new ArrayCollection();
         $this->supprimeAuteurs = new ArrayCollection();
         $this->enregistreEditeurs = new ArrayCollection();
         $this->modifieEditeurs = new ArrayCollection();
         $this->supprimeEditeurs = new ArrayCollection();
+        $this->enregistreModePaiements = new ArrayCollection();
+        $this->modifieModePaiements = new ArrayCollection();
+        $this->supprimeModePaiements = new ArrayCollection();
+        $this->enregistreArmoires = new ArrayCollection();
+        $this->modifieArmoires = new ArrayCollection();
+        $this->supprimeArmoires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,36 +212,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Armoire>
-     */
-    public function getArmoires(): Collection
-    {
-        return $this->armoires;
-    }
-
-    public function addArmoire(Armoire $armoire): self
-    {
-        if (!$this->armoires->contains($armoire)) {
-            $this->armoires->add($armoire);
-            $armoire->setEnregistrePar($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArmoire(Armoire $armoire): self
-    {
-        if ($this->armoires->removeElement($armoire)) {
-            // set the owning side to null (unless already changed)
-            if ($armoire->getEnregistrePar() === $this) {
-                $armoire->setEnregistrePar(null);
-            }
-        }
 
         return $this;
     }
@@ -412,6 +402,186 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($supprimeEditeur->getSupprimePar() === $this) {
                 $supprimeEditeur->setSupprimePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModePaiement>
+     */
+    public function getEnregistreModePaiements(): Collection
+    {
+        return $this->enregistreModePaiements;
+    }
+
+    public function addEnregistreModePaiement(ModePaiement $enregistreModePaiement): self
+    {
+        if (!$this->enregistreModePaiements->contains($enregistreModePaiement)) {
+            $this->enregistreModePaiements->add($enregistreModePaiement);
+            $enregistreModePaiement->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnregistreModePaiement(ModePaiement $enregistreModePaiement): self
+    {
+        if ($this->enregistreModePaiements->removeElement($enregistreModePaiement)) {
+            // set the owning side to null (unless already changed)
+            if ($enregistreModePaiement->getEnregistrePar() === $this) {
+                $enregistreModePaiement->setEnregistrePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModePaiement>
+     */
+    public function getModifieModePaiements(): Collection
+    {
+        return $this->modifieModePaiements;
+    }
+
+    public function addModifieModePaiement(ModePaiement $modifieModePaiement): self
+    {
+        if (!$this->modifieModePaiements->contains($modifieModePaiement)) {
+            $this->modifieModePaiements->add($modifieModePaiement);
+            $modifieModePaiement->setModifiePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModifieModePaiement(ModePaiement $modifieModePaiement): self
+    {
+        if ($this->modifieModePaiements->removeElement($modifieModePaiement)) {
+            // set the owning side to null (unless already changed)
+            if ($modifieModePaiement->getModifiePar() === $this) {
+                $modifieModePaiement->setModifiePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModePaiement>
+     */
+    public function getSupprimeModePaiements(): Collection
+    {
+        return $this->supprimeModePaiements;
+    }
+
+    public function addSupprimeModePaiement(ModePaiement $supprimeModePaiement): self
+    {
+        if (!$this->supprimeModePaiements->contains($supprimeModePaiement)) {
+            $this->supprimeModePaiements->add($supprimeModePaiement);
+            $supprimeModePaiement->setSupprimePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupprimeModePaiement(ModePaiement $supprimeModePaiement): self
+    {
+        if ($this->supprimeModePaiements->removeElement($supprimeModePaiement)) {
+            // set the owning side to null (unless already changed)
+            if ($supprimeModePaiement->getSupprimePar() === $this) {
+                $supprimeModePaiement->setSupprimePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Armoire>
+     */
+    public function getEnregistreArmoires(): Collection
+    {
+        return $this->enregistreArmoires;
+    }
+
+    public function addEnregistreArmoire(Armoire $enregistreArmoire): self
+    {
+        if (!$this->enregistreArmoires->contains($enregistreArmoire)) {
+            $this->enregistreArmoires->add($enregistreArmoire);
+            $enregistreArmoire->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnregistreArmoire(Armoire $enregistreArmoire): self
+    {
+        if ($this->enregistreArmoires->removeElement($enregistreArmoire)) {
+            // set the owning side to null (unless already changed)
+            if ($enregistreArmoire->getEnregistrePar() === $this) {
+                $enregistreArmoire->setEnregistrePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Armoire>
+     */
+    public function getModifieArmoires(): Collection
+    {
+        return $this->modifieArmoires;
+    }
+
+    public function addModifieArmoire(Armoire $modifieArmoire): self
+    {
+        if (!$this->modifieArmoires->contains($modifieArmoire)) {
+            $this->modifieArmoires->add($modifieArmoire);
+            $modifieArmoire->setModifiePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModifieArmoire(Armoire $modifieArmoire): self
+    {
+        if ($this->modifieArmoires->removeElement($modifieArmoire)) {
+            // set the owning side to null (unless already changed)
+            if ($modifieArmoire->getModifiePar() === $this) {
+                $modifieArmoire->setModifiePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Armoire>
+     */
+    public function getSupprimeArmoires(): Collection
+    {
+        return $this->supprimeArmoires;
+    }
+
+    public function addSupprimeArmoire(Armoire $supprimeArmoire): self
+    {
+        if (!$this->supprimeArmoires->contains($supprimeArmoire)) {
+            $this->supprimeArmoires->add($supprimeArmoire);
+            $supprimeArmoire->setSupprimePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupprimeArmoire(Armoire $supprimeArmoire): self
+    {
+        if ($this->supprimeArmoires->removeElement($supprimeArmoire)) {
+            // set the owning side to null (unless already changed)
+            if ($supprimeArmoire->getSupprimePar() === $this) {
+                $supprimeArmoire->setSupprimePar(null);
             }
         }
 

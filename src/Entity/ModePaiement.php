@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ModePaiementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ModePaiementRepository::class)]
@@ -29,6 +30,27 @@ class ModePaiement
 
     #[ORM\OneToMany(mappedBy: 'modePaiement', targetEntity: Reservation::class)]
     private Collection $reservations;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'enregistreModePaiements')]
+    private ?User $enregistrePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $enregistreLeAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'modifieModePaiements')]
+    private ?User $modifiePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $modifieLeAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'supprimeModePaiements')]
+    private ?User $supprimePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $supprimeLeAt = null;
 
     public function __construct()
     {
@@ -152,6 +174,90 @@ class ModePaiement
                 $reservation->setModePaiement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getEnregistrePar(): ?User
+    {
+        return $this->enregistrePar;
+    }
+
+    public function setEnregistrePar(?User $enregistrePar): self
+    {
+        $this->enregistrePar = $enregistrePar;
+
+        return $this;
+    }
+
+    public function getEnregistreLeAt(): ?\DateTimeInterface
+    {
+        return $this->enregistreLeAt;
+    }
+
+    public function setEnregistreLeAt(\DateTimeInterface $enregistreLeAt): self
+    {
+        $this->enregistreLeAt = $enregistreLeAt;
+
+        return $this;
+    }
+
+    public function getModifiePar(): ?User
+    {
+        return $this->modifiePar;
+    }
+
+    public function setModifiePar(?User $modifiePar): self
+    {
+        $this->modifiePar = $modifiePar;
+
+        return $this;
+    }
+
+    public function getModifieLeAt(): ?\DateTimeInterface
+    {
+        return $this->modifieLeAt;
+    }
+
+    public function setModifieLeAt(?\DateTimeInterface $modifieLeAt): self
+    {
+        $this->modifieLeAt = $modifieLeAt;
+
+        return $this;
+    }
+
+    public function getSupprimePar(): ?User
+    {
+        return $this->supprimePar;
+    }
+
+    public function setSupprimePar(?User $supprimePar): self
+    {
+        $this->supprimePar = $supprimePar;
+
+        return $this;
+    }
+
+    public function getSupprimeLeAt(): ?\DateTimeInterface
+    {
+        return $this->supprimeLeAt;
+    }
+
+    public function setSupprimeLeAt(?\DateTimeInterface $supprimeLeAt): self
+    {
+        $this->supprimeLeAt = $supprimeLeAt;
 
         return $this;
     }
