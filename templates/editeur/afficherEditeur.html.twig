@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Profil de {% endtrans %} {{ auteur.nom }}{% endblock %}
+{% block title %}{% trans %}Profil de {% endtrans %} {{ editeur.nom }}{% endblock %}
 {% block stylesheets %}
 	<style>
 		th,
@@ -26,15 +26,15 @@
         <!--Page header-->
 						<div class="page-header">
 							<div class="page-leftheader">
-								<h4 class="page-title mb-0 text-primary"><i class="fa fa-user me-2"></i>{% trans %}Profil de{% endtrans %} {{ auteur.nom }}</h4>
+								<h4 class="page-title mb-0 text-primary"><i class="fa fa-user me-2"></i>{% trans %}Profil de{% endtrans %} {{ editeur.nom }}</h4>
 							</div>
 							<div class="page-rightheader">
 								<div class="btn-list">
-									<a href="{{ path ('ajout_auteur') }}" class="btn btn-outline-primary"><i class="fe fe-user-plus me-2"></i>
-										{% trans %}Ajouter un auteur{% endtrans %}
+									<a href="{{ path ('ajout_editeur') }}" class="btn btn-outline-primary"><i class="fe fe-user-plus me-2"></i>
+										{% trans %}Ajouter un editeur{% endtrans %}
                                     </a>
-									<a href="{{ path ('liste_auteur') }}"  class="btn btn-outline-primary btn-pill" >
-										<i class="fa fa-users me-2 fs-14"></i>{% trans %}Liste des auteurs{% endtrans %}
+									<a href="{{ path ('liste_editeur') }}"  class="btn btn-outline-primary btn-pill" >
+										<i class="fa fa-users me-2 fs-14"></i>{% trans %}Liste des editeurs{% endtrans %}
                                     </a>
 									
 								</div>
@@ -50,11 +50,11 @@
                                         <img alt="User Avatar" class="rounded-circle" src="{{ asset ('assets/images/users/2.jpg') }}"></div>
 									<div class="card-body text-center">
 										<div class="pro-user">
-											<h4 class="pro-user-username mb-1 font-weight-bold">{{ auteur.nom }}</h4>
-											<h6 class="pro-user-desc text-muted">{{ auteur.typeAuteur.typeAuteur }}</h6>
+											<h4 class="pro-user-username mb-1 font-weight-bold">{{ editeur.nom }}</h4>
+											<h6 class="pro-user-desc text-muted">{{ editeur.typeAuteur.typeAuteur }}</h6>
 											
 											<a href="javascript:void(0);" class="btn btn-success mt-3"><i class="fa fa-print me-2"></i>{% trans %}Imprimer{% endtrans %}</a>
-											<a href="{{ path ('modifier_auteur', {'slug': auteur.slug}) }}" class="btn btn-primary mt-3"><i class="fa fa-pencil me-2"></i>{% trans %}Modifier{% endtrans %}</a>
+											<a href="{{ path ('modifier_editeur', {'slug': editeur.slug}) }}" class="btn btn-primary mt-3"><i class="fa fa-pencil me-2"></i>{% trans %}Modifier{% endtrans %}</a>
 										</div>
 									</div>
 								</div>
@@ -70,37 +70,37 @@
 														<td class="">
 															<span class="font-weight-semibold w-50">{% trans %}Date Naissance{% endtrans %} </span>
 														</td>
-														<td class="">{{ auteur.dateNaissanceAt|date('d-M-Y') }}</td>
+														<td class="">{{ editeur.dateNaissanceAt|date('d-M-Y') }}</td>
 													</tr>
 													<tr>
 														<td class="">
 															<span class="font-weight-semibold w-50">{% trans %}Genre{% endtrans %} </span>
 														</td>
-														<td class="">{{ auteur.sexe.sexe }}</td>
+														<td class="">{{ editeur.sexe.sexe }}</td>
 													</tr>
 													<tr>
 														<td class="">
 															<span class="font-weight-semibold w-50">{% trans %}Nationalité{% endtrans %} </span>
 														</td>
-														<td class="">{{ auteur.nationalite.nationalite }}</td>
+														<td class="">{{ editeur.nationalite.nationalite }}</td>
 													</tr>
 													<tr>
 														<td class="">
 															<span class="font-weight-semibold w-50">{% trans %}Nombre de livres{% endtrans %} </span>
 														</td>
-														<td class="">{{ auteur.livres|length|number_format }} </td>
+														<td class="">{{ editeur.livres|length|number_format }} </td>
 													</tr>
 													<tr>
 														<td class="">
 															<span class="font-weight-semibold w-50">Email </span>
 														</td>
-														<td class="">{{ auteur.email }}</td>
+														<td class="">{{ editeur.email }}</td>
 													</tr>
 													<tr>
 														<td class="">
 															<span class="font-weight-semibold w-50">{% trans %}Contact(s){% endtrans %} </span>
 														</td>
-														<td class="">{{ auteur.telephone }}</td>
+														<td class="">{{ editeur.telephone }}</td>
 													</tr>
 												</tbody>
 											</table>
@@ -116,7 +116,7 @@
 									<div class="main-profile-body">
 										<div class="card-body">
 											<div class="main-profile-bio mb-5">
-												<p>{{ auteur.biographie }}</p>
+												<p>{{ editeur.biographie }}</p>
 											</div>
 											
 										</div>
@@ -125,7 +125,7 @@
                                 <div class="tab-pane" id="tab-8">
                                     <div class="card p-5">
                                         <div class="row">
-                                            {% for livre in auteur.livres %}
+                                            {% for livre in editeur.livres %}
                                                 <div class="col-lg-6">
                                                     <div class="d-flex align-items-center border p-3 mb-3 br-7">
                                                         <div class="avatar avatar-lg brround d-block cover-image" data-image-src="../../assets/images/users/7.jpg" >

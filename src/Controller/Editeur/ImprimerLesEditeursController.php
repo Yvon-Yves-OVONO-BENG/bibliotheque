@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Auteur;
+namespace App\Controller\Editeur;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,13 +14,14 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-#[Route('/auteur')]
-class ImprimerUnAuteurController extends AbstractController
+#[Route('/editeur')]
+class ImprimerLesEditeursController extends AbstractController
 {
-    #[Route('/imprimer-un-auteur', name: 'imprimer_un_auteur')]
-    public function imprimerUnAuteur(): Response
+    #[Route('/imprimer-les-editeurs', name: 'imprimer_les_editeurs')]
+    public function imprimerLesEditeurs(): Response
     {
-        return $this->render('auteur/index.html.twig', [
+        return $this->render('editeurs/index.html.twig', [
+            
         ]);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller\Armoire;
+namespace App\Controller\Editeur;
 
-use App\Entity\Armoire;
-use App\Form\AjoutArmoireType;
-use App\Repository\ArmoireRepository;
+use App\Entity\Editeur;
+use App\Form\AjoutEditeurType;
+use App\Repository\EditeurRepository;
 use App\Repository\UserRepository;
 use App\Services\StrService;
 use DateTime;
@@ -21,19 +21,19 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-#[Route('/armoire')]
-class AjoutArmoireController extends AbstractController
+#[Route('/editeur')]
+class AjoutEditeurController extends AbstractController
 {
     public function __construct(
         protected StrService $strService,
         protected EntityManagerInterface $em,
         protected UserRepository $userRepository,
-        protected ArmoireRepository $armoireRepository,
+        protected EditeurRepository $editeurRepository,
         protected CsrfTokenManagerInterface $csrfTokenManager,
     ){}
 
-    #[Route('/ajout-armoire', name: 'ajout_armoire')]
-    public function ajoutArmoire(Request $request): Response
+    #[Route('/ajout-editeur', name: 'ajout_editeur')]
+    public function ajoutEditeur(Request $request): Response
     {
         $mySession = $request->getSession();
         
@@ -48,39 +48,39 @@ class AjoutArmoireController extends AbstractController
         
         $slug = "";
 
-        $armoire = new Armoire;       
+        $editeur = new Editeur;       
         
-        $form = $this->createForm(AjoutArmoireType::class, $armoire);
+        $form = $this->createForm(AjoutEditeurType::class, $editeur);
 
         $form->handleRequest($request);
 
         # je crée mon CSRF pour sécuriser mes formulaires
-        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireArmoire')->getValue();
+        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireEditeur')->getValue();
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
             $csrfTokenFormulaire = $request->request->get('csrfToken');
 
             if ($this->csrfTokenManager->isTokenValid(
-                new CsrfToken('envoieFormulaireArmoire', $csrfTokenFormulaire))) 
+                new CsrfToken('envoieFormulaireEditeur', $csrfTokenFormulaire))) 
             {
-                $armoire->setArmoire($this->strService->strToUpper($armoire->getArmoire()))
-                ->setSlug(uniqid('', true))
-                ->setSupprime(0)
-                ->setEnregistrePar($this->getUser())
-                ->setEnregistreLeAt(new DateTime('now'))
-                ;
+                $editeur->setEditeur($this->strService->strToUpper($editeur->getEditeur()))
+            ->setSlug(uniqid('', true))
+            ->setSupprime(0)
+            ->setEnregistrePar($this->getUser())
+            ->setEnregistreLeAt(new DateTime('now'))
+            ;
 
-                $this->em->persist($armoire);
-                $this->em->flush(); 
+            $this->em->persist($editeur);
+            $this->em->flush(); 
 
-                $this->addFlash('info', 'Armoire ajoutée avec succès !');
-                
-                #j'affecte 1 à ma variable pour afficher le message
-                $mySession->set('ajout', 1);
+            $this->addFlash('info', 'Editeur ajouté avec succès !');
+            
+            #j'affecte 1 à ma variable pour afficher le message
+            $mySession->set('ajout', 1);
 
-                $armoire = new Armoire();
-                $form = $this->createForm(AjoutArmoireType::class, $armoire);
+            $editeur = new Editeur();
+            $form = $this->createForm(AjoutEditeurType::class, $editeur);
 
             } 
             else 
@@ -100,14 +100,14 @@ class AjoutArmoireController extends AbstractController
             
         }
 
-        #je récupère toutes mes armoires non supprimées
-        $armoires = $this->armoireRepository->findBy(['supprime' => 0]);
+        #je récupère toutes mes editeurs non supprimées
+        $editeurs = $this->editeurRepository->findBy(['supprime' => 0]);
 
-        return $this->render('armoire/ajoutArmoire.html.twig', [
+        return $this->render('editeur/ajoutEditeur.html.twig', [
             'slug' => $slug,
             'csrfToken' => $csrfToken,
-            'armoires' => $armoires,
-            'ajoutArmoireForm' => $form->createView(),
+            'editeurs' => $editeurs,
+            'ajoutEditeurForm' => $form->createView(),
         ]);
     }
 }

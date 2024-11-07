@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Auteur;
+namespace App\Controller\Editeur;
 
-use App\Repository\AuteurRepository;
+use App\Repository\EditeurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,16 +15,16 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-#[Route('/auteur')]
-class AfficherAuteurController extends AbstractController
+#[Route('/editeur')]
+class AfficherEditeurController extends AbstractController
 {
     public function __construct(
-        protected AuteurRepository $auteurRepository
+        protected EditeurRepository $editeurRepository
     )
     {}
 
-    #[Route('/afficher-auteur/{slug}', name: 'afficher_auteur')]
-    public function afficherAuteur(Request $request, string $slug): Response
+    #[Route('/afficher-editeur/{slug}', name: 'afficher_editeur')]
+    public function afficherEditeur(Request $request, string $slug): Response
     {
         $mySession = $request->getSession();
         
@@ -37,11 +37,11 @@ class AfficherAuteurController extends AbstractController
         $mySession->set('suppression', null);
         $mySession->set('miseAjour', null);
 
-        #je récupère l'auteur à afficher
-        $auteur = $this->auteurRepository->findOneBy(['slug' => $slug]);
+        #je récupère l'editeur à afficher
+        $editeur = $this->editeurRepository->findOneBy(['slug' => $slug]);
 
-        return $this->render('auteur/afficherAuteur.html.twig', [
-            'auteur' => $auteur
+        return $this->render('editeur/afficherEditeur.html.twig', [
+            'editeur' => $editeur
         ]);
     }
 }

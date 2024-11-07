@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Armoire;
+namespace App\Controller\Editeur;
 
 use DateTime;
-use App\Repository\ArmoireRepository;
+use App\Repository\EditeurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,16 +15,16 @@ use Symfony\Component\HttpFoundation\Request;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-#[Route('/armoire')]
-class SupprimerArmoireController extends AbstractController
+#[Route('/editeur')]
+class SupprimerEditeurController extends AbstractController
 {
     public function __construct(
         protected EntityManagerInterface $em,
-        protected ArmoireRepository $armoireRepository
+        protected EditeurRepository $editeurRepository
     ){}
 
-    #[Route('/supprimer-armoire/{slug}', name: 'supprimer_armoire')]
-    public function supprimerArmoire(Request $request, string $slug): Response
+    #[Route('/supprimer-editeur/{slug}', name: 'supprimer_editeur')]
+    public function supprimerEditeur(Request $request, string $slug): Response
     {
         $mySession = $request->getSession();
         
@@ -37,22 +37,22 @@ class SupprimerArmoireController extends AbstractController
         $mySession->set('suppression', null);
         $mySession->set('miseAjour', null);
 
-        $armoire = $this->armoireRepository->findOneBySlug(['slug' => $slug]);       
+        $editeur = $this->editeurRepository->findOneBySlug(['slug' => $slug]);       
         
-        $armoire->setSupprime(1)
+        $editeur->setSupprime(1)
         ->setSupprimePar($this->getUser())
         ->setSupprimeLeAt(new DateTime('now'))
         ;
 
-        $this->em->persist($armoire);
+        $this->em->persist($editeur);
         $this->em->flush(); 
 
-        $this->addFlash('info', 'Armoire supprimmée avec succès !');
+        $this->addFlash('info', 'Editeur supprimmée avec succès !');
         
         #j'affecte 1 à ma variable pour afficher le message
         $mySession->set('suppression', 1);
 
-        return $this->redirectToRoute('liste_armoire', [
+        return $this->redirectToRoute('liste_editeur', [
             's' => 1,
         ]);
             

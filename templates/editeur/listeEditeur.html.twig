@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Liste des auteurs{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Liste des éditeurs{% endtrans %}{% endblock %}
 {% block stylesheets %}
 	<style>
 		th,
@@ -28,15 +28,15 @@
                 <!--Page header-->
                 <div class="page-header">
                     <div class="page-leftheader">
-                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-navicon me-2"></i>{% trans %}Liste des auteurs{% endtrans %}</h4>
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-navicon me-2"></i>{% trans %}Liste des editeurs{% endtrans %}</h4>
                     </div>
                     <div class="page-rightheader">
                         <div class="btn-list">
-                            <a href="{{ path ('ajout_auteur')}}" class="btn btn-outline-primary">
-                                <i class="fa fa-plus me-2"></i>{% trans %}Ajouter un auteur{% endtrans %}
+                            <a href="{{ path ('ajout_editeur')}}" class="btn btn-outline-primary">
+                                <i class="fa fa-plus me-2"></i>{% trans %}Ajouter un editeur{% endtrans %}
                             </a>
                             <a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
-                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer tous les auteurs{% endtrans %}
+                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer tous les editeurs{% endtrans %}
                             </a>
                             
                         </div>
@@ -52,12 +52,12 @@
                         <div class="card border-primary">
                             <div class="card-header">
                                 <div class="col-md-8">
-                                    <div class="card-title"><i class="fa fa-navicon me-2"></i>{% trans %}Les auteurs{% endtrans %}</div>
+                                    <div class="card-title"><i class="fa fa-navicon me-2"></i>{% trans %}Les editeurs{% endtrans %}</div>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <button type="button" class="btn btn-primary mt-1 mb-1 ">
-                                        <span class="badge bg-white text-dark">{{ auteurs|length|number_format }}</span>
-                                        <span>{% trans %}auteurs enregitrés{% endtrans %}</span>
+                                        <span class="badge bg-white text-dark">{{ editeurs|length|number_format }}</span>
+                                        <span>{% trans %}editeurs enregitrés{% endtrans %}</span>
                                     </button>
                                 </div>
                                 
@@ -69,53 +69,42 @@
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0">N°</th>
-                                                    <th class="border-bottom-0">{% trans %}Nom{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Date de naissance{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Genre{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Nationalité{% endtrans %}</th>
-                                                    {# <th class="border-bottom-0">{% trans %}Biographie{% endtrans %}</th> #}
+                                                    <th class="border-bottom-0">{% trans %}Editeur{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Adresse{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Téléphone{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Nombre de livres{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Opérations{% endtrans %}</th>
+                                                </tr>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th class="border-bottom-0">N°</th>
-                                                    <th class="border-bottom-0">{% trans %}Nom{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Date de naissance{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Genre{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Nationalité{% endtrans %}</th>
-                                                    {# <th class="border-bottom-0">{% trans %}Biographie{% endtrans %}</th> #}
+                                                    <th class="border-bottom-0">{% trans %}Editeur{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Adresse{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Téléphone{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Nombre de livres{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Opérations{% endtrans %}</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
                                                 {% set i = 1 %}
-                                                {% for auteur in auteurs %}
+                                                {% for editeur in editeurs %}
                                                     <tr>
                                                         <td><span class="badge bg-primary">{{ i }}</span></td>
-                                                        <td>{{ auteur.nom }} <br>
-                                                            <span class="badge bg-primary">{{ auteur.typeAuteur ? auteur.typeAuteur.typeAuteur: "" }}</span><br>
-                                                            {{ auteur.email }} // {{ auteur.telephone }}
+                                                        <td>{{ editeur.editeur }}
                                                         </td>
-                                                        <td>{{ auteur.dateNaissanceAt|date('d-M-Y') }}</td>
+                                                        <td>{{ editeur.adresse }}</td>
                                                         <td>
-                                                            {% if auteur.sexe.sexe == "M" %}
-                                                                <span class="badge bg-primary">{{ auteur.sexe.sexe }}</span>
-                                                                {% else %}
-                                                                <span class="badge bg-danger">{{ auteur.sexe.sexe }}</span>
-                                                            {% endif %}
+                                                            {{ editeur.telephone }} <br>
+                                                            {{ editeur.email }}
                                                         </td>
-                                                        <td><span class="badge bg-primary">{{ auteur.nationalite.nationalite }}</span></td>
-                                                        {# <td>{{ auteur.biographie|truncate_40 }}</td> #}
                                                         <td>
-                                                            {% if auteur.livres|length > 0 %}
-                                                                <span class="badge bg-primary"> {{ auteur.livres|length|number_format }} </span>
+                                                            {% if editeur.livres|length > 0 %}
+                                                                <span class="badge bg-primary"> {{ editeur.livres|length|number_format }} </span>
                                                                 {% else %}
-                                                                <span class="badge bg-danger"> {{ auteur.livres|length|number_format }} </span>
+                                                                <span class="badge bg-danger"> {{ editeur.livres|length|number_format }} </span>
                                                             {% endif %}
-                                                            
                                                             
                                                         </td>
                                                         <td>
@@ -123,14 +112,14 @@
                                                                 <a href="javascript:void(0);" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options <i class="fa fa-angle-down"></i>
                                                                 </a>
                                                                 <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="{{ path ('afficher_auteur', {'slug': auteur.slug}) }}"><i class="fe fe-eye me-2"></i>{% trans %}Afficher{% endtrans %} </a>
-                                                                    <a class="dropdown-item" href="{{ path ('modifier_auteur', {'slug': auteur.slug}) }}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
+                                                                    <a class="dropdown-item" href="{{ path ('afficher_editeur', {'slug': editeur.slug}) }}"><i class="fe fe-eye me-2"></i>{% trans %}Afficher{% endtrans %} </a>
+                                                                    <a class="dropdown-item" href="{{ path ('modifier_editeur', {'slug': editeur.slug}) }}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
 
-                                                                    {% if auteur.livres|length > 0 %}
+                                                                    {% if editeur.livres|length > 0 %}
                                                                         <a class="dropdown-item" href="javascript:void(0);" 
                                                                             onclick="swal({
                                                                                 'title': '{% trans %}Danger{% endtrans %}',
-                                                                                'text': '{% trans %}Suppression annulée! Cet auteur a des livres.{% endtrans %}',
+                                                                                'text': '{% trans %}Suppression annulée! Cet editeur a des livres.{% endtrans %}',
                                                                                 'type': 'error',
                                                                                 'showCancelButton': true,
                                                                                 'showConfirmButton': false,
@@ -146,13 +135,13 @@
                                                                             onclick="swal({
                                                                                 'title': 'Avertissement !', 
                                                                                 'type': 'warning', 
-                                                                                'text': 'Voulez-vous vraiment supprimer cet auteur ' + ' {{ auteur.nom }} ?', 
+                                                                                'text': 'Voulez-vous vraiment supprimer cet éditeur ' + ' {{ editeur.editeur }} ?', 
                                                                                 'showCancelButton': true, 
                                                                                 'confirmButtonText': 'Oui', 
                                                                                 'confirmButtonColor': '#f00', 
                                                                                 'cancelButtonText': 'Non', 
                                                                                 'cancelButtonColor': '#186106', 
-                                                                                'confirmButtonPath': '{{ path('supprimer_auteur', {'slug': auteur.slug}) }} '});">
+                                                                                'confirmButtonPath': '{{ path('supprimer_editeur', {'slug': editeur.slug}) }} '});">
                                                                             <i class="fa fa-trash me-2"></i>{% trans %}Supprimer{% endtrans %}
                                                                         </a>
                                                                     {% endif %}

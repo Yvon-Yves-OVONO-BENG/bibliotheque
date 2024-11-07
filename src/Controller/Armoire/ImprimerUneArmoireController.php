@@ -14,6 +14,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
+#[Route('/armoire')]
 class ImprimerUneArmoireController extends AbstractController
 {
     #[Route('/imprimer-une-armoire', name: 'imprimer_une_armoire')]

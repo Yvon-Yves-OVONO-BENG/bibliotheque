@@ -58,12 +58,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $temoin = null;
 
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Editeur::class)]
+    private Collection $enregistreEditeurs;
+
+    #[ORM\OneToMany(mappedBy: 'modifiePar', targetEntity: Editeur::class)]
+    private Collection $modifieEditeurs;
+
+    #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Editeur::class)]
+    private Collection $supprimeEditeurs;
+
     public function __construct()
     {
         $this->armoires = new ArrayCollection();
         $this->enregistreAuteurs = new ArrayCollection();
         $this->modifieAuteurs = new ArrayCollection();
         $this->supprimeAuteurs = new ArrayCollection();
+        $this->enregistreEditeurs = new ArrayCollection();
+        $this->modifieEditeurs = new ArrayCollection();
+        $this->supprimeEditeurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -312,6 +324,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTemoin(string $temoin): self
     {
         $this->temoin = $temoin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Editeur>
+     */
+    public function getEnregistreEditeurs(): Collection
+    {
+        return $this->enregistreEditeurs;
+    }
+
+    public function addEnregistreEditeur(Editeur $enregistreEditeur): self
+    {
+        if (!$this->enregistreEditeurs->contains($enregistreEditeur)) {
+            $this->enregistreEditeurs->add($enregistreEditeur);
+            $enregistreEditeur->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnregistreEditeur(Editeur $enregistreEditeur): self
+    {
+        if ($this->enregistreEditeurs->removeElement($enregistreEditeur)) {
+            // set the owning side to null (unless already changed)
+            if ($enregistreEditeur->getEnregistrePar() === $this) {
+                $enregistreEditeur->setEnregistrePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Editeur>
+     */
+    public function getModifieEditeurs(): Collection
+    {
+        return $this->modifieEditeurs;
+    }
+
+    public function addModifieEditeur(Editeur $modifieEditeur): self
+    {
+        if (!$this->modifieEditeurs->contains($modifieEditeur)) {
+            $this->modifieEditeurs->add($modifieEditeur);
+            $modifieEditeur->setModifiePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModifieEditeur(Editeur $modifieEditeur): self
+    {
+        if ($this->modifieEditeurs->removeElement($modifieEditeur)) {
+            // set the owning side to null (unless already changed)
+            if ($modifieEditeur->getModifiePar() === $this) {
+                $modifieEditeur->setModifiePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Editeur>
+     */
+    public function getSupprimeEditeurs(): Collection
+    {
+        return $this->supprimeEditeurs;
+    }
+
+    public function addSupprimeEditeur(Editeur $supprimeEditeur): self
+    {
+        if (!$this->supprimeEditeurs->contains($supprimeEditeur)) {
+            $this->supprimeEditeurs->add($supprimeEditeur);
+            $supprimeEditeur->setSupprimePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupprimeEditeur(Editeur $supprimeEditeur): self
+    {
+        if ($this->supprimeEditeurs->removeElement($supprimeEditeur)) {
+            // set the owning side to null (unless already changed)
+            if ($supprimeEditeur->getSupprimePar() === $this) {
+                $supprimeEditeur->setSupprimePar(null);
+            }
+        }
 
         return $this;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Auteur;
+namespace App\Controller\Editeur;
 
-use App\Repository\AuteurRepository;
+use App\Repository\EditeurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,16 +13,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-#[Route('/auteur')]
-class ListeAuteurController extends AbstractController
+#[Route('/editeur')]
+class ListeEditeurController extends AbstractController
 {
     public function __construct(
-        protected AuteurRepository $auteurRepository
+        protected EditeurRepository $editeurRepository
     )
     {}
 
-    #[Route('/liste-auteur/{a<[0-1]{1}>}/{m<[0-1]{1}>}/{s<[0-1]{1}>}', name: 'liste_auteur')]
-    public function listeAuteur(Request $request, int $a = 0, int $m = 0, int $s = 0): Response
+    #[Route('/liste-editeur/{a<[0-1]{1}>}/{m<[0-1]{1}>}/{s<[0-1]{1}>}', name: 'liste_editeur')]
+    public function listeEditeur(Request $request, int $a = 0, int $m = 0, int $s = 0): Response
     {
         # je récupère ma session
         $maSession = $request->getSession();
@@ -57,11 +57,11 @@ class ListeAuteurController extends AbstractController
             
         }
 
-        #je récupère toutes mes auteurs non supprimées
-        $auteurs = $this->auteurRepository->findBy (['supprime' => 0]);
+        #je récupère toutes mes editeurs non supprimées
+        $editeurs = $this->editeurRepository->findBy (['supprime' => 0]);
         
-        return $this->render('auteur/listeAuteur.html.twig', [
-            'auteurs' => $auteurs,
+        return $this->render('editeur/listeEditeur.html.twig', [
+            'editeurs' => $editeurs,
         ]);
     }
 }

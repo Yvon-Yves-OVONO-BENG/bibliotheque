@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller\Auteur;
+namespace App\Controller\Editeur;
 
 use DateTime;
 use App\Services\StrService;
-use App\Form\AjoutAuteurType;
-use App\Repository\AuteurRepository;
+use App\Form\AjoutEditeurType;
+use App\Repository\EditeurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,18 +19,18 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
-#[Route('/auteur')]
-class ModifierAuteurController extends AbstractController
+#[Route('/editeur')]
+class ModifierEditeurController extends AbstractController
 {
     public function __construct(
         protected StrService $strService,
         protected EntityManagerInterface $em,
-        protected AuteurRepository $auteurRepository,
+        protected EditeurRepository $editeurRepository,
         protected CsrfTokenManagerInterface $csrfTokenManager,
     ){}
 
-    #[Route('/modifier-auteur/{slug}', name: 'modifier_auteur')]
-    public function modifierAuteur(Request $request, string $slug): Response
+    #[Route('/modifier-editeur/{slug}', name: 'modifier_editeur')]
+    public function modifierEditeur(Request $request, string $slug): Response
     {
         $mySession = $request->getSession();
         
@@ -43,37 +43,37 @@ class ModifierAuteurController extends AbstractController
         $mySession->set('suppression', null);
         $mySession->set('miseAjour', null);
 
-        $auteur = $this->auteurRepository->findOneBySlug(['slug' => $slug]);       
+        $editeur = $this->editeurRepository->findOneBySlug(['slug' => $slug]);       
         
-        $form = $this->createForm(AjoutAuteurType::class, $auteur);
+        $form = $this->createForm(AjoutEditeurType::class, $editeur);
 
         $form->handleRequest($request);
 
         # je crée mon CSRF pour sécuriser mes formulaires
-        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireAuteur')->getValue();
+        $csrfToken = $this->csrfTokenManager->getToken('envoieFormulaireEditeur')->getValue();
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
             $csrfTokenFormulaire = $request->request->get('csrfToken');
 
             if ($this->csrfTokenManager->isTokenValid(
-                new CsrfToken('envoieFormulaireAuteur', $csrfTokenFormulaire))) 
+                new CsrfToken('envoieFormulaireEditeur', $csrfTokenFormulaire))) 
             {
-                $auteur->setNom($this->strService->strToUpper($auteur->getNom()))
+                $editeur->setEditeur($this->strService->strToUpper($editeur->getEditeur()))
                 ->setSupprime(0)
                 ->setModifiePar($this->getUser())
                 ->setModifieLeAt(new DateTime('now'))
                 ;
 
-                $this->em->persist($auteur);
+                $this->em->persist($editeur);
                 $this->em->flush(); 
 
-                $this->addFlash('info', 'Auteur modifiée avec succès !');
+                $this->addFlash('info', 'Editeur modifiée avec succès !');
                 
                 #j'affecte 1 à ma variable pour afficher le message
                 $mySession->set('miseAjour', 1);
 
-                return $this->redirectToRoute('liste_auteur', [
+                return $this->redirectToRoute('liste_editeur', [
                     'm' => 1,
                 ]);
             }
@@ -94,15 +94,15 @@ class ModifierAuteurController extends AbstractController
             
         }
 
-        #je récupère toutes mes auteurs non supprimées
-        $auteurs = $this->auteurRepository->findBy(['supprime' => 0]);
+        #je récupère toutes mes editeurs non supprimées
+        $editeurs = $this->editeurRepository->findBy(['supprime' => 0]);
 
-        return $this->render('auteur/ajoutAuteur.html.twig', [
+        return $this->render('editeur/ajoutEditeur.html.twig', [
             'slug' => $slug,
-            'auteur' => $auteur,
-            'auteurs' => $auteurs,
+            'editeur' => $editeur,
+            'editeurs' => $editeurs,
             'csrfToken' => $csrfToken,
-            'ajoutAuteurForm' => $form->createView(),
+            'ajoutEditeurForm' => $form->createView(),
         ]);
     }
 }
