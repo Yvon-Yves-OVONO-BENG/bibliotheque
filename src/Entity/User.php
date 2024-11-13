@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $bloque = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Armoire::class)]
@@ -58,12 +58,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $temoin = null;
 
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Livre::class)]
+    private Collection $livres;
+
     public function __construct()
     {
         $this->armoires = new ArrayCollection();
         $this->enregistreAuteurs = new ArrayCollection();
         $this->modifieAuteurs = new ArrayCollection();
         $this->supprimeAuteurs = new ArrayCollection();
+        $this->livres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -312,6 +316,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTemoin(string $temoin): self
     {
         $this->temoin = $temoin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livre>
+     */
+    public function getLivres(): Collection
+    {
+        return $this->livres;
+    }
+
+    public function addLivre(Livre $livre): static
+    {
+        if (!$this->livres->contains($livre)) {
+            $this->livres->add($livre);
+            $livre->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivre(Livre $livre): static
+    {
+        if ($this->livres->removeElement($livre)) {
+            // set the owning side to null (unless already changed)
+            if ($livre->getEnregistrePar() === $this) {
+                $livre->setEnregistrePar(null);
+            }
+        }
 
         return $this;
     }
