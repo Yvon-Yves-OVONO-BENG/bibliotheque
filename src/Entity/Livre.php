@@ -76,12 +76,25 @@ class Livre
     #[ORM\Column]
     private ?int $niveau = null;
 
+    #[ORM\ManyToOne(inversedBy: 'livres')]
+    private ?User $enregistrePar = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $enregistreLeAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Photo::class, cascade:['persist'])]
+    private Collection $photos;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $supprime = null;
+
     public function __construct()
     {
         $this->etatExemplaires = new ArrayCollection();
         $this->exemplaires = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -377,6 +390,72 @@ class Livre
     public function setNiveau(int $niveau): self
     {
         $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getEnregistrePar(): ?User
+    {
+        return $this->enregistrePar;
+    }
+
+    public function setEnregistrePar(?User $enregistrePar): static
+    {
+        $this->enregistrePar = $enregistrePar;
+
+        return $this;
+    }
+
+    public function getEnregistreLeAt(): ?\DateTimeImmutable
+    {
+        return $this->enregistreLeAt;
+    }
+
+    public function setEnregistreLeAt(?\DateTimeImmutable $enregistreLeAt): static
+    {
+        $this->enregistreLeAt = $enregistreLeAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): static
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getLivre() === $this) {
+                $photo->setLivre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isSupprime(): ?bool
+    {
+        return $this->supprime;
+    }
+
+    public function setSupprime(?bool $supprime): static
+    {
+        $this->supprime = $supprime;
 
         return $this;
     }

@@ -510,16 +510,18 @@
 																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
 																	<ul>
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-book me-2"></i>{% trans %}Livres{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un livre{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des livres{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{path('ajout_livre')}}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un livre{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{path('liste_livre')}}"><i class="fa fa-list me-2"></i>{% trans %}Liste des livres{% endtrans %}</a></li>
 
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check me-2"></i>{% trans %}Statut emprunt{% endtrans %}</h3></li>
 																		<li aria-haspopup="true"><a href="{{ path ('ajout_statutEmprunt') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut emprunt{% endtrans %}</a></li>
 																		<li aria-haspopup="true"><a href="{{ path ('liste_statutEmprunt') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts emprunt{% endtrans %}</a></li>
 																		
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle me-2"></i>{% trans %}Etat exemplaire{% endtrans %}</h3></li>
+
 																		<li aria-haspopup="true"><a href="{{ path ('ajout_etatExemplaire') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état exemplaire{% endtrans %}</a></li>
 																		<li aria-haspopup="true"><a href="{{ path ('liste_etatExemplaire') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des états exemplaire{% endtrans %}</a></li>
+
 													
 																	</ul>
 																</div>

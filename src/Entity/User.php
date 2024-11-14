@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $bloque = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Auteur::class)]
@@ -54,6 +54,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $temoin = null;
+
+
+    #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Livre::class)]
+    private Collection $livres;
 
     #[ORM\OneToMany(mappedBy: 'enregistrePar', targetEntity: Editeur::class)]
     private Collection $enregistreEditeurs;
@@ -145,11 +149,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: EtatReservation::class)]
     private Collection $supprimeEtatReservations;
 
+
     public function __construct()
     {
         $this->enregistreAuteurs = new ArrayCollection();
         $this->modifieAuteurs = new ArrayCollection();
         $this->supprimeAuteurs = new ArrayCollection();
+
+        $this->livres = new ArrayCollection();
+
         $this->enregistreEditeurs = new ArrayCollection();
         $this->modifieEditeurs = new ArrayCollection();
         $this->supprimeEditeurs = new ArrayCollection();
@@ -180,6 +188,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->enregistreEtatReservations = new ArrayCollection();
         $this->modifieEtatReservations = new ArrayCollection();
         $this->supprimeEtatReservations = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -403,6 +412,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+
+     * @return Collection<int, Livre>
+     */
+    public function getLivres(): Collection
+    {
+        return $this->livres;
+    }
+
+    public function addLivre(Livre $livre): static
+    {
+        if (!$this->livres->contains($livre)) {
+            $this->livres->add($livre);
+            $livre->setEnregistrePar($this);
+
      * @return Collection<int, Editeur>
      */
     public function getEnregistreEditeurs(): Collection
@@ -415,10 +438,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->enregistreEditeurs->contains($enregistreEditeur)) {
             $this->enregistreEditeurs->add($enregistreEditeur);
             $enregistreEditeur->setEnregistrePar($this);
+
         }
 
         return $this;
     }
+
+
+    public function removeLivre(Livre $livre): static
+    {
+        if ($this->livres->removeElement($livre)) {
+            // set the owning side to null (unless already changed)
+            if ($livre->getEnregistrePar() === $this) {
+                $livre->setEnregistrePar(null);
 
     public function removeEnregistreEditeur(Editeur $enregistreEditeur): self
     {
@@ -1296,6 +1328,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($supprimeEtatReservation->getSupprimePar() === $this) {
                 $supprimeEtatReservation->setSupprimePar(null);
+
             }
         }
 

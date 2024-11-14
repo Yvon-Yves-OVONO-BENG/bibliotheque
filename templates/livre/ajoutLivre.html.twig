@@ -1,0 +1,223 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Ajout du livre{% endtrans %}{% endblock %}
+
+{% block body %}
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    {% if slug == null %}
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-plus me-2"></i>{% trans %}Ajout d'un livre{% endtrans %}</h4>
+                        {% else %}
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-edit me-2"></i>{% trans %}Modification d'un livre{% endtrans %}</h4>
+                    {% endif %}
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        <a href="{{ path ('liste_livre')}}" class="btn btn-outline-primary"><i class="fa fa-list me-2"></i>{% trans %}Liste des livres{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+        
+                {% if slug == null %}
+                    <div class="card border-primary">
+                    {% else %}
+                    <div class="card border-danger">
+                {% endif %}
+                <div class="card-header">
+                        <div class="col-md-8">
+                            <div class="card-title">
+                                {% if slug == null %}
+                                    <i class="fa fa-plus me-2"></i> {% trans %}Ajout d'un livre{% endtrans %}
+                                {% else %}
+                                    <i class="fa fa-edit me-2"></i> {% trans %}Modification du livre : {% endtrans %} <span class="badge badge-default">{{ livre.titre }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <button type="button" class="btn btn-primary  mt-1 mb-1 me-3 form-control-sm">
+                                <span class="badge bg-white text-dark rounded-pill">{{ livres|length|number_format }}</span>
+                                <span>{% trans %}livres enregistrés{% endtrans %}</span>
+                            </button>
+                        </div>
+                    {# Fin ligne afficher les armoires #}
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        {{ form_start(ajoutLivreForm, {'attr': {'class': 'row g-3 needs-validation', 'novalidate': ""}}) }}
+                            <div class="row mb-5">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.titre)}}
+                                        {{ form_widget(ajoutLivreForm.titre, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le titre du livre !{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.isbn)}}
+                                        {{ form_widget(ajoutLivreForm.isbn, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir l'ISBN !{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.datePublicationAt)}}
+                                        {{ form_widget(ajoutLivreForm.datePublicationAt, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir la date de publication !{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.genreLitteraire)}}
+                                        {{ form_widget(ajoutLivreForm.genreLitteraire, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner le genre littéraire{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.auteur)}}
+                                        {{ form_widget(ajoutLivreForm.auteur, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner le nom de l'auteur{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.editeur)}}
+                                        {{ form_widget(ajoutLivreForm.editeur, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner le nom de l'éditeur{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.langue)}}
+                                        {{ form_widget(ajoutLivreForm.langue, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner la langue{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.statutLivre)}}
+                                        {{ form_widget(ajoutLivreForm.statutLivre, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner le statut du livre{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.fournisseur)}}
+                                        {{ form_widget(ajoutLivreForm.fournisseur, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner le fournisseur{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.armoire)}}
+                                        {{ form_widget(ajoutLivreForm.armoire, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner l'armoire{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.face)}}
+                                        {{ form_widget(ajoutLivreForm.face, {'attr': {'class': 'form-select form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez selectionner la face{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.niveau)}}
+                                        {{ form_widget(ajoutLivreForm.niveau, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le niveau{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.resume)}}
+                                        {{ form_widget(ajoutLivreForm.resume, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le résumé du livre{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.photo)}}
+                                        {{ form_widget(ajoutLivreForm.photo, {'attr': {'id':'validationCustom04'}}) }}
+                
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.photos)}}
+                                        {{ form_widget(ajoutLivreForm.photos, {'attr': {'id':'validationCustom04'}}) }}
+                
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.nombreExemplaire)}}
+                                        {{ form_widget(ajoutLivreForm.nombreExemplaire, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le nombre d'exemplaires !{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label style="color: #fff;">.</label>
+                                            {% if slug == null %}
+                                                <button type="submit" class="btn btn-outline-primary btn-medium w-100 br-7" name="addArmoire">
+                                                    <i class="fa fa-save me-2"></i> {% trans %}Enregistrer{% endtrans %}
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-outline-primary btn-medium w-100 br-7" name="editArmoire">
+                                                    <i class="fa fa-save me-2"></i>
+                                                    {% trans %}Enregistrer les modifications{% endtrans %}
+                                                </button>
+                                            {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+
+                        {{ form_end(ajoutLivreForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
