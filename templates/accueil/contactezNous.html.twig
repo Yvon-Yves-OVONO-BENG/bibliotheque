@@ -1,0 +1,148 @@
+{% extends 'baseFrontEnd.html.twig' %}
+
+{% block title %}{% trans %}Contactez nous{% endtrans %}{% endblock %}
+
+{% block body %}
+
+<!--Banner Start-->
+<section class="breadcumnd__banner">
+   <div class="container">
+      <div class="row align-items-center">
+         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__content">
+               <h4>
+                  contact,
+                  Feel free to contact
+               </h4>
+               <p class="b__space">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, inventore nesciunt. Aliquid.
+               </p>
+               <ul class="ssd__list">
+                  <li>
+                    <span><i class="fa-solid fa-arrow-right"></i></span> <span>Unlimited Contact</span>
+                  </li>
+                  <li>
+                     <span><i class="fa-solid fa-arrow-right"></i></span> <span>Contact For Support Team</span>
+                  </li>
+                  <li>
+                     <span><i class="fa-solid fa-arrow-right"></i></span> <span>24/Hours Contact Our Team</span>
+                  </li>
+               </ul>
+               <a href="#0" class="cmn--btn border__trans">
+                  <span>Contact Us</span>
+               </a>
+            </div>
+         </div>
+         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__Thumb">
+               <img src="{{ asset ('assetsFrontEnd/img/hosting/contact.png') }}" alt="about-img">
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--Banner End-->
+	<!--Contact Here-->
+<div class="contact__section pt-80" style="margin-bottom: 10px !important;">
+   <div class="contact_inner">
+       <div class="container">
+         <div class="section__header center mb-5">
+            <h2 class="text-black wow fadeInDown" data-wow-delay="0.2s">
+               Contact our  <span class="text-base">team</span>
+            </h2>
+            <p class="text-black wow fadeInDown" data-wow-delay="0.4s">
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, exercitationem?
+            </p>
+         </div>
+           <div class="row justify-content-between align-items-center">
+            <div class="col-lg-12">
+              <div class="contact__card__wrap">
+               <div class="row">
+                  <div class="col-xl-4">
+                     <div class="contact__card">
+                        <div class="icon">
+                           <i class="fas fa-envelope"></i>
+                        </div>
+                        <h6>
+                           Email
+                        </h6>
+                        <a href="#0">
+                           example@example.com
+                        </a>
+                     </div>
+                  </div>
+                  <div class="col-xl-4">
+                     <div class="contact__card">
+                        <div class="icon">
+                           <i class="fas fa-phone"></i>
+                        </div>
+                        <h6>
+                           Phone
+                        </h6>
+                        <a href="#0">
+                           +8805656524566  
+                        </a>
+                     </div>
+                  </div>
+                  <div class="col-xl-4">
+                     <div class="contact__card">
+                        <div class="icon">
+                           <i class="fas fa-envelope"></i>
+                        </div>
+                        <h6>
+                           Address
+                        </h6>
+                        <a href="#0">
+                           Us,loreex/25ns
+                        </a>
+                     </div>
+                  </div>
+               </div>
+              </div>
+           </div>
+            <div class="col-lg-12">
+                  <div class="form_area">
+                     <form id="form" method="POST" action="contact.php">
+                        <div class="row">
+                              <div class="col-lg-6">
+                                 <div class="form-control">
+                                    <label for="Name">Name</label>
+                                    <input type="text" name="name" id="Name" placeholder="Your Name...">
+                                 </div>
+                              </div>
+                              <div class="col-lg-6">
+                                 <div class="form-control">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" placeholder="Your Email">
+                                 </div>
+                              </div>
+                              <div class="col-lg-6">
+                                 <div class="form-control form_control">
+                                    <label for="company-name">Phone</label>
+                                    <input type="number" name="company-name" id="company-name" placeholder="Your Phone">
+                                 </div>
+                              </div>
+                              <div class="col-lg-6">
+                                 <div class="form-control">
+                                    <label for="budget">Subject</label>
+                                    <input type="text" name="subject" id="subject" placeholder="Subject">
+                                 </div>
+                              </div>
+                              <div class="col-lg-12">
+                                 <div class="form-control">
+                                    <label for="message">Leave a message</label>
+                                    <textarea name="message" id="message" cols="10" rows="5" placeholder="Please type your message here..."></textarea>
+                                 </div>
+                              </div>
+                        </div>
+                        <button type="submit" class="cmn--btn"><span>Request a quote</span></button>
+                        <p class="form-message"></p>
+                     </form>
+                  </div>
+            </div>
+           </div>
+       </div>
+   </div>
+</div>
+<!--Contact End-->
+{% endblock %}

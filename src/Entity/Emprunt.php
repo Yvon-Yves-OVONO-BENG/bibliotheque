@@ -38,6 +38,9 @@ class Emprunt
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
     private ?ModePaiement $modePaiement = null;
 
+    #[ORM\ManyToOne(inversedBy: 'emprunts')]
+    private ?EtatPaiement $etatPaiement = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Emprunt
     public function setModePaiement(?ModePaiement $modePaiement): self
     {
         $this->modePaiement = $modePaiement;
+
+        return $this;
+    }
+
+    public function getEtatPaiement(): ?EtatPaiement
+    {
+        return $this->etatPaiement;
+    }
+
+    public function setEtatPaiement(?EtatPaiement $etatPaiement): self
+    {
+        $this->etatPaiement = $etatPaiement;
 
         return $this;
     }

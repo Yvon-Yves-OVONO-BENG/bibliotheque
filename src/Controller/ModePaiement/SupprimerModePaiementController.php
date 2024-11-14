@@ -47,7 +47,7 @@ class SupprimerModePaiementController extends AbstractController
         $this->em->persist($modePaiement);
         $this->em->flush(); 
 
-        $this->addFlash('info', 'ModePaiement supprimmée avec succès !');
+        $this->addFlash('info', 'Mode paiement supprimmée avec succès !');
         
         #j'affecte 1 à ma variable pour afficher le message
         $mySession->set('suppression', 1);
