@@ -485,24 +485,24 @@
 																		<li aria-haspopup="true"><a href="{{ path ('liste_auteur') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des auteurs{% endtrans %}</a></li>
 
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fe fe-book me-2"></i>{% trans %}Editeurs{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un éditeur{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des editeurs{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_editeur') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un éditeur{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_editeur') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des editeurs{% endtrans %}</a></li>
 													
 																	</ul>
 																</div>
 																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
 																	<ul>
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-money me-2"></i>{% trans %}Mode de paiement{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un mode de paiement{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des modes de paiement{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_modePaiement') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un mode de paiement{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_modePaiement') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des modes de paiement{% endtrans %}</a></li>
 													
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-truck me-2"></i>{% trans %}Fournissuers{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un fournissuer{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des fournissuers{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_fournisseur') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un fournissuer{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_fournisseur') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des fournissuers{% endtrans %}</a></li>
 
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-leanpub me-2"></i>{% trans %}Genre littéraire{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un genre littéraire{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des genres littéraires{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_genreLitteraire') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un genre littéraire{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_genreLitteraire') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des genres littéraires{% endtrans %}</a></li>
 													
 																	</ul>
 																</div>
@@ -514,12 +514,14 @@
 																		<li aria-haspopup="true"><a href="{{path('liste_livre')}}"><i class="fa fa-list me-2"></i>{% trans %}Liste des livres{% endtrans %}</a></li>
 
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check me-2"></i>{% trans %}Statut emprunt{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut emprunt{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts emprunt{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_statutEmprunt') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut emprunt{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_statutEmprunt') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts emprunt{% endtrans %}</a></li>
 																		
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle me-2"></i>{% trans %}Etat exemplaire{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0)"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état exemplaire{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0)"><i class="fa fa-list me-2"></i>{% trans %}Liste des états exemplaire{% endtrans %}</a></li>
+
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_etatExemplaire') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état exemplaire{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_etatExemplaire') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des états exemplaire{% endtrans %}</a></li>
+
 													
 																	</ul>
 																</div>
@@ -527,16 +529,16 @@
 																<div class="col-lg-3 col-md-12 col-xs-12 link-list">
 																	<ul>
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-circle-o me-2"></i>{% trans %}Statut livre{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut livre{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts livres{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_statutLivre') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un statut livre{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_statutLivre') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts livres{% endtrans %}</a></li>
 
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-square me-2"></i>{% trans %}Etat paiement{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état paiement{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états paiements{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_etatPaiement') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état paiement{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_etatPaiement') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des états paiements{% endtrans %}</a></li>
 																		
 																		<li><h3 class="fs-14 font-weight-bold mt-3"><i class="fa fa-check-square-o me-2"></i>{% trans %}Etat réservation{% endtrans %}</h3></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état réservation{% endtrans %}</a></li>
-																		<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des états réservation{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('ajout_etatReservation') }}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un état réservation{% endtrans %}</a></li>
+																		<li aria-haspopup="true"><a href="{{ path ('liste_etatReservation') }}"><i class="fa fa-list me-2"></i>{% trans %}Liste des états réservation{% endtrans %}</a></li>
 													
 																	</ul>
 																</div>

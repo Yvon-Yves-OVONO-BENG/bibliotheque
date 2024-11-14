@@ -24,7 +24,7 @@ class Penalite
     private ?\DateTimeInterface $dateApplicationAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'penalites')]
-    private ?StatutPaiement $statutPaiement = null;
+    private ?EtatPaiement $etatPaiement = null;
 
     #[ORM\ManyToOne(inversedBy: 'penalites')]
     private ?ModePaiement $modePaiement = null;
@@ -70,14 +70,14 @@ class Penalite
         return $this;
     }
 
-    public function getStatutPaiement(): ?StatutPaiement
+    public function getEtatPaiement(): ?EtatPaiement
     {
-        return $this->statutPaiement;
+        return $this->etatPaiement;
     }
 
-    public function setStatutPaiement(?StatutPaiement $statutPaiement): self
+    public function setEtatPaiement(?EtatPaiement $etatPaiement): self
     {
-        $this->statutPaiement = $statutPaiement;
+        $this->etatPaiement = $etatPaiement;
 
         return $this;
     }

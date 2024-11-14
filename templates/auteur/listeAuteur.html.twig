@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Liste auteur{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Liste des auteurs{% endtrans %}{% endblock %}
 {% block stylesheets %}
 	<style>
 		th,
@@ -36,7 +36,7 @@
                                 <i class="fa fa-plus me-2"></i>{% trans %}Ajouter un auteur{% endtrans %}
                             </a>
                             <a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
-                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer toutes les auteurs{% endtrans %}
+                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer tous les auteurs{% endtrans %}
                             </a>
                             
                         </div>
@@ -95,7 +95,10 @@
                                                 {% for auteur in auteurs %}
                                                     <tr>
                                                         <td><span class="badge bg-primary">{{ i }}</span></td>
-                                                        <td>{{ auteur.nom }} <br><span class="badge bg-primary">{{ auteur.typeAuteur ? auteur.typeAuteur.typeAuteur: "" }}</span></td>
+                                                        <td>{{ auteur.nom }} <br>
+                                                            <span class="badge bg-primary">{{ auteur.typeAuteur ? auteur.typeAuteur.typeAuteur: "" }}</span><br>
+                                                            {{ auteur.email }} // {{ auteur.telephone }}
+                                                        </td>
                                                         <td>{{ auteur.dateNaissanceAt|date('d-M-Y') }}</td>
                                                         <td>
                                                             {% if auteur.sexe.sexe == "M" %}

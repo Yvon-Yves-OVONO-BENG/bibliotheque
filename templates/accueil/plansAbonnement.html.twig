@@ -1,0 +1,173 @@
+{% extends 'baseFrontEnd.html.twig' %}
+
+{% block title %}{% trans %}Plans d'abonnement{% endtrans %}{% endblock %}
+
+{% block body %}
+
+<!--Banner Start-->
+<section class="breadcumnd__banner">
+   <div class="container">
+      <div class="row align-items-center">
+         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__content">
+               <h4>
+                  Nos plans d'abonnement
+               </h4>
+               <p>
+                  {% trans %}Nos plans d'abonnement à porté de tous{% endtrans %}
+               </p>
+            </div>
+         </div>
+         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__Thumb">
+               <img src="{{ asset ('assetsFrontEnd/img/about/share.png') }}" alt="about-img">
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--Banner End-->
+
+<!--Banner Section Start-->
+<section class="pricing__sharp pb-120">
+   <div class="container">
+      <div class="section__header section-center">
+         <h4 class="text-white wow fadeInDown" data-wow-delay="0.2s">
+            {% trans %}Plans d'abonnement{% endtrans %} <span class="text-base">{% trans %}d'abonnement{% endtrans %}</span>
+         </h4>
+      </div>
+      <div class="host__domian__wrapper">
+         <div class="row g-4 align-items-center">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="pricing__itmes">
+                     <div class="header-pricing">
+                        <h4 class="title">
+                              Basic
+                        </h4>
+                        <h6 class="theme3">
+                              $ 14.95 <span class="small">AUD</span>
+                        </h6>
+                        <span class="month">
+                              per month
+                        </span>
+                     </div>
+                     <ul class="text-center">
+                        <li>
+                              <span>20 GB</span> Disk Space
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Databases
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Mailbox
+                        </li>
+                     </ul>
+                     <div class="bottom text-center">
+                        <a href="#0" class="cmn--btn border__trans">
+                              <span>Purchase Plan</span>
+                        </a>
+                     </div>
+                  </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="pricing__itmes">
+                     <div class="header-pricing">
+                        <h4 class="title">
+                              Standard
+                        </h4>
+                        <h6 class="theme3">
+                              $ 18.95 <span class="small">AUD</span>
+                        </h6>
+                        <span class="month">
+                              per month
+                        </span>
+                     </div>
+                     <ul class="text-center">
+                        <li>
+                              <span>20 GB</span> Disk Space
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Databases
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Mailbox
+                        </li>
+                     </ul>
+                     <div class="bottom text-center">
+                        <a href="#0" class="cmn--btn border__trans">
+                              <span>Purchase Plan</span>
+                        </a>
+                     </div>
+                  </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="pricing__itmes">
+                     <div class="header-pricing">
+                        <h4 class="title">
+                              Advanced
+                        </h4>
+                        <h6 class="theme3">
+                              $ 33.95 <span class="small">AUD</span>
+                        </h6>
+                        <span class="month">
+                              per month
+                        </span>
+                     </div>
+                     <ul class="text-center">
+                        <li>
+                              <span>20 GB</span> Disk Space
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Databases
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Mailbox
+                        </li>
+                     </ul>
+                     <div class="bottom text-center">
+                        <a href="#0" class="cmn--btn border__trans">
+                              <span>Purchase Plan</span>
+                        </a>
+                     </div>
+                  </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="pricing__itmes">
+                     <div class="header-pricing">
+                        <h4 class="title">
+                              Brand Pro
+                        </h4>
+                        <h6 class="theme3">
+                              $ 39.95 <span class="small">AUD</span>
+                        </h6>
+                        <span class="month">
+                              per month
+                        </span>
+                     </div>
+                     <ul class="text-center">
+                        <li>
+                              <span>20 GB</span> Disk Space
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Databases
+                        </li>
+                        <li>
+                              <span>Unlimited</span> Mailbox
+                        </li>
+                     </ul>
+                     <div class="bottom text-center">
+                        <a href="#0" class="cmn--btn border__trans">
+                              <span>Purchase Plan</span>
+                        </a>
+                     </div>
+                  </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="round__shape">
+      <img src="{{ asset ('assetsFrontEnd/img/sharp-home/shape.png') }}" alt="shape-img">
+   </div>
+</section>
+<!--Banner Section End-->
+{% endblock %}

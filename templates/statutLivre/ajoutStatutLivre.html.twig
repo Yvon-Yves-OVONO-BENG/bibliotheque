@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if slug == null %}
+        {% trans %}Ajout d'un statut livre{% endtrans %}
+    {% else %}
+        {% trans %}Modification du statut livre : {% endtrans %} {{ statutLivre.statutLivre }}
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+
+        
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    {% if slug == null %}
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-check-circle-o me-2"></i>{% trans %}Ajout d'un statut livre{% endtrans %}</h4>
+                        {% else %}
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-edit me-2"></i>{% trans %}Modification d'un statut livre{% endtrans %}</h4>
+                    {% endif %}
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        <a href="{{ path ('liste_statutLivre')}}" class="btn btn-outline-primary"><i class="fa fa-list me-2"></i>{% trans %}Liste des statuts Livre{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+        
+                {% if slug == null %}
+                    <div class="card border-primary">
+                    {% else %}
+                    <div class="card border-danger">
+                {% endif %}
+                <div class="card-header">
+                        <div class="col-md-8">
+                            <div class="card-title">
+                                {% if slug == null %}
+                                    <i class="fa fa-check-circle-o me-2"></i> {% trans %}Ajout d'un statut livre{% endtrans %}
+                                {% else %}
+                                    <i class="fa fa-edit me-2"></i> {% trans %}Modification du statut livre : {% endtrans %} 
+                                    <span class="badge badge-default">{{ statutLivre.statutLivre }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <button type="button" class="btn btn-primary  mt-1 mb-1 me-3 form-control-sm">
+                                <span class="badge bg-white text-dark rounded-pill">{{ statutLivres|length|number_format }}</span>
+                                <span>{% trans %}statuts Livre enregistrés{% endtrans %}</span>
+                            </button>
+                        </div>
+                    {# Fin ligne afficher les statut livres #}
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        {{ form_start(ajoutStatutLivreForm, {'attr': {'class': 'row g-3 needs-validation', 'novalidate': ""}}) }}
+                            <div class="row mb-5">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutStatutLivreForm.statutLivre)}}
+                                        {{ form_widget(ajoutStatutLivreForm.statutLivre, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le nom du statut livre !{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label style="color: #fff;">.</label>
+                                            {% if slug == null %}
+                                                <button type="submit" class="btn btn-outline-primary btn-medium w-100 br-7" name="addArmoire">
+                                                    <i class="fa fa-save me-2"></i> {% trans %}Enregistrer{% endtrans %}
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-outline-primary btn-medium w-100 br-7" name="editArmoire">
+                                                    <i class="fa fa-save me-2"></i>
+                                                    {% trans %}Enregistrer les modifications{% endtrans %}
+                                                </button>
+                                            {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                </div>
+                                
+                               
+                                
+                            </div>
+                            
+
+                        {{ form_end(ajoutStatutLivreForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

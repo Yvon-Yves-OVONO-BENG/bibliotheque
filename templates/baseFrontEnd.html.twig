@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zxx">
+	<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="NextGenerationDev">
+	<title>{% block title %}
+		{% trans %}Accueil - Biblio Smart{% endtrans %}
+	{% endblock %}</title>
+	<!--Favicon img-->
+	<link rel="shortcut icon" href="{{ asset ('assetsFrontEnd/img/favicon/favicon.png') }}">
+	<!--Bootstarp min css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/bootstrap.min.css') }}">
+	<!--Bootstarp map css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/bootstrap.css') }}.map') }}">
+	<!--Odometer css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/odometer.css') }}">
+	<!--Owl Carousel css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/owl.min.css') }}">
+	<!--Owl Carousel Theme css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/owl.theme.default.min.css') }}">
+	<!--All min css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/all.min.css') }}">
+	<!--Animate css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/animate.css') }}">
+	<!--Owl Nice select css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/nice-select.css') }}">
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/magnific-popup.css') }}">
+	<!--main css-->
+	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/main.css') }}">
+	</head>
+
+	<body>
+
+
+		<!--==== Scrool Top Bottom Here ======= -->
+		<div id="progress">
+			<span id="valiu"><i class="fas fa-arrow-up"></i></span>
+		</div>
+		<!--==== Scrool Top Bottom End ======= -->
+
+		<div class="signin__signup__wrap">
+			{% if app.user %}
+				<a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#register">
+					<span>{% trans %}Mon profil{% endtrans %}</span>
+				</a>
+				<a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#login">
+					<span>{% trans %}Se déconnecter{% endtrans %}</span>
+				</a>
+				{% else %}
+				<a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#register">
+					<span>{% trans %}Se connecter{% endtrans %}</span>
+				</a>
+				<a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#login">
+					<span>{% trans %}S'enregistrer{% endtrans %}</span>
+				</a>
+			{% endif %}
+			
+		</div>
+
+		<!--Header Here-->
+		<header class="header-section home__header border__bottom sharp__header">
+			<div class="container">
+				<div class="header-wrapper">
+					<div class="logo-menu">
+					<a href="index.html" class="logo">
+						<img src="{{ asset ('assetsFrontEnd/img/logo/logo2.png') }}" alt="img">
+					</a>
+					</div>
+					<div class="header-bar d-lg-none">
+					<span></span>
+					<span></span>
+					<span></span>
+					</div>
+					<ul class="main-menu">
+					<li class="active">
+						<a href="{{ path ('accueil') }}">{% trans %}Accueil{% endtrans %}</a>
+						
+					</li>
+					<li>
+						<a href="{{ path ('afficher_genreLitteraire') }}">{% trans %}Genres littéraires{% endtrans %}</a>
+					</li>
+					<li>
+						<a href="about.html">{% trans %}Catalogue{% endtrans %}</a>
+					</li>
+					
+					<li>
+						<a href="{{ path ('plans_abonnement')}}">{% trans %}Abonnement{% endtrans %}</a>
+					</li>
+					
+					{% if app.user %}
+						 <li>
+							<a href="#0">Mon compte <i class="fas fa-chevron-down"></i></a>
+							<ul class="sub-menu">
+								<li class="subtwohober">
+									<a href="resserler.html">
+									<span class="icon"><i class="fa-brands fa-audible"></i></span>
+									<span>Mes emprunts</span>
+									</a>
+								</li>
+								<li class="subtwohober">
+									<a href="sharehost.html">
+									<span class="icon"><i class="fa-solid fa-server"></i></span>
+									<span>Mes réservations</span>
+									</a>
+								</li>
+								
+							</ul>
+						</li>
+					{% endif %}
+					
+					<li class="btn--items">
+						<a href="{{ path ('contactez_nous') }}" class="cmn--btn">
+							<span>{% trans %}Contactez-nous{% endtrans %}</span>
+						</a>
+					</li>
+					</ul>
+					<a href="{{ path ('contactez_nous') }}" class="cmn--btn">
+					<span>{% trans %}Contactez-nous{% endtrans %}</span>
+					</a>
+				</div>
+			</div>
+		</header>
+		<!--Header End-->
+
+		{% block body %}
+			
+		{% endblock %}
+
+		<!--Footer Here-->
+		<footer class="footer-section home__footer sharp__footer pt-120">
+		<div class="container">
+			<div class="footer-top pb-120">
+				<div class="row g-4">
+					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 ">
+					<div class="widget-items">
+						<div class="footer-head">
+							<a href="index.html" class="footer-logo">
+								<img src="{{ asset ('assetsFrontEnd/img/logo/logo2.png') }}" alt="f-logo">
+							</a>
+						</div>
+						<div class="content-area">
+							<p>
+								Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptate minus minima.
+							</p>
+							<ul class="social">
+								<li>
+								<a href="#" class="icon">
+									<i class="fa-brands fa-facebook-f"></i>
+								</a>
+								</li>
+								<li>
+								<a href="#" class="icon">
+									<i class="fa-brands fa-instagram"></i>
+								</a>
+								</li>
+								<li>
+								<a href="#" class="icon">
+									<i class="fa-brands fa-twitter"></i>
+								</a>
+								</li>
+								<li>
+								<a href="#" class="icon">
+									<i class="fa-brands fa-whatsapp"></i>
+								</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					</div>
+					<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 ">
+					<div class="widget-items">
+						<div class="footer-head">
+							<h5 class="title">
+								Services
+							</h5>
+						</div>
+						<div class="content-area">
+							<ul class="quick-link">
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Shared Hosting
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> WordPress Hosting
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> VPS Hosting
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Reseller Hosting
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Dedicated Server
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Window Hosting
+								</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					</div>
+					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 ">
+					<div class="widget-items">
+						<div class="footer-head">
+							<h5 class="title">
+								Domains
+							</h5>
+						</div>
+						<div class="content-area">
+							<ul class="quick-link">
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Register Domains
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Transfer
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Transfer Domains
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Manage Domains
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Personal 
+								</a>
+								</li>
+								<li>
+								<a href="#0">
+									<i class="fas fa-caret-right"></i> Premium Domains
+								</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 ">
+					<div class="widget-items">
+						<div class="footer-head">
+							<h5 class="title">
+								Contact Us
+							</h5>
+						</div>
+						<div class="content-area">
+							<ul class="contact">
+								<li>
+								<div class="phone-icon">
+									<img src="{{ asset ('assetsFrontEnd/img/footer/email.png') }}" alt="email">
+								</div>
+								<a href="#0" class="email-part">
+									<span>Email:</span>
+									support@example.com
+								</a>
+								</li>
+								<li>
+								<div class="phone-icon">
+									<img src="{{ asset ('assetsFrontEnd/img/footer/phone.png') }}" alt="phone">
+								</div>
+								<a href="#0" class="email-part">
+									<span>Phone:</span>
+									+879 624 548
+								</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p>
+					Copyright &copy; 2023 Atos | Designed by <a href="#0">NextGenerationDev</a>
+				</p>
+				<ul class="footer-bottom-link">
+					<li>
+					<a href="#0">
+						Privacy
+					</a>
+					</li>
+					<li>
+					<a href="#0">
+						Terms & Conditions
+					</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="round__shape">
+			<img src="{{ asset ('assetsFrontEnd/img/sharp-home/shape.png') }}" alt="shape-img">
+		</div>
+		</footer>
+		<!--Footer End-->
+
+
+		<!--Register Modal Start-->
+		<div class="modal register__modal fade" id="register" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog  modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+						<div class="modal__right">
+								<ul class="nav nav-tabs" id="myTabing" role="tablist">
+									<li class="nav-item" role="presentation">
+									<button class="nav-link " id="home-tabemail" data-bs-toggle="tab" data-bs-target="#homeemail" type="button" role="tab" aria-controls="homeemail" aria-selected="true">Sign  Up</button>
+									</li>
+									<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="contact-tabup" data-bs-toggle="tab" data-bs-target="#contactup" type="button" role="tab" aria-controls="contactup" aria-selected="false">Sign In</button>
+									</li>
+								</ul>
+								<div class="tab-content" id="myTabContentents">
+									<div class="tab-pane fade" id="homeemail" role="tabpanel">
+									<div class="form__tabs__wrap">
+											<div class="focus__icon">
+												<img src="{{ asset ('assetsFrontEnd/img/modal/flowers.png') }}" alt="f-img">
+											</div>
+											<form action="#0">
+												<div class="form__grp">
+												<label for="email33">Email Address</label>
+												<input type="email" id="email33" placeholder="Your Email Address.">
+												</div>
+												<div class="form__grp">
+												<label for="password-field9">Your Password</label>
+												<input id="password-field9" type="password" placeholder="Your Password">
+												<span id="#password-field9" class="fa fa-fw fa-eye field-icon toggle-password9"></span>
+												</div>
+												<div class="form__grp">
+												<label for="password-field5">Confirm Password</label>
+												<input id="password-field5" type="password" placeholder="Confirm Password">
+												<span id="#password-field5" class="fa fa-fw fa-eye field-icon toggle-password5"></span>
+												</div>
+												<div class="form-check form__check d-flex align-items-center">
+												<input class="form-check-input" type="checkbox" id="checkiss2">
+												<label class="form-check-label" for="checkiss2">
+														I agree with <a href="#0"> user agreement,</a> and confirm that I am at least 18 years old!
+												</label>
+												</div>       
+												<div class="create__btn">
+												<a href="#0" class="cmn--btn">
+														<span>Create an account</span>
+												</a>
+												</div>
+											</form>
+											<div class="social__head">
+												<div class="border__static"></div>
+												<span>
+												Or log in directly with
+												</span>
+												<ul class="social">
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-facebook-f"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-google"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-twitter"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-linkedin-in"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-telegram"></i>
+														</a>
+												</li>
+												</ul>
+											</div>
+									</div>
+									</div>
+									<div class="tab-pane fade show active" id="contactup" role="tabpanel">
+									<div class="form__tabs__wrap">
+											<div class="focus__icon">
+												<img src="{{ asset ('assetsFrontEnd/img/modal/flowers.png') }}" alt="f-img">
+											</div>
+											<form action="#0">
+												<div class="form__grp">
+												<label for="emailg">Email Address</label>
+												<input type="email" id="emailg" placeholder="Your Email Address.">
+												</div>
+												<div class="login__signup">
+												<a href="#0">
+														Forgot Your Password?
+												</a>
+												</div>
+												<div class="form__grp">
+												<label for="password-field7">Your Password</label>
+												<input id="password-field7" type="password" placeholder="Your Password">
+												<span id="#password-field7" class="fa fa-fw fa-eye field-icon toggle-password7"></span>
+												</div>    
+												<div class="create__btn">
+												<a href="#0" class="cmn--btn">
+														<span>Login account</span>
+												</a>
+												</div>
+												<div class="signup__text">
+												<p>Don't have an account? <a href="#0">Sign Up</a></p>
+												</div>
+											</form>
+											<div class="social__head">
+												<div class="border__static"></div>
+												<span>
+												Or log in directly with
+												</span>
+												<ul class="social">
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-facebook-f"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-google"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-twitter"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-linkedin-in"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-telegram"></i>
+														</a>
+												</li>
+												</ul>
+											</div>
+									</div>
+									</div>
+								</div>
+						</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		<!--Register Modal End-->
+
+		<!--Login Modal Start-->
+		<div class="modal register__modal fade" id="login" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog  modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+						<div class="modal__right">
+								<ul class="nav nav-tabs" id="myTab2" role="tablist">
+									<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="home-tab1" data-bs-toggle="tab" data-bs-target="#home2" type="button" role="tab" aria-controls="home2" aria-selected="true">Sign Up</button>
+									</li>
+									<li class="nav-item" role="presentation">
+									<button class="nav-link" id="contact-tab3" data-bs-toggle="tab" data-bs-target="#contact2" type="button" role="tab" aria-controls="contact2" aria-selected="false">Sign In</button>
+									</li>
+								</ul>
+									<div class="tab-content" id="myTabContent2">
+									<div class="tab-pane fade show active" id="home2" role="tabpanel">
+									<div class="form__tabs__wrap">
+											<div class="focus__icon">
+												<img src="{{ asset ('assetsFrontEnd/img/modal/flowers.png') }}" alt="f-img">
+											</div>
+											<form action="#0">
+												<div class="form__grp">
+												<label for="email3">Email Address</label>
+												<input type="email" id="email3" placeholder="Your Email Address.">
+												</div>
+												<div class="form__grp">
+												<label for="password-field10">Your Password</label>
+												<input id="password-field10" type="password" placeholder="Your Password">
+												<span id="#password-field10" class="fa fa-fw fa-eye field-icon toggle-password10"></span>
+												</div>
+												<div class="form__grp">
+												<label for="password-field6">Confirm Password</label>
+												<input id="password-field6" type="password" placeholder="Confirm Password">
+												<span id="#password-field6" class="fa fa-fw fa-eye field-icon toggle-password6"></span>
+												</div>
+												<div class="form-check form__check d-flex align-items-center">
+												<input class="form-check-input" type="checkbox" id="checkiss">
+												<label class="form-check-label" for="checkiss">
+														I agree with <a href="#0"> user agreement,</a> and confirm that I am at least 18 years old!
+												</label>
+												</div>       
+												<div class="create__btn">
+												<a href="#0" class="cmn--btn">
+														<span>Create an account</span>
+												</a>
+												</div>
+											</form>
+											<div class="social__head">
+												<div class="border__static"></div>
+												<span>
+												Or log in directly with
+												</span>
+												<ul class="social">
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-facebook-f"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-google"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-twitter"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-linkedin-in"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-telegram"></i>
+														</a>
+												</li>
+												</ul>
+											</div>
+									</div>
+									</div>
+									<div class="tab-pane fade" id="contact2" role="tabpanel">
+									<div class="form__tabs__wrap">
+											<div class="focus__icon">
+												<img src="{{ asset ('assetsFrontEnd/img/modal/flowers.png') }}" alt="f-img">
+											</div>
+											<form action="#0">
+												<div class="form__grp">
+												<label for="email34">Email Address</label>
+												<input type="email" id="email34" placeholder="Your Email Address.">
+												</div>
+												<div class="login__signup">
+												<a href="#0">
+														Forgot Your Password?
+												</a>
+												</div>
+												<div class="form__grp">
+												<label for="password-field1">Your Password</label>
+												<input id="password-field1" type="password" placeholder="Your Password">
+												<span id="#password-field1" class="fa fa-fw fa-eye field-icon toggle-password1"></span>
+												</div>    
+												<div class="create__btn">
+												<a href="#0" class="cmn--btn">
+														<span>Login account</span>
+												</a>
+												</div>
+												<div class="signup__text">
+												<p>Don't have an account? <a href="#0">Sign Up</a></p>
+												</div>
+											</form>
+											<div class="social__head">
+												<div class="border__static"></div>
+												<span>
+												Or log in directly with
+												</span>
+												<ul class="social">
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-facebook-f"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-google"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fab fa-twitter"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-linkedin-in"></i>
+														</a>
+												</li>
+												<li>
+														<a href="#0">
+															<i class="fa-brands fa-telegram"></i>
+														</a>
+												</li>
+												</ul>
+											</div>
+									</div>
+									</div>
+								</div>
+						</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		<!--Login Modal End-->
+
+
+		<!--Jquery 3 6 0 Min Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/jquery-3.6.0.min.js') }}"></script>
+		<!--Bootstrap bundle Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/bootstrap.bundle.js') }}"></script>
+		<!--Waypoint Jquery min Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/jquery.waypoints.min.js') }}"></script>
+		<!--Viewport Jquery Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/viewport.jquery.js') }}"></script>
+		<!--Wow min Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/wow.min.js') }}"></script>
+		<!--Odometer Up min Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/odometer.min.js') }}"></script>
+		<!--Owl Carousel min Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/owl.min.js') }}"></script>
+		<!--Owl nice Jquery min Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/jquery.nice-select.min.js') }}"></script> 
+		<script src="{{ asset ('assetsFrontEnd/js/magnific-popup.js') }}"></script> 
+		<!--main Js-->
+		<script src="{{ asset ('assetsFrontEnd/js/main.js') }}"></script>
+
+	</body>
+
+</html>

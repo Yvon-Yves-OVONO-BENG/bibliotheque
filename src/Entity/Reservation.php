@@ -24,7 +24,7 @@ class Reservation
     private ?\DateTimeInterface $dateReservationAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    private ?StatutReservation $statutReservation = null;
+    private ?EtatReservation $etatReservation = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -73,14 +73,14 @@ class Reservation
         return $this;
     }
 
-    public function getStatutReservation(): ?StatutReservation
+    public function getEtatReservation(): ?EtatReservation
     {
-        return $this->statutReservation;
+        return $this->etatReservation;
     }
 
-    public function setStatutReservation(?StatutReservation $statutReservation): self
+    public function setEtatReservation(?EtatReservation $etatReservation): self
     {
-        $this->statutReservation = $statutReservation;
+        $this->etatReservation = $etatReservation;
 
         return $this;
     }

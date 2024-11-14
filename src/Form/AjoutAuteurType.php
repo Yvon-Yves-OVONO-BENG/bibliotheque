@@ -2,19 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\Auteur;
-use App\Entity\Nationalite;
 use App\Entity\Sexe;
+use App\Entity\Auteur;
 use App\Entity\TypeAuteur;
-use App\Repository\NationaliteRepository;
+use App\Entity\Nationalite;
 use App\Repository\SexeRepository;
 use App\Repository\TypeAuteurRepository;
 use Symfony\Component\Form\AbstractType;
+use App\Repository\NationaliteRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AjoutAuteurType extends AbstractType
@@ -41,6 +42,22 @@ class AjoutAuteurType extends AbstractType
                 'attr' => [
                     'autofocus' => true,
                     'placeholder' => "Saisir la biographie de l'auteur",
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'label' => "Email de l'auteur",
+                'required' => false,
+                'attr' => [
+                    'autofocus' => true,
+                    'placeholder' => "Saisir l'email de l'auteur",
+                ]
+            ])
+            ->add('telephone', TextType::class, [
+                'label' => "Contact(s) de l'auteur",
+                'required' => false,
+                'attr' => [
+                    'autofocus' => true,
+                    'placeholder' => "Saisir le(s) contct(s) de l'auteur",
                 ]
             ])
             ->add('nationalite', EntityType::class, [

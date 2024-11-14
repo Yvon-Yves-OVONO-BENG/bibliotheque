@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
+#[Route('/auteur')]
 class ListeAuteurController extends AbstractController
 {
     public function __construct(

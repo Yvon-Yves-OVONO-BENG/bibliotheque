@@ -1,0 +1,64 @@
+{% extends 'baseFrontEnd.html.twig' %}
+
+{% block title %}{% trans %}Nos genres littéraires{% endtrans %} {% endblock %}
+
+{% block body %}
+    <!--Banner Start-->
+<section class="breadcumnd__banner">
+   <div class="container">
+      <div class="row align-items-center">
+         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__content">
+               <h4>
+                  {% trans %}Nos genre littéraires{% endtrans %}
+               </h4>
+               
+               <p>
+					{% trans %}Plongez dans tous les mondes : découvrez nos genres littéraires !{% endtrans %}
+               </p>
+            </div>
+         </div>
+         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="banner__Thumb">
+               <img src="{{ asset ('assetsFrontEnd/img/hosting/atos-cloud.png') }}" alt="about-img">
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--Banner End-->
+
+<!--Feature Here-->
+<section class="home__feature pb-80">
+	<div class="container">
+		<div class="feature__wrap">
+			<div class="row g-4">
+
+				{% for genreLitteraire in genreLitteraires %}
+					<div class="col-xxl-2 col-xl-3 col-lg-4 col-md-4 col-sm-6">
+						<div class="home__feature__items">
+							<div class="thumb">
+								<img src="{{ asset ('assetsFrontEnd/img/home/feature/f6.png') }}" alt="f">
+							</div>
+							<h6>
+								<a href="#0">
+									{{ genreLitteraire.genreLitteraire }}
+								</a>
+								
+							</h6>
+							<h6>
+								{% trans %}Nombre de livres : {% endtrans %} {{ genreLitteraire.livres|length|number_format }}
+							</h6>
+						</div>
+					</div>
+				{% endfor %}
+				
+			</div>
+		</div>
+	</div>
+	<div class="h__bottom d-none">
+		<img src="{{ asset ('assetsFrontEnd/img/home/h-bottom2.png') }}" alt="h-img">
+	</div>
+</section>
+<!--Feature End-->
+{% endblock %}

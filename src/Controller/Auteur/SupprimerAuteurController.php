@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
  *
  */
+#[Route('/auteur')]
 class SupprimerAuteurController extends AbstractController
 {
     public function __construct(

@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Liste des modes de paiements{% endtrans %}{% endblock %}
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+        td{
+            text-align: center !important; 
+            vertical-align: middle !important;
+        }
+	</style>
+{% endblock %}
+
+{% block body %}
+        
+
+                <!--Page header-->
+                <div class="page-header">
+                    <div class="page-leftheader">
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-money me-2"></i>{% trans %}Liste des modes de paiements{% endtrans %}</h4>
+                    </div>
+                    <div class="page-rightheader">
+                        <div class="btn-list">
+                            <a href="{{ path ('ajout_modePaiement')}}" class="btn btn-outline-primary">
+                                <i class="fa fa-plus me-2"></i>{% trans %}Ajouter un mode de paiement{% endtrans %}
+                            </a>
+                            <a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
+                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer tous les modes de paiements{% endtrans %}
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--End Page header-->
+
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-12">
+
+                        <!--div-->
+                        <div class="card border-primary">
+                            <div class="card-header">
+                                <div class="col-md-8">
+                                    <div class="card-title"><i class="fa fa-money me-2"></i>{% trans %}Les modes de paiements{% endtrans %}</div>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <button type="button" class="btn btn-primary mt-1 mb-1 ">
+                                        <span class="badge bg-white text-dark">{{ modePaiements|length|number_format }}</span>
+                                        <span>{% trans %}modes de paiements enregitrés{% endtrans %}</span>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-bordered text-nowrap key-buttons">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0">N°</th>
+                                                    <th class="border-bottom-0">{% trans %}Mode de paiement{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Nombre de pénalités{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Nombre de emprunts{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Opérations{% endtrans %}</th>
+                                                </tr>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th class="border-bottom-0">N°</th>
+                                                    <th class="border-bottom-0">{% trans %}Mode de paiement{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Nombre de pénalités{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Nombre de emprunts{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Opérations{% endtrans %}</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                {% set i = 1 %}
+                                                {% for modePaiement in modePaiements %}
+                                                    <tr>
+                                                        <td><span class="badge bg-primary">{{ i }}</span></td>
+                                                        <td>{{ modePaiement.modePaiement }}
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            {% if modePaiement.penalites|length > 0 %}
+                                                                <span class="badge bg-primary"> {{ modePaiement.penalites|length|number_format }} </span>
+                                                                {% else %}
+                                                                <span class="badge bg-danger"> {{ modePaiement.penalites|length|number_format }} </span>
+                                                            {% endif %}
+                                                            
+                                                        </td>
+
+                                                        <td>
+                                                            {% if modePaiement.emprunts|length > 0 %}
+                                                                <span class="badge bg-primary"> {{ modePaiement.emprunts|length|number_format }} </span>
+                                                                {% else %}
+                                                                <span class="badge bg-danger"> {{ modePaiement.emprunts|length|number_format }} </span>
+                                                            {% endif %}
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <a href="javascript:void(0);" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options <i class="fa fa-angle-down"></i>
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="{{ path ('afficher_modePaiement', {'slug': modePaiement.slug}) }}"><i class="fe fe-eye me-2"></i>{% trans %}Afficher{% endtrans %} </a>
+                                                                    <a class="dropdown-item" href="{{ path ('modifier_modePaiement', {'slug': modePaiement.slug}) }}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
+
+                                                                    <a class="dropdown-item" href="javascript:void(0);" 
+                                                                        onclick="swal({
+                                                                            'title': 'Avertissement !', 
+                                                                            'type': 'warning', 
+                                                                            'text': 'Voulez-vous vraiment supprimer ce mode de paiement ' + ' {{ modePaiement.modePaiement }} ?', 
+                                                                            'showCancelButton': true, 
+                                                                            'confirmButtonText': 'Oui', 
+                                                                            'confirmButtonColor': '#f00', 
+                                                                            'cancelButtonText': 'Non', 
+                                                                            'cancelButtonColor': '#186106', 
+                                                                            'confirmButtonPath': '{{ path('supprimer_modePaiement', {'slug': modePaiement.slug}) }} '});">
+                                                                        <i class="fa fa-trash me-2"></i>{% trans %}Supprimer{% endtrans %}
+                                                                    </a>
+                                                                    
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% set i = i + 1 %}
+                                                {% endfor %}
+                                                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/div-->
+
+                    </div>
+                </div>
+                <!-- /Row -->
+
+            </div>
+        </div><!-- right app-content-->
+    </div>
+{% endblock %}

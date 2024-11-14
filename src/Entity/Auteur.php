@@ -22,7 +22,7 @@ class Auteur
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateNaissanceAt = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $biographie = null;
 
     #[ORM\ManyToOne(inversedBy: 'auteurs')]
@@ -60,6 +60,12 @@ class Auteur
 
     #[ORM\ManyToOne(inversedBy: 'auteurs')]
     private ?TypeAuteur $typeAuteur = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telephone = null;
 
     public function __construct()
     {
@@ -265,6 +271,30 @@ class Auteur
     public function setTypeAuteur(?TypeAuteur $typeAuteur): self
     {
         $this->typeAuteur = $typeAuteur;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
