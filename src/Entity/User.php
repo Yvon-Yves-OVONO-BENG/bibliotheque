@@ -425,7 +425,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->livres->contains($livre)) {
             $this->livres->add($livre);
             $livre->setEnregistrePar($this);
-
+    /**
      * @return Collection<int, Editeur>
      */
     public function getEnregistreEditeurs(): Collection
