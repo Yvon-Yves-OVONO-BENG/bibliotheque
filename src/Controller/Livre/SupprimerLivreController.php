@@ -3,6 +3,7 @@
 namespace App\Controller\Livre;
 
 use App\Repository\LivreRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +35,9 @@ class SupprimerLivreController extends AbstractController
         //Je vérifie s'il existe
         if ($livre) {
             //je le supprime des vues
-            $livre->setSupprime(1);
+            $livre->setSupprime(1)
+                ->setSupprimePar($this->getUser())
+                ->setSupprimeLeAt(new DateTime('now'));
             $this->em->persist($livre);
             $this->em->flush();
         }

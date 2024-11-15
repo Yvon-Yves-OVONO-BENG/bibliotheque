@@ -104,9 +104,9 @@
                                                         </td>
                                                         <td>
                                                             {% if livre.nombreExemplaire|length > 0 %}
-                                                                <span class="badge bg-primary"> {{livre.nombreExemplaire|length|number_format }} </span>
+                                                                <span class="badge bg-primary"> {{livre.nombreExemplaire|number_format }} </span>
                                                                 {% else %}
-                                                                <span class="badge bg-danger"> {{livre.nombreExemplaire|length|number_format }} </span>
+                                                                <span class="badge bg-danger"> {{livre.nombreExemplaire|number_format }} </span>
                                                             {% endif %}
                                                             
                                                             
