@@ -94,6 +94,10 @@
                                                     <tr>
                                                         <td><span class="badge bg-primary">{{ i }}</span></td>
                                                         <td>
+                                                            <div class="widget-user-image1 d-xl-flex d-block">
+                                                                <img alt="User Avatar" class="avatar brround p-0" src="{{ asset ('photo/' ~ livre.photo )}}">
+                                                            </div>
+                                                            <br>
                                                             {{ livre.titre }}</td>
                                                         </td>
                                                         <td><span class="badge bg-primary">{{ livre.auteur.nom }}</span>
@@ -119,7 +123,8 @@
                                                                 <a href="javascript:void(0);" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options <i class="fa fa-angle-down"></i>
                                                                 </a>
                                                                 <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="{{path('modifier_livre', {'slug':livre.slug})}}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
+                                                                    <a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-eye me-2"></i>{% trans %}Détails{% endtrans %} </a>
+                                                                    <a class="dropdown-item" href="{{ path ('modifier_livre', {'slug':livre.slug})}}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
 
                                                                     <a class="dropdown-item" href="javascript:void(0);" 
                                                                         onclick="swal({
