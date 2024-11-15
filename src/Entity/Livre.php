@@ -88,6 +88,18 @@ class Livre
     #[ORM\Column(nullable: true)]
     private ?bool $supprime = null;
 
+    #[ORM\ManyToOne(inversedBy: 'modifieLivres')]
+    private ?User $modifiePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $modifieLeAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'supprimeLivres')]
+    private ?User $supprimePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $supprimeLeAt = null;
+
     public function __construct()
     {
         $this->etatExemplaires = new ArrayCollection();
@@ -456,6 +468,54 @@ class Livre
     public function setSupprime(?bool $supprime): static
     {
         $this->supprime = $supprime;
+
+        return $this;
+    }
+
+    public function getModifiePar(): ?User
+    {
+        return $this->modifiePar;
+    }
+
+    public function setModifiePar(?User $modifiePar): static
+    {
+        $this->modifiePar = $modifiePar;
+
+        return $this;
+    }
+
+    public function getModifieLeAt(): ?\DateTimeInterface
+    {
+        return $this->modifieLeAt;
+    }
+
+    public function setModifieLeAt(?\DateTimeInterface $modifieLeAt): static
+    {
+        $this->modifieLeAt = $modifieLeAt;
+
+        return $this;
+    }
+
+    public function getSupprimePar(): ?User
+    {
+        return $this->supprimePar;
+    }
+
+    public function setSupprimePar(?User $supprimePar): static
+    {
+        $this->supprimePar = $supprimePar;
+
+        return $this;
+    }
+
+    public function getSupprimeLeAt(): ?\DateTimeInterface
+    {
+        return $this->supprimeLeAt;
+    }
+
+    public function setSupprimeLeAt(?\DateTimeInterface $supprimeLeAt): static
+    {
+        $this->supprimeLeAt = $supprimeLeAt;
 
         return $this;
     }

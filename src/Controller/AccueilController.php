@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ConstantsClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,9 +58,20 @@ class AccueilController extends AbstractController
             
         }
 
-        
-        return $this->render('accueil/index.html.twig', [
+        if ($this->getUser() && in_array(ConstantsClass::ROLE_ADMIN, $this->getUser()->getRoles())) 
+        {
+            return $this->render('accueil/indexAdmin.html.twig', [
+                'b' => $b
+             ]);
+
+        } 
+        else 
+        {
+            return $this->render('accueil/index.html.twig', [
            'b' => $b
         ]);
+        }
+        
+        
     }
 }

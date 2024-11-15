@@ -149,6 +149,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: EtatReservation::class)]
     private Collection $supprimeEtatReservations;
 
+    #[ORM\OneToMany(mappedBy: 'modifiePar', targetEntity: Livre::class)]
+    private Collection $modifieLivres;
+
+    #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Livre::class)]
+    private Collection $supprimeLivres;
+
 
     public function __construct()
     {
@@ -188,6 +194,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->enregistreEtatReservations = new ArrayCollection();
         $this->modifieEtatReservations = new ArrayCollection();
         $this->supprimeEtatReservations = new ArrayCollection();
+        $this->modifieLivres = new ArrayCollection();
+        $this->supprimeLivres = new ArrayCollection();
 
     }
 
@@ -425,6 +433,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->livres->contains($livre)) {
             $this->livres->add($livre);
             $livre->setEnregistrePar($this);
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Editeur>
      */
@@ -451,6 +464,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($livre->getEnregistrePar() === $this) {
                 $livre->setEnregistrePar(null);
+            }
+
+        }
+
+        return $this;
+    }
 
     public function removeEnregistreEditeur(Editeur $enregistreEditeur): self
     {
@@ -1329,6 +1348,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($supprimeEtatReservation->getSupprimePar() === $this) {
                 $supprimeEtatReservation->setSupprimePar(null);
 
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livre>
+     */
+    public function getModifieLivres(): Collection
+    {
+        return $this->modifieLivres;
+    }
+
+    public function addModifieLivre(Livre $modifieLivre): static
+    {
+        if (!$this->modifieLivres->contains($modifieLivre)) {
+            $this->modifieLivres->add($modifieLivre);
+            $modifieLivre->setModifiePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModifieLivre(Livre $modifieLivre): static
+    {
+        if ($this->modifieLivres->removeElement($modifieLivre)) {
+            // set the owning side to null (unless already changed)
+            if ($modifieLivre->getModifiePar() === $this) {
+                $modifieLivre->setModifiePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livre>
+     */
+    public function getSupprimeLivres(): Collection
+    {
+        return $this->supprimeLivres;
+    }
+
+    public function addSupprimeLivre(Livre $supprimeLivre): static
+    {
+        if (!$this->supprimeLivres->contains($supprimeLivre)) {
+            $this->supprimeLivres->add($supprimeLivre);
+            $supprimeLivre->setSupprimePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupprimeLivre(Livre $supprimeLivre): static
+    {
+        if ($this->supprimeLivres->removeElement($supprimeLivre)) {
+            // set the owning side to null (unless already changed)
+            if ($supprimeLivre->getSupprimePar() === $this) {
+                $supprimeLivre->setSupprimePar(null);
             }
         }
 

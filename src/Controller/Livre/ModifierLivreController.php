@@ -6,6 +6,7 @@ use App\Entity\Photo;
 use App\Form\AjoutLivreType;
 use App\Services\StrService;
 use App\Repository\LivreRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -88,7 +89,9 @@ class ModifierLivreController extends AbstractController
                     }
                 }
                 
-                $livre->setTitre($this->strService->strToUpper($livre->getTitre()));
+                $livre->setTitre($this->strService->strToUpper($livre->getTitre()))
+                    ->setModifiePar($this->getUser())
+                    ->setModifieLeAt(new DateTime('now'));
                 $this->em->persist($livre);
                 $this->em->flush(); 
 
