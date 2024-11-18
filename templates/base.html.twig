@@ -580,10 +580,10 @@
 													{% trans %}Exemplaire{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
 												</a>
 												<ul class="sub-menu">
-													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un exemplaire{% endtrans %}</a>
+													<li aria-haspopup="true"><a href="{{path('ajout_exemplaire')}}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un exemplaire{% endtrans %}</a>
 														
 													</li>
-													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des exemplaires{% endtrans %}</a>
+													<li aria-haspopup="true"><a href="{{path('liste_exemplaire')}}"><i class="fa fa-list me-2"></i>{% trans %}Liste des exemplaires{% endtrans %}</a>
 														
 												</ul>
 											</li>
