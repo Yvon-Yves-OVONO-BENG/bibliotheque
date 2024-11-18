@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Liste des livres{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Liste des exemplaires{% endtrans %}{% endblock %}
 {% block stylesheets %}
 	<style>
 		th,
@@ -33,10 +33,10 @@
                     <div class="page-rightheader">
                         <div class="btn-list">
                             <a href="{{ path ('ajout_livre')}}" class="btn btn-outline-primary">
-                                <i class="fa fa-plus me-2"></i>{% trans %}Ajouter un livre{% endtrans %}
+                                <i class="fa fa-plus me-2"></i>{% trans %}Ajouter un exemplaire{% endtrans %}
                             </a>
                             <a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
-                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer la liste de tous les livres{% endtrans %}
+                                <i class="fe fe-printer me-2"></i> {% trans %}Imprimer la liste de tous les exemplaires{% endtrans %}
                             </a>
                             
                         </div>
@@ -52,12 +52,12 @@
                         <div class="card border-primary">
                             <div class="card-header">
                                 <div class="col-md-8">
-                                    <div class="card-title"><i class="fa fa-navicon me-2"></i>{% trans %}Les livres{% endtrans %}</div>
+                                    <div class="card-title"><i class="fa fa-navicon me-2"></i>{% trans %}Les exemplaire{% endtrans %}</div>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <button type="button" class="btn btn-primary mt-1 mb-1 ">
-                                        <span class="badge bg-white text-dark">{{ livres|length|number_format }}</span>
-                                        <span>{% trans %}livres enregitrés{% endtrans %}</span>
+                                        <span class="badge bg-white text-dark">{{ exemplaires|length|number_format }}</span>
+                                        <span>{% trans %}Exemplaires enregitrés{% endtrans %}</span>
                                     </button>
                                 </div>
                                 
@@ -69,49 +69,39 @@
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0">N°</th>
-                                                    <th class="border-bottom-0">{% trans %}Titre{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Auteur{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Genre litteraire{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Nombre d'exemplaire{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Etagère{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Livre{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Etat{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Date d'acquisition{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}code de l'exemplaire{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Opérations{% endtrans %}</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th class="border-bottom-0">N°</th>
-                                                    <th class="border-bottom-0">{% trans %}Titre{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Auteur{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Genre litteraire{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Nombre d'exemplaire{% endtrans %}</th>
-                                                    <th class="border-bottom-0">{% trans %}Armoire{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Livre{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Etat{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Date d'acquisition{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}code de l'exemplaire{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Opérations{% endtrans %}</th> 
                                                 </tr>
                                             </tfoot>
                                             <tbody>
                                                 {% set i = 1 %}
-                                                {% for livre in livres %}
+                                                {% for exemplaire in exemplaires %}
                                                     <tr>
                                                         <td><span class="badge bg-primary">{{ i }}</span></td>
                                                         <td>
-                                                            {{ livre.titre }}</td>
+                                                            {{ exemplaire.livre.titre }}</td>
                                                         </td>
-                                                        <td><span class="badge bg-primary">{{ livre.auteur.nom }}</span>
+                                                        <td><span class="badge bg-primary">{{ exemplaire.etatExemplaire.etatExemplaire }}</span>
                                                             
                                                         </td>
-                                                         <td><span class="badge bg-primary">{{ livre.genreLitteraire.genreLitteraire }}</span>
+                                                         <td><span class="badge bg-primary">{{ exemplaire.dateAcquisitionAt|date('d/m/Y')}}</span>
                                                             
                                                         </td>
-                                                        <td>
-                                                            {% if livre.nombreExemplaire|length > 0 %}
-                                                                <span class="badge bg-primary"> {{livre.nombreExemplaire|number_format }} </span>
-                                                                {% else %}
-                                                                <span class="badge bg-danger"> {{livre.nombreExemplaire|number_format }} </span>
-                                                            {% endif %}
-                                                            
-                                                            
-                                                        </td>
-                                                        <td><span class="badge bg-primary">{{ livre.armoire.armoire }}</span>
+                                                        
+                                                        <td><span class="badge bg-primary">{{ exemplaire.codeExemplaire }}</span>
                                                             
                                                         </td>
                                                         <td>
@@ -120,22 +110,20 @@
                                                                 </a>
                                                                 <div class="dropdown-menu">
                                                                     <a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-eye me-2"></i>{% trans %}Détails{% endtrans %} </a>
-                                                                    <a class="dropdown-item" href="{{ path ('modifier_livre', {'slug':livre.slug})}}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
-
+                                                                    <a class="dropdown-item" href="{{ path ('modifier_exemplaire', {'slug':exemplaire.slug})}}"><i class="fe fe-edit me-2"></i>{% trans %}Modifier{% endtrans %} </a>
                                                                     <a class="dropdown-item" href="javascript:void(0);" 
                                                                         onclick="swal({
                                                                             'title': 'Avertissement !', 
                                                                             'type': 'warning', 
-                                                                            'text': 'Voulez-vous vraiment supprimer le livre ' + ' {{ livre.titre }} ?', 
+                                                                            'text': 'Voulez-vous vraiment supprimer cet exemplaire ' + ' {{ exemplaire.codeExemplaire }} {{ exemplaire.livre.titre }} ?', 
                                                                             'showCancelButton': true, 
                                                                             'confirmButtonText': 'Oui', 
                                                                             'confirmButtonColor': '#f00', 
                                                                             'cancelButtonText': 'Non', 
                                                                             'cancelButtonColor': '#186106', 
-                                                                            'confirmButtonPath': '{{ path('supprimer_livre', {'slug': livre.slug}) }}' });">
+                                                                            'confirmButtonPath': '{{ path('supprimer_exemplaire', {'slug': exemplaire.slug}) }}' });">
                                                                         <i class="fa fa-trash me-2"></i>{% trans %}Supprimer{% endtrans %}
                                                                     </a>
-                                                                   
                                                                     
                                                                 </div>
                                                             </div>

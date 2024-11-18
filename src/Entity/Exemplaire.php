@@ -32,6 +32,15 @@ class Exemplaire
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $supprime = null;
+
+    #[ORM\ManyToOne(inversedBy: 'exemplaires')]
+    private ?User $supprimePar = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $supprimeLeAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +114,42 @@ class Exemplaire
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function isSupprime(): ?bool
+    {
+        return $this->supprime;
+    }
+
+    public function setSupprime(?bool $supprime): static
+    {
+        $this->supprime = $supprime;
+
+        return $this;
+    }
+
+    public function getSupprimePar(): ?User
+    {
+        return $this->supprimePar;
+    }
+
+    public function setSupprimePar(?User $supprimePar): static
+    {
+        $this->supprimePar = $supprimePar;
+
+        return $this;
+    }
+
+    public function getSupprimeLeAt(): ?\DateTimeInterface
+    {
+        return $this->supprimeLeAt;
+    }
+
+    public function setSupprimeLeAt(?\DateTimeInterface $supprimeLeAt): static
+    {
+        $this->supprimeLeAt = $supprimeLeAt;
 
         return $this;
     }
