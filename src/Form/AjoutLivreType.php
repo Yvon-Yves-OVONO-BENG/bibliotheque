@@ -27,6 +27,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -200,6 +201,13 @@ class AjoutLivreType extends AbstractType
                     'data-height' => '180'
                 ]
 
+            ])
+            ->add('montantEmprunt', NumberType::class, [
+                'label' => "Montant de l'emprunt",
+                'attr' => [
+                    'autofocus' => true,
+                    'placeholder' => "Saisir le montant de l'emprunt",
+                ]
             ])
         ;
     }

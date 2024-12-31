@@ -79,7 +79,8 @@ class AjoutLivreController extends AbstractController
 
                 //Je récuppère les autres images du livre pour uploader 
                 $images = $form->get('photos')->getData();
-                foreach ($images as $image) {
+                foreach ($images as $image) 
+                {
                     $fichier = md5(uniqid()) . '.' . $image->guessExtension();
                     $image->move(
                         $this->getParameter('photo_directory'),

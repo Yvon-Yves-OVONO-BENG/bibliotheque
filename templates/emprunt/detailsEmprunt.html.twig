@@ -1,0 +1,197 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'emprunt
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		.infoTable {
+			text-align: center !important;
+			vertical-align: middle !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	
+
+			<!--Page header-->
+			<div class="page-header">
+				<div class="page-leftheader">
+					<h4 class="page-title mb-0 text-primary">
+						<i class="fa fa-cart-arrow-down me-2"></i>
+						Détails de l'emprunt</h4>
+				</div>
+				<div class="page-rightheader">
+					{% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_ADMINISTRATEUR') %}
+						<a href="{{ path('liste_emprunt') }}" class="btn btn-outline-primary">
+							<i class="fa fa-cart-arrow-down me-2"></i>
+							{% trans %}Les emprunts{% endtrans %}
+						</a>
+					{% endif %}
+
+					<a href="{{ path('imprimer_emprunt', {'slug': emprunt.slug }) }}" class="btn btn-outline-primary" target="_blank">
+						<i class="si si-printer me-2"></i>
+						{% trans %}Imprimer{% endtrans %}
+					</a>
+						
+						
+				</div>
+			</div>
+			<!--End Page header-->
+
+			<!-- Row -->
+			<!-- Row-->
+				<div class="row"> <div class="col-md-12">
+					<div class="card overflow-hidden border-primary">
+						<div class="card-body">
+							<h2 class="font-weight-bold text-primary">DETAILS DE LA EMPRUNT :
+								{{ emprunt.reference }}</h2>
+							<div class="row">
+								<div class="col-sm-6">
+									<h5 class="mb-1">Salut
+										<strong>{{ emprunt.membre ? emprunt.membre.nom : "CLIENT" }}</strong>,</h5>
+									Cette emprunt s'élève à un montant de :
+									<strong>{{ emprunt.nombre * emprunt.livre.montantEmprunt  }}</strong>
+									FCFA
+								</div>
+								<div class="col-sm-6 text-end">
+									<span>Date de l'emprunt</span><br>
+									<strong>{{ emprunt.dateEmpruntAt | date('d-m-Y') }} - {{ emprunt.dateEmpruntAt | date('H:i') }}</strong>
+								
+								</div>
+							</div>
+								
+
+							<div class="card-body ps-0 pe-0">
+								<div class="row">
+									<div class="col-sm-6">
+										<span>Statut de l'emprunt :</span>
+										<strong>{{ emprunt.statutEmprunt ? emprunt.statutEmprunt.statutEmprunt : "" }}</strong>;
+										<span>Mode de paiement :</span>
+										<strong>{{ emprunt.modePaiement ? emprunt.modePaiement.modePaiement : "" }}</strong>
+									</div>
+									<div class="col-sm-6 text-end">
+										<span>Par :</span>
+										<strong>{{ emprunt.enregistrePar ? emprunt.enregistrePar.nom : "Gérant" }}</strong> 
+									</div>
+								</div>
+							</div>
+							<div class="dropdown-divider"></div>
+							<div class="row pt-4">
+								<div class="col-lg-4 ">
+									<p class="h5 font-weight-bold">Facture de : Biblio Smart
+									</p>
+									<address>
+										Cameroun<br>
+										Centre, Mfoundi<br>
+										Yaoundé, BP : 00000 - Yaoundé<br>
+										+237 xxx xxx xxx <br>
+										
+									</address>
+								</div>
+
+								<div class="col-lg-4 text-center">
+									<img src="{{ asset ('images/qrCode/' ~ emprunt.qrCode )}}" alt="qrCode" width="100" heigth="100">
+								</div>
+
+								<div class="col-lg-4 text-end">
+									<p class="h5 font-weight-bold">Pour :
+									</p>
+									<address>
+										Nom client :
+										{{ emprunt.membre ? emprunt.membre.nom : "CLIENT"  }}<br>
+										Téléphone :
+										{{ emprunt.membre.telephone }}<br>
+										Adresse :
+										{{ emprunt.membre.adresse  }}<br>
+										Email :
+										{{ emprunt.membre.email  }}
+										
+									</address>
+								</div>
+							</div>
+							<div class="table-responsive push">
+								<table class="table table-bordered table-striped table-hover text-nowrap">
+									<tr class=" ">
+										<th class="text-center " style="width: 1%">N°</th>
+										<th class="text-center " style="width: 1%">Photo</th>
+										<th>Livre</th>
+										<th class="text-end" style="width: 1%">Montant emprunt(FCFA)</th>
+										<th class="text-center" style="width: 1%">Qté</th>
+										<th class="text-end" style="width: 1%">Total (FCFA)</th>
+									</tr>
+									
+										<tr>
+											<td class="text-center" style="vertical-align: middle !important;">1</td>
+											<td class="text-center" style="vertical-align: middle !important;">
+												<img src="{{ asset ('photo/' ~ emprunt.livre.photo )}}" alt="photo">
+											</td>
+											
+											<td class="text-center" style="vertical-align: middle !important;"><h5><span class="badge badge-default">{{ emprunt.livre.titre }}</span></h5></td>
+											<td class="text-end" style="vertical-align: middle !important;"><h5><span class="badge badge-default">{{ emprunt.livre.montantEmprunt }}</span></h5></td>
+											<td class="text-end" style="vertical-align: middle !important;"><h5><span class="badge badge-default">{{ emprunt.nombre }}</span></h5></td>
+											<td class="text-end" style="vertical-align: middle !important;"><h5><span class="badge badge-default">{{ emprunt.nombre * emprunt.livre.montantEmprunt }}</span></h5></td>
+										</tr>
+
+
+									<tr>
+										<td colspan="5" class="font-weight-semibold text-end">Montant HT</td>
+										<td class="text-end"><h5><span class="badge bg-primary">{{ emprunt.nombre * emprunt.livre.montantEmprunt }}</span></h5></td>
+									</tr>
+									<tr>
+										<td colspan="5" class="font-weight-semibold text-end">TVA</td>
+										<td class="text-end">0%</td>
+									</tr>
+									<tr>
+										<td colspan="5" class="font-weight-semibold text-end">Montant à payer</td>
+										<td class="text-end"><h5><span class="badge bg-primary">{{ emprunt.nombre * emprunt.livre.montantEmprunt }}</span></h5></td>
+									</tr>
+									<tr class="text-danger">
+										<td colspan="5" class="font-weight-bold text-uppercase text-end h4 mb-0">NET A PAYER</td>
+										<td class="font-weight-bold text-end h4 mb-0">{{ emprunt.nombre * emprunt.livre.montantEmprunt }} FCFA</td>
+									</tr>
+									<tr>
+										<td colspan="6" class="text-end">
+											{% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_ADMINISTRATEUR') %}
+												<a href="{{ path('liste_emprunt') }}" class="btn btn-outline-primary">
+													<i class="fa fa-cart-arrow-down me-2"></i>
+
+													{% trans %}Nos emprunts{% endtrans %}
+												</a>
+											{% endif %}
+											{# <a href="{{ path('envoi_emprunt', {'slug': emprunt.slug }) }}" class="btn btn-outline-primary">
+												<i class="fa fa-send me-2"></i>
+												{% trans %}Envoyer{% endtrans %}
+											</a> #}
+											<a href="{{ path('imprimer_emprunt', {'slug': emprunt.slug }) }}" class="btn btn-outline-primary" target="_blank">
+												<i class="si si-printer me-2"></i>
+												{% trans %}Imprimer{% endtrans %}
+											</a>
+											
+										</td>
+									</tr>
+								</table>
+							</div>
+							<p class="text-muted text-center">Merci beacoup d'avoit fait confiance à Biblio Smart. !</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End row-->
+		</div>
+	</div>
+{% endblock %}

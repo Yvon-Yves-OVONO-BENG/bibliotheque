@@ -91,6 +91,15 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
+.collection-container {
+    display: flex;
+    gap: 10px;
+}
+
+.collection-container .form-group {
+    flex: 1;
+}
+
 @-ms-viewport {
     width: device-width;
 }

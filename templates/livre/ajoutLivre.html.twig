@@ -188,13 +188,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutLivreForm.montantEmprunt)}}
+                                        {{ form_widget(ajoutLivreForm.montantEmprunt, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le montant d'Emprunt !{% endtrans %}
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
-                                <div class="col-md-3">
-                                </div>
-                                <div class="col-md-3">
-                                </div>
-                                <div class="col-md-3">
+                                
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label style="color: #fff;">.</label>
                                             {% if slug == null %}
