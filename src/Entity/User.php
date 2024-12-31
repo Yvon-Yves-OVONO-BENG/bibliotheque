@@ -158,6 +158,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Exemplaire::class)]
     private Collection $exemplaires;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Membre::class)]
+    private Collection $membres;
+
 
     public function __construct()
     {
@@ -200,6 +203,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->modifieLivres = new ArrayCollection();
         $this->supprimeLivres = new ArrayCollection();
         $this->exemplaires = new ArrayCollection();
+        $this->membres = new ArrayCollection();
 
     }
 
@@ -1442,6 +1446,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($exemplaire->getSupprimePar() === $this) {
                 $exemplaire->setSupprimePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Membre>
+     */
+    public function getMembres(): Collection
+    {
+        return $this->membres;
+    }
+
+    public function addMembre(Membre $membre): static
+    {
+        if (!$this->membres->contains($membre)) {
+            $this->membres->add($membre);
+            $membre->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMembre(Membre $membre): static
+    {
+        if ($this->membres->removeElement($membre)) {
+            // set the owning side to null (unless already changed)
+            if ($membre->getUser() === $this) {
+                $membre->setUser(null);
             }
         }
 

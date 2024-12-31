@@ -31,6 +31,24 @@
 	<link rel="stylesheet" href="{{ asset ('assetsFrontEnd/css/main.css') }}">
 	</head>
 
+	<!-- CSS AZEA -->
+	<!--Bootstrap css -->
+	<link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+	<!-- Style css -->
+	<link href="{{ asset('assets/css/style.css')}}" rel="stylesheet" />
+	<link href="{{ asset('assets/css/dark.css')}}" rel="stylesheet" />
+	<link href="{{ asset('assets/css/skin-modes.css')}}" rel="stylesheet" />
+
+	<!-- Animate css -->
+	<link href="{{ asset('assets/css/animated.css')}}" rel="stylesheet" />
+
+	<!---Icons css-->
+	<link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet" />
+
+	<!-- Color Skin css -->
+	<link id="theme" href="{{ asset('assets/colors/color1.css')}}" rel="stylesheet" type="text/css"/>
+
 	<body>
 
 
@@ -40,7 +58,7 @@
 		</div>
 		<!--==== Scrool Top Bottom End ======= -->
 
-		<div class="signin__signup__wrap">
+		{# <div class="signin__signup__wrap">
 			{% if app.user %}
 				<a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#register">
 					<span>{% trans %}Mon profil{% endtrans %}</span>
@@ -57,7 +75,7 @@
 				</a>
 			{% endif %}
 			
-		</div>
+		</div> #}
 
 		<!--Header Here-->
 		<header class="header-section home__header border__bottom sharp__header">
@@ -116,9 +134,16 @@
 						</a>
 					</li>
 					</ul>
-					<a href="{{ path ('contactez_nous') }}" class="cmn--btn">
-					<span>{% trans %}Contactez-nous{% endtrans %}</span>
-					</a>
+					{% if app.user %}
+						<a href="{{ path ('app_logout') }}" class="cmn--btn">
+							<span>{% trans %}Deconnexion{% endtrans %}</span>
+						</a>
+					{% else %}
+						<a href="{{ path ('app_login') }}" class="cmn--btn">
+							<span>{% trans %}Connectez-vous{% endtrans %}</span>
+						</a>
+					{% endif %}
+					
 				</div>
 			</div>
 		</header>
@@ -647,6 +672,31 @@
 		<script src="{{ asset ('assetsFrontEnd/js/magnific-popup.js') }}"></script> 
 		<!--main Js-->
 		<script src="{{ asset ('assetsFrontEnd/js/main.js') }}"></script>
+
+
+		<!-- JS AZEA-->
+		<!-- Jquery js-->
+		<script src="{{ asset('assets/js/jquery.min.js')}}"></script>
+
+		<!-- Bootstrap5 js-->
+		<script src="{{ asset('assets/plugins/bootstrap/popper.min.js')}}"></script>
+		<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+
+		<!--Othercharts js-->
+		<script src="{{ asset('assets/plugins/othercharts/jquery.sparkline.min.js')}}"></script>
+
+		<!-- Circle-progress js-->
+		<script src="{{ asset('assets/js/circle-progress.min.js')}}"></script>
+
+		<!-- Jquery-rating js-->
+		<script src="{{ asset('assets/plugins/rating/jquery.rating-stars.js')}}"></script>
+
+		<!-- Show Password -->
+		<script src="{{ asset('assets/js/bootstrap-show-password.min.js')}}"></script>
+
+		<!-- Custom js-->
+		<script src="{{ asset('assets/js/custom.js')}}"></script>
+
 
 	</body>
 

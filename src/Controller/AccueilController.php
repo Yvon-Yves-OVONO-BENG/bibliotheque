@@ -7,12 +7,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AccueilController extends AbstractController
 {
     #[Route('/{a<[0-1]{1}>}/{m<[0-1]{1}>}/{s<[0-1]{1}>}/{b}', name: 'accueil')]
-    public function accueil(Request $request, int $a = 0,  int $m = 0, int $s = 0, int $b = 0): Response
+    public function accueil(AuthenticationUtils $authenticationUtils, Request $request, int $a = 0,  int $m = 0, int $s = 0, int $b = 0): Response
     {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
         $mySession = $request->getSession();
         
         if(!$mySession)
@@ -61,17 +66,22 @@ class AccueilController extends AbstractController
         if ($this->getUser() && in_array(ConstantsClass::ROLE_ADMIN, $this->getUser()->getRoles())) 
         {
             return $this->render('accueil/indexAdmin.html.twig', [
-                'b' => $b
+                'b' => $b,
+                'last_username' => $lastUsername, 
+                'error' => $error
              ]);
 
         } 
         else 
         {
             return $this->render('accueil/index.html.twig', [
-           'b' => $b
+           'b' => $b,
+           'last_username' => $lastUsername, 
+            'error' => $error
         ]);
         }
         
         
     }
+
 }
