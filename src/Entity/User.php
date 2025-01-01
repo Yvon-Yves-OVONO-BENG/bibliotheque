@@ -162,6 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $membres;
 
 
+
     public function __construct()
     {
         $this->enregistreAuteurs = new ArrayCollection();
@@ -204,6 +205,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->supprimeLivres = new ArrayCollection();
         $this->exemplaires = new ArrayCollection();
         $this->membres = new ArrayCollection();
+
 
     }
 
@@ -1453,6 +1455,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+
      * @return Collection<int, Membre>
      */
     public function getMembres(): Collection
@@ -1465,6 +1468,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->membres->contains($membre)) {
             $this->membres->add($membre);
             $membre->setUser($this);
+
         }
 
         return $this;
@@ -1476,6 +1480,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($membre->getUser() === $this) {
                 $membre->setUser(null);
+
             }
         }
 

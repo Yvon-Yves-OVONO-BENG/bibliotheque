@@ -100,6 +100,12 @@ class Livre
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $supprimeLeAt = null;
 
+    #[ORM\Column]
+    private ?int $montantEmprunt = null;
+
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: LigneEmprunt::class)]
+    private Collection $ligneEmprunts;
+
     public function __construct()
     {
         $this->etatExemplaires = new ArrayCollection();
@@ -107,6 +113,7 @@ class Livre
         $this->emprunts = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->ligneEmprunts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -516,6 +523,48 @@ class Livre
     public function setSupprimeLeAt(?\DateTimeInterface $supprimeLeAt): static
     {
         $this->supprimeLeAt = $supprimeLeAt;
+
+        return $this;
+    }
+
+    public function getMontantEmprunt(): ?int
+    {
+        return $this->montantEmprunt;
+    }
+
+    public function setMontantEmprunt(int $montantEmprunt): static
+    {
+        $this->montantEmprunt = $montantEmprunt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigneEmprunt>
+     */
+    public function getLigneEmprunts(): Collection
+    {
+        return $this->ligneEmprunts;
+    }
+
+    public function addLigneEmprunt(LigneEmprunt $ligneEmprunt): static
+    {
+        if (!$this->ligneEmprunts->contains($ligneEmprunt)) {
+            $this->ligneEmprunts->add($ligneEmprunt);
+            $ligneEmprunt->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneEmprunt(LigneEmprunt $ligneEmprunt): static
+    {
+        if ($this->ligneEmprunts->removeElement($ligneEmprunt)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneEmprunt->getLivre() === $this) {
+                $ligneEmprunt->setLivre(null);
+            }
+        }
 
         return $this;
     }

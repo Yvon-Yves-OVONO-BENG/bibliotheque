@@ -556,8 +556,8 @@
 													{% trans %}Emprunt{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
 												</a>
 												<ul class="sub-menu">
-													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un Emprunt{% endtrans %}</a></li>
-													<li aria-haspopup="true"><a href="javascript:void(0);"><i class="fa fa-list me-2"></i>{% trans %}Liste des Emprunts{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="{{ path ('ajout_emprunt')}}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un Emprunt{% endtrans %}</a></li>
+													<li aria-haspopup="true"><a href="{{ path ('liste_emprunt')}}"><i class="fa fa-list me-2"></i>{% trans %}Liste des Emprunts{% endtrans %}</a></li>
 													
 												</ul>
 											</li>
@@ -574,10 +574,10 @@
 													
 												</ul>
 											</li>
-											<li aria-haspopup="true">
+											{# <li aria-haspopup="true">
 												<a href="javascript:void(0);" class="sub-icon">
 													<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 11h8V3H3zm2-6h4v4H5zM3 21h8v-8H3zm2-6h4v4H5zm8-12v8h8V3zm6 6h-4V5h4zm-5.99 4h2v2h-2zm2 2h2v2h-2zm-2 2h2v2h-2zm4 0h2v2h-2zm2 2h2v2h-2zm-4 0h2v2h-2zm2-6h2v2h-2zm2 2h2v2h-2z"/></svg>
-													{% trans %}Exemplaire{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+													{% trans %}Retour exemplaire{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
 												</a>
 												<ul class="sub-menu">
 													<li aria-haspopup="true"><a href="{{path('ajout_exemplaire')}}"><i class="fa fa-plus me-2"></i>{% trans %}Ajouter un exemplaire{% endtrans %}</a>
@@ -586,7 +586,7 @@
 													<li aria-haspopup="true"><a href="{{path('liste_exemplaire')}}"><i class="fa fa-list me-2"></i>{% trans %}Liste des exemplaires{% endtrans %}</a>
 														
 												</ul>
-											</li>
+											</li> #}
 											<li aria-haspopup="true">
 												<a href="javascript:void(0);" class="sub-icon">
 													
