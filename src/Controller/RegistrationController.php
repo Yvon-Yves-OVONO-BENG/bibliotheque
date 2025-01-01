@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Membre;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\MembreRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +17,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    public function __construct(protected MembreRepository $membreRepository, protected UserRepository $userRepository)
+    {
+    }
+
+
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -23,6 +31,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
+            $membre = new Membre();
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -30,11 +39,17 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setSlug(uniqid('', true))
+            $user->setSlug(md5(uniqid()))
             ->setBloque(0)
             ->setTemoin(0);
 
             $entityManager->persist($user);
+
+            $membre->setUser($user)
+            ->setNom($request->request->get('nom'))
+            ->setTelephone('contact')
+            ->setSlug(md5(uniqid()));
+            $entityManager->persist($membre);
             $entityManager->flush();
             // do anything else you need here, like send an email
 

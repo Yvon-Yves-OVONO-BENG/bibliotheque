@@ -40,8 +40,9 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password',
-            'class'=>'form-control',
-        'placeholder'=>'Mot de passe'],
+                    'class'=>'form-control',
+                    'placeholder'=>'Mot de passe'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',

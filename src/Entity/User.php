@@ -158,8 +158,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'supprimePar', targetEntity: Exemplaire::class)]
     private Collection $exemplaires;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Emprunt::class)]
-    private Collection $emprunts;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Membre::class)]
+    private Collection $membres;
+
 
 
     public function __construct()
@@ -203,7 +204,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->modifieLivres = new ArrayCollection();
         $this->supprimeLivres = new ArrayCollection();
         $this->exemplaires = new ArrayCollection();
-        $this->emprunts = new ArrayCollection();
+        $this->membres = new ArrayCollection();
+
 
     }
 
@@ -1453,29 +1455,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Emprunt>
+
+     * @return Collection<int, Membre>
      */
-    public function getEmprunts(): Collection
+    public function getMembres(): Collection
     {
-        return $this->emprunts;
+        return $this->membres;
     }
 
-    public function addEmprunt(Emprunt $emprunt): static
+    public function addMembre(Membre $membre): static
     {
-        if (!$this->emprunts->contains($emprunt)) {
-            $this->emprunts->add($emprunt);
-            $emprunt->setUser($this);
+        if (!$this->membres->contains($membre)) {
+            $this->membres->add($membre);
+            $membre->setUser($this);
+
         }
 
         return $this;
     }
 
-    public function removeEmprunt(Emprunt $emprunt): static
+    public function removeMembre(Membre $membre): static
     {
-        if ($this->emprunts->removeElement($emprunt)) {
+        if ($this->membres->removeElement($membre)) {
             // set the owning side to null (unless already changed)
-            if ($emprunt->getUser() === $this) {
-                $emprunt->setUser(null);
+            if ($membre->getUser() === $this) {
+                $membre->setUser(null);
+
             }
         }
 

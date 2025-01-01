@@ -30,7 +30,7 @@ class Membre
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: User::class)]
     private Collection $users;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: EtatExemplaire::class)]
@@ -48,7 +48,7 @@ class Membre
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: Penalite::class)]
     private Collection $penalites;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: CommentaireLivre::class)]
@@ -56,6 +56,9 @@ class Membre
 
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: NoteEtoileLivre::class)]
     private Collection $noteEtoileLivres;
+
+    #[ORM\ManyToOne(inversedBy: 'membres')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -360,6 +363,18 @@ class Membre
                 $noteEtoileLivre->setMembre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

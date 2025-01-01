@@ -1,11 +1,11 @@
-{% extends '/baseLoginRegister.html.twig' %}
+{% extends 'baseFrontEnd.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
    
-
-    {# {{ form_start(registrationForm) }}
+{# 
+    {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
@@ -15,88 +15,69 @@
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }} #}
 
-    <div class="page">
-			<div class="page-single">
+
+
+	<div class="page" style="background: linear-gradient(90deg, hsla(239, 60%, 30%, 1) 0%, hsla(250, 78%, 48%, 1) 100%);">
+			<div class="page-content">
 				<div class="container">
 					<div class="row">
 						<div class="col mx-auto">
 							<div class="row justify-content-center">
-								<div class="col-xl-7 col-lg-12">
-									<div class="row p-0 m-0">
-										<div class="col-lg-6 p-0">
-											<div class="text-justified text-white p-5 register-1 overflow-hidden">
-												<div class="custom-content">
-													<div class="mb-5 br-7">
-														<img src="{{ asset('build/assets/images/brand/logo.png')}}" class="header-brand-img desktop-lgo" alt="Azea logo">
-													</div>
-													<div class="ms-5">
-														<div class="fs-25 mb-6 font-weight-bold text-white text-center">{% trans %}BIENVENUE{% endtrans %}</div>
-														<div class="mb-6 text-white-50 text-center fs-12  ">
-															{% trans %}Application de gestion d'une bibliothèque{% endtrans %}
+								<div class="col-md-6 col-xl-4">
+									<div class="text-center mb-6">
+										{# <img src="../../assets/images/brand/logo1.png" class="header-brand-img desktop-lgo" alt="Azea logo"> #}
+									</div>
+									<div class="card">
+										<div class="card-body">
+											<div class="text-center mb-3">
+												<h1 class="mb-2">Enregistrement</h1>
+												<a href="javascript:void(0);" class="">Création d'un nouveau compte</a>
+											</div>
+											{{ form_start(registrationForm) }}
+												<div class="input-group mb-4">
+														<div class="input-group-text">
+															<i class="fe fe-user"></i>
 														</div>
-														<h6 class="text-white-50 text-center ">{% trans %}Vous avez déjà un compte ?{% endtrans %}
-														<br>
-														<a href="{{ path('app_login') }}" class="btn btn-white text-primary text-transparent font-weight-bold text-center mt-5"><i class="fa fa-unlock me-2"></i>{% trans %}Connectez-vous ici{% endtrans %}</a>
-														<a href="{{ path('accueil') }}" class="btn btn-white text-primary text-transparent font-weight-bold text-center mt-5"><i class="fa fa-home me-2"></i>{% trans %}Accueil{% endtrans %}</a>
-														</h6>
+													<input type="text" class="form-control" name="nom" placeholder="Votre nom">
+												</div>
+												<div class="input-group mb-4">
+														<div class="input-group-text">
+															<i class="fe fe-phone"></i>
+														</div>
+													<input type="text" class="form-control" name="contact" placeholder="Votre contact">
+												</div>
+												<div class="input-group mb-4">
+														<div class="input-group-text">
+															<i class="fe fe-mail"></i>
+														</div>
+														{{ form_widget(registrationForm.email) }}
+												</div>
+												<div class="input-group mb-4">
+													<div class="input-group" id="Password-toggle">
+														<a href="" class="input-group-text">
+														  <i class="fe fe-eye" aria-hidden="true"></i>
+														</a>
+														{{ form_widget(registrationForm.plainPassword) }}
 													</div>
 												</div>
-											</div>
-										</div>
-										<div class="col-md-8 col-lg-6 p-0 mx-auto">
-											<div class="bg-white  text-dark br-7 br-tl-0 br-bl-0 border-primary">
-												<div class="card-body">
-													<div class="text-center mb-3">
-														<h1 class="mb-2">{% trans %}Enregistrement{% endtrans %}</h1>
-														<a href="javascript:void(0);" class="">{% trans %}Création de compte{% endtrans %}</a>
-													</div>
-													{{ form_start(registrationForm) }}
-														{# <div class="input-group mb-4">
-																<div class="input-group-text">
-																	<i class="fe fe-user"></i>
-																</div>
-															<input type="text" class="form-control" placeholder="Username">
-														</div> #}
-														<div class="input-group mb-4">
-																<div class="input-group-text">
-																	<i class="fe fe-mail"></i>
-																</div>
-														{{ form_row(registrationForm.email) }}	
 												
-														</div>
-														<div class="input-group mb-4">
-															<div class="input-group" id="Password-toggle">
-																	<a href="" class="input-group-text">
-																	<i class="fe fe-eye" aria-hidden="true"></i>
-																	</a>
-																{{ form_row(registrationForm.plainPassword) }}
-															</div>
-														</div>
-														{# <div class="input-group mb-4">
-															<div class="input-group" id="Password-toggle1">
-																<a href="" class="input-group-text">
-																<i class="fe fe-eye" aria-hidden="true"></i>
-																</a>
-																<input class="form-control" type="password" placeholder="Confirm Password">
-															</div>
-														</div> #}
-														<div class="form-group">
-															<label class="custom-control custom-checkbox">
-																<input type="checkbox" class="custom-control-input" />
-																<span class="custom-control-label">{% trans %}Se souvenir de moi{% endtrans %}</span>
-															</label>
-														</div>
-														<div class="form-group text-center mb-3">
-															<button class="btn btn-primary btn-md w-100 br-7"><i class="fa fa-user"></i> {% trans %}Je m'enregistre{% endtrans %}</button>
-														</div>
-														<div class="form-group fs-12 text-center text-white">
-															
-														</div>
-													{{ form_end(registrationForm) }}
+												<div class="form-group">
+													<label class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" />
+														
+														<span class="custom-control-label">J'accepte les<a href="javascript:void(0);" class="font-weight-bold">  Termes & Conditions.</a></span>
+													</label>
 												</div>
-											</div>
+												<div class="form-group text-center mb-3">
+													<button class="btn btn-primary btn-lg w-100 br-7">Sign Up</button>
+												</div>
+												<div class="form-group fs-12 text-center">
+													En cliquant sur ce bouton, vous acceptez les <a href="javascript:void(0);" class="font-weight-bold">Termes & Conditions</a> et que vous avez pris connaissance de la  <a href="javascript:void(0);" class="font-weight-bold">Politique & des services.</a>
+												</div>
+											{{ form_end(registrationForm) }}
 										</div>
 									</div>
+									
 								</div>
 							</div>
 						</div>
@@ -104,4 +85,8 @@
 				</div>
 			</div>
 		</div>
+
+
+
+
 {% endblock %}
